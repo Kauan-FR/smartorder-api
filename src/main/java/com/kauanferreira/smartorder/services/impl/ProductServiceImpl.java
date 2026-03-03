@@ -111,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findByCategoryId(Long categoryId) {
         categoryService.findById(categoryId);
         return productRepository.findByCategoryId(categoryId);
@@ -120,6 +121,7 @@ public class ProductServiceImpl implements ProductService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findByActive(Boolean active) {
         return productRepository.findByActive(active);
     }
@@ -128,6 +130,7 @@ public class ProductServiceImpl implements ProductService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findActiveByCategoryId(Long categoryId) {
         categoryService.findById(categoryId);
         return productRepository.findByCategoryIdAndActive(categoryId, true);
@@ -137,6 +140,7 @@ public class ProductServiceImpl implements ProductService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
         return productRepository.findByPriceBetween(minPrice, maxPrice);
     }
@@ -149,6 +153,7 @@ public class ProductServiceImpl implements ProductService {
      * @throws IllegalArgumentException if a product with the new name already exists
      */
     @Override
+    @Transactional
     public Product update(Long id, Product product) {
         Product existing = findById(id);
         categoryService.findById(product.getCategory().getId());
@@ -175,6 +180,7 @@ public class ProductServiceImpl implements ProductService {
      * @throws EntityNotFoundException if no product is found with the given ID
      */
     @Override
+    @Transactional
     public Product activate(Long id) {
         Product existing = findById(id);
         existing.setActive(true);
@@ -187,6 +193,7 @@ public class ProductServiceImpl implements ProductService {
      * @throws EntityNotFoundException if no product is found with the given ID
      */
     @Override
+    @Transactional
     public Product deactivate(Long id) {
         Product existing = findById(id);
         existing.setActive(false);
@@ -199,6 +206,7 @@ public class ProductServiceImpl implements ProductService {
      * @throws EntityNotFoundException if no product is found with the given ID
      */
     @Override
+    @Transactional
     public void delete(Long id) {
         Product existing = findById(id);
         productRepository.delete(existing);
