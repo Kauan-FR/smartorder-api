@@ -39,7 +39,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      * @param name the partial name to search for
      * @return a list of products matching the search term
      */
-    List<Product> findByNameIgnoreCaseContaining(String name);
+    List<Product> findByNameContainingIgnoreCase(String name);
 
     /**
      * Finds all products belonging to a specific category.

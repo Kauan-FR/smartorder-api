@@ -98,7 +98,7 @@ public class ProductRepositoryTest {
                 100, true, clothing));
 
         // Act
-        List<Product> results = productRepository.findByNameIgnoreCaseContaining("smart");
+        List<Product> results = productRepository.findByNameContainingIgnoreCase("smart");
 
         // Assert
         assertThat(results).hasSize(2);
