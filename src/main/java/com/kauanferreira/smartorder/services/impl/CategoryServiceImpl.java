@@ -18,9 +18,11 @@ import java.util.List;
  * <p>Handles business logic for category management,
  * including validation, CRUD operations, and search.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
+ * @see CategoryService
+ * @see CategoryRepository
  */
 @Service
 @RequiredArgsConstructor

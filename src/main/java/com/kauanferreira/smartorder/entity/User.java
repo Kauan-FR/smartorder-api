@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  * <p>Users can have roles of ADMIN or CUSTOMER, which determine
  * their access level and permissions within the application.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

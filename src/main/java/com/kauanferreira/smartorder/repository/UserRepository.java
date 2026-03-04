@@ -15,7 +15,7 @@ import java.util.Optional;
  * for managing users in the authentication and
  * authorization system.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

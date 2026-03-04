@@ -12,7 +12,7 @@ import java.util.List;
  * <p>Defines the contract for category business logic,
  * including CRUD operations and search functionality.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

@@ -19,7 +19,7 @@ import java.math.BigDecimal;
  * about pricing, stock availability, and active status for
  * e-commerce catalog management.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

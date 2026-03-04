@@ -15,7 +15,7 @@ import lombok.Setter;
  * <p>Each address belongs to a {@link User} and can be used
  * as a shipping destination for orders.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

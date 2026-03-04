@@ -22,9 +22,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <p>Validates CRUD operations and custom query methods
  * against the database using Spring Data JPA test slice.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
+ * @see ProductRepository
+ * @see CategoryRepository
+ * @see Product
+ * @see Category
  */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

@@ -33,9 +33,13 @@ import static org.mockito.Mockito.*;
  * <p>Uses Mockito to mock the repository layer,
  * testing user business logic in isolation.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
+ * @see UserServiceImpl
+ * @see UserRepository
+ * @see User
+ * @see Role
  */
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {

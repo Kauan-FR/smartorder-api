@@ -14,7 +14,7 @@ import java.util.List;
  * including CRUD operations, search, filtering,
  * stock management, and activation control.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

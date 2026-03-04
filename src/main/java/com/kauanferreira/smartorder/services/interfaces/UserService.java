@@ -13,7 +13,7 @@ import java.util.List;
  * <p>Defines the contract for user business logic,
  * including CRUD operations, search, and role management.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

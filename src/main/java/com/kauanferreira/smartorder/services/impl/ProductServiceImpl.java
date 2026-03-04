@@ -21,9 +21,12 @@ import java.util.List;
  * including validation, stock control, activation,
  * and category relationship enforcement.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
+ * @see ProductService
+ * @see ProductRepository
+ * @see CategoryService
  */
 @Service
 @RequiredArgsConstructor

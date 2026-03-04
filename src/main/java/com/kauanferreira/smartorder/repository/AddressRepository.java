@@ -12,7 +12,7 @@ import java.util.List;
  * <p>Provides CRUD operations and custom query methods
  * for managing user delivery addresses.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

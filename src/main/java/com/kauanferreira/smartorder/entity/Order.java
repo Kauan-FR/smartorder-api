@@ -21,7 +21,7 @@ import java.util.List;
  * and contains one or more {@link OrderItem} entries. The order tracks
  * its lifecycle through {@link OrderStatus} transitions.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

@@ -13,7 +13,7 @@ import java.util.List;
  * <p>Provides CRUD operations and custom query methods
  * for managing customer orders in the e-commerce system.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

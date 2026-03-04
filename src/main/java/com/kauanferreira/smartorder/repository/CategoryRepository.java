@@ -17,7 +17,7 @@ import java.util.Optional;
  * {@code save()}, {@code findById()}, {@code findAll()},
  * {@code deleteById()}, {@code count()}, and pagination support.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

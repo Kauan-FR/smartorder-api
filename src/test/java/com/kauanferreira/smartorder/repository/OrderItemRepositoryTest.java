@@ -26,6 +26,20 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Kauan
  * @version 1.0
  * @since 2026
+ * @see OrderRepository
+ * @see OrderItemRepository
+ * @see ProductRepository
+ * @see AddressRepository
+ * @see UserRepository
+ * @see CategoryRepository
+ * @see OrderStatus
+ * @see Role
+ * @see Order
+ * @see Product
+ * @see User
+ * @see Address
+ * @see Category
+ * @see OrderItem
  */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

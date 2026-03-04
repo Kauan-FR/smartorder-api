@@ -32,9 +32,12 @@ import static org.mockito.Mockito.*;
  * <p>Uses Mockito to mock the repository layer,
  * testing business logic in isolation.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
+ * @see CategoryServiceImpl
+ * @see CategoryRepository
+ * @see Category
  */
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceImplTest {

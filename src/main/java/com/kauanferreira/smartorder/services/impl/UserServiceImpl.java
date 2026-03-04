@@ -20,9 +20,11 @@ import java.util.List;
  * including email uniqueness validation, profile updates,
  * password management, and role-based queries.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
+ * @see UserService
+ * @see UserRepository
  */
 @Service
 @RequiredArgsConstructor

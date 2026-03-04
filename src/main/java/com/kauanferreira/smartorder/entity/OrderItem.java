@@ -17,7 +17,7 @@ import java.math.BigDecimal;
  * the quantity, unit price at the time of purchase, and
  * the calculated subtotal.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

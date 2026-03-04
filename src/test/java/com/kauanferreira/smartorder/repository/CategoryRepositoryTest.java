@@ -23,6 +23,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Kauan
  * @version 1.0
  * @since 2026
+ * @see CategoryRepository
+ * @see Category
  */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

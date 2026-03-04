@@ -14,7 +14,7 @@ import lombok.Setter;
  * <p>Categories are used to group and organize products,
  * enabling better navigation and filtering for customers.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
  */

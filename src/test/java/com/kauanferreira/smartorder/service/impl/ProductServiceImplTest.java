@@ -35,9 +35,14 @@ import static org.mockito.Mockito.*;
  * <p>Uses Mockito to mock the repository and service layers,
  * testing product business logic in isolation.</p>
  *
- * @author Kauan
+ * @author Kauan Santos Ferreira
  * @version 1.0
  * @since 2026
+ * @see ProductServiceImpl
+ * @see ProductRepository
+ * @see CategoryService
+ * @see Category
+ * @see Product
  */
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceImplTest {
