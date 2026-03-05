@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public Order findById(Long id) {
-        return  orderRepository.findById(id).orElseThrow(
+        return orderRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Order with id %d not found", id))
         );
     }
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public Page<Order> findAll(Pageable pageable) {
-        return  orderRepository.findAll(pageable);
+        return orderRepository.findAll(pageable);
     }
 
     /**

@@ -44,7 +44,7 @@ public class AddressServiceImpl implements AddressService {
     @Transactional
     public Address create(Address address) {
         userService.findById(address.getUser().getId());
-        return  addressRepository.save(address);
+        return addressRepository.save(address);
     }
 
     /**
