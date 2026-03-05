@@ -2,9 +2,9 @@ package com.kauanferreira.smartorder.service.impl;
 
 import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.Role;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.UserRepository;
 import com.kauanferreira.smartorder.services.impl.UserServiceImpl;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -127,7 +127,7 @@ public class UserServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> userService.findById(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
     }
 
@@ -159,7 +159,7 @@ public class UserServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> userService.findByEmail("naoexiste@email.com"))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("naoexiste@email.com");
     }
 
@@ -367,7 +367,7 @@ public class UserServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> userService.update(99L, updateData))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(userRepository, never()).save(any());
@@ -402,7 +402,7 @@ public class UserServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> userService.updatePassword(99L, "senha"))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(userRepository, never()).save(any());
@@ -436,7 +436,7 @@ public class UserServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> userService.delete(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(userRepository, never()).delete(any());

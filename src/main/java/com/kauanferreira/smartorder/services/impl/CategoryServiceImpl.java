@@ -1,9 +1,10 @@
 package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.Category;
+import com.kauanferreira.smartorder.exception.DuplicateResourceException;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.CategoryRepository;
 import com.kauanferreira.smartorder.services.interfaces.CategoryService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,13 +34,13 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalArgumentException if a category with the same name already exists
+     * @throws DuplicateResourceException if a category with the same name already exists
      */
     @Override
     @Transactional
     public Category create(Category category) {
         if (categoryRepository.findByNameIgnoreCase(category.getName()).isPresent()) {
-            throw new IllegalArgumentException(String.format("Category with name %s already exists", category.getName()));
+            throw new DuplicateResourceException(String.format("Category with name %s already exists", category.getName()));
         }
         return categoryRepository.save(category);
     }
@@ -47,12 +48,12 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no category is found with the given ID
+     * @throws ResourceNotFoundException if no category is found with the given ID
      */
     @Override
     @Transactional(readOnly = true)
     public Category findById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+        return categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 String.format("Category with ID %d not found", id)));
     }
 
@@ -95,8 +96,8 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no category is found with the given ID
-     * @throws IllegalArgumentException if a category with the new name already exists
+     * @throws ResourceNotFoundException if no category is found with the given ID
+     * @throws DuplicateResourceException if a category with the new name already exists
      */
     @Override
     @Transactional
@@ -105,7 +106,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         if (categoryRepository.findByNameIgnoreCase(category.getName()).isPresent()
         && !existing.getName().equalsIgnoreCase(category.getName())) {
-            throw  new IllegalArgumentException(
+            throw  new DuplicateResourceException(
                     String.format("Category with name %s already exists", category.getName()));
         }
         existing.setName(category.getName());
@@ -116,7 +117,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no category is found with the given ID
+     * @throws ResourceNotFoundException if no category is found with the given ID
      */
     @Override
     @Transactional

@@ -2,10 +2,10 @@ package com.kauanferreira.smartorder.service.impl;
 
 import com.kauanferreira.smartorder.entity.Category;
 import com.kauanferreira.smartorder.entity.Product;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.ProductRepository;
 import com.kauanferreira.smartorder.services.impl.ProductServiceImpl;
 import com.kauanferreira.smartorder.services.interfaces.CategoryService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -124,11 +124,11 @@ public class ProductServiceImplTest {
                 new BigDecimal("100.00"), 10, null, true, fakeCategory);
         when(productRepository.findByNameIgnoreCase("Produto")).thenReturn(Optional.empty());
         when(categoryService.findById(99L)).thenThrow(
-                new EntityNotFoundException("Category not found. Id: 99"));
+                new ResourceNotFoundException("Category not found. Id: 99"));
 
         // Act & Assert
         assertThatThrownBy(() -> productService.create(newProduct))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(productRepository, never()).save(any());
@@ -162,7 +162,7 @@ public class ProductServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> productService.findById(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
     }
 
@@ -312,11 +312,11 @@ public class ProductServiceImplTest {
     void shouldThrowExceptionWhenFindingByInvalidCategory() {
         // Arrange
         when(categoryService.findById(99L)).thenThrow(
-                new EntityNotFoundException("Category not found. Id: 99"));
+                new ResourceNotFoundException("Category not found. Id: 99"));
 
         // Act & Assert
         assertThatThrownBy(() -> productService.findByCategoryId(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
     }
 
@@ -455,7 +455,7 @@ public class ProductServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> productService.update(99L, updateData))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(productRepository, never()).save(any());
@@ -508,7 +508,7 @@ public class ProductServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> productService.activate(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
     }
 
@@ -540,7 +540,7 @@ public class ProductServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> productService.delete(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(productRepository, never()).delete(any());

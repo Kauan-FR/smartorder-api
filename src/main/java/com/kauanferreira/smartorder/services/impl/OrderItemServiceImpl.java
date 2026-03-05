@@ -1,12 +1,11 @@
 package com.kauanferreira.smartorder.services.impl;
 
-import com.kauanferreira.smartorder.entity.Order;
 import com.kauanferreira.smartorder.entity.OrderItem;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.OrderItemRepository;
 import com.kauanferreira.smartorder.services.interfaces.OrderItemService;
 import com.kauanferreira.smartorder.services.interfaces.OrderService;
 import com.kauanferreira.smartorder.services.interfaces.ProductService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +40,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the associated order or product does not exist
+     * @throws ResourceNotFoundException if the associated order or product does not exist
      */
     @Override
     @Transactional
@@ -54,13 +53,13 @@ public class OrderItemServiceImpl implements OrderItemService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no order item is found with the given id
+     * @throws ResourceNotFoundException if no order item is found with the given id
      */
     @Override
     @Transactional(readOnly = true)
     public OrderItem findById(Long id) {
         return orderItemRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("OrderItem with id %d not found", id))
+                () -> new ResourceNotFoundException(String.format("OrderItem with id %d not found", id))
         );
     }
 
@@ -81,7 +80,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the order does not exist
+     * @throws ResourceNotFoundException if the order does not exist
      */
     @Override
     @Transactional(readOnly = true)
@@ -93,7 +92,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the product does not exist
+     * @throws ResourceNotFoundException if the product does not exist
      */
     @Override
     @Transactional(readOnly = true)
@@ -115,7 +114,7 @@ public class OrderItemServiceImpl implements OrderItemService {
      * <p>Updates the following fields: quantity, price, subtotal, and product.
      * The order association is not updatable.</p>
      *
-     * @throws EntityNotFoundException if no order item is found with the given id
+     * @throws ResourceNotFoundException if no order item is found with the given id
      *         or if the new product does not exist
      */
     @Override
@@ -134,7 +133,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no order item is found with the given id
+     * @throws ResourceNotFoundException if no order item is found with the given id
      */
     @Override
     @Transactional

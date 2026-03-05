@@ -5,11 +5,11 @@ import com.kauanferreira.smartorder.entity.Order;
 import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.OrderStatus;
 import com.kauanferreira.smartorder.enums.Role;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.OrderRepository;
 import com.kauanferreira.smartorder.services.impl.OrderServiceImpl;
 import com.kauanferreira.smartorder.services.interfaces.AddressService;
 import com.kauanferreira.smartorder.services.interfaces.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -141,10 +141,10 @@ public class OrderServiceImplTest {
     @DisplayName("Should throw exception when creating order with non-existent user")
     void shouldThrowExceptionWhenCreatingOrderWithNonExistentUser() {
         when(userService.findById(1L)).thenThrow(
-                new EntityNotFoundException("User not found. Id: 1"));
+                new ResourceNotFoundException("User not found. Id: 1"));
 
         assertThatThrownBy(() -> orderService.create(order1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("User not found");
 
         verify(userService).findById(1L);
@@ -158,10 +158,10 @@ public class OrderServiceImplTest {
     void shouldThrowExceptionWhenCreatingOrderWithNonExistentAddress() {
         when(userService.findById(1L)).thenReturn(user);
         when(addressService.findById(1L)).thenThrow(
-                new EntityNotFoundException("Address not found. Id: 1"));
+                new ResourceNotFoundException("Address not found. Id: 1"));
 
         assertThatThrownBy(() -> orderService.create(order1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Address not found");
 
         verify(userService).findById(1L);
@@ -194,7 +194,7 @@ public class OrderServiceImplTest {
         when(orderRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderService.findById(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Order with id 99 not found");
 
         verify(orderRepository).findById(99L);
@@ -287,10 +287,10 @@ public class OrderServiceImplTest {
     @DisplayName("Should throw exception when finding orders by non-existent user id")
     void shouldThrowExceptionWhenFindingOrdersByNonExistentUserId() {
         when(userService.findById(99L)).thenThrow(
-                new EntityNotFoundException("User not found. Id: 99"));
+                new ResourceNotFoundException("User not found. Id: 99"));
 
         assertThatThrownBy(() -> orderService.findByUserId(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("User not found");
 
         verify(userService).findById(99L);
@@ -354,10 +354,10 @@ public class OrderServiceImplTest {
     @DisplayName("Should throw exception when finding by non-existent user id and status")
     void shouldThrowExceptionWhenFindingByNonExistentUserIdAndStatus() {
         when(userService.findById(99L)).thenThrow(
-                new EntityNotFoundException("User not found. Id: 99"));
+                new ResourceNotFoundException("User not found. Id: 99"));
 
         assertThatThrownBy(() -> orderService.findByUserIdAndStatus(99L, OrderStatus.PENDING))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("User not found");
 
         verify(userService).findById(99L);
@@ -478,7 +478,7 @@ public class OrderServiceImplTest {
         when(orderRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderService.updateStatus(99L, OrderStatus.CONFIRMED))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Order with id 99 not found");
 
         verify(orderRepository).findById(99L);
@@ -522,7 +522,7 @@ public class OrderServiceImplTest {
         when(orderRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderService.update(99L, order1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Order with id 99 not found");
 
         verify(orderRepository).findById(99L);
@@ -535,10 +535,10 @@ public class OrderServiceImplTest {
     void shouldThrowExceptionWhenUpdatingOrderWithNonExistentAddress() {
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order1));
         when(addressService.findById(1L)).thenThrow(
-                new EntityNotFoundException("Address not found. Id: 1"));
+                new ResourceNotFoundException("Address not found. Id: 1"));
 
         assertThatThrownBy(() -> orderService.update(1L, order1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Address not found");
 
         verify(orderRepository).findById(1L);
@@ -569,7 +569,7 @@ public class OrderServiceImplTest {
         when(orderRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderService.delete(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Order with id 99 not found");
 
         verify(orderRepository).findById(99L);

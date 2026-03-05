@@ -2,9 +2,10 @@ package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.Role;
+import com.kauanferreira.smartorder.exception.DuplicateResourceException;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.UserRepository;
 import com.kauanferreira.smartorder.services.interfaces.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,13 +36,13 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalArgumentException if the email is already registered
+     * @throws DuplicateResourceException if the email is already registered
      */
     @Override
     @Transactional
     public User create(User user) {
         if (userRepository.existsByEmailIgnoreCase(user.getEmail())) {
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                     String.format("Email '%s' is already registered", user.getEmail()));
         }
         return userRepository.save(user);
@@ -50,26 +51,26 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no user is found with the given ID
+     * @throws ResourceNotFoundException if no user is found with the given ID
      */
     @Override
     @Transactional(readOnly = true)
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("User with id " + id + " not found")
+                () -> new ResourceNotFoundException("User with id " + id + " not found")
         );
     }
 
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no user is found with the given email
+     * @throws ResourceNotFoundException if no user is found with the given email
      */
     @Override
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
         return userRepository.findByEmailIgnoreCase(email).orElseThrow(
-                () -> new EntityNotFoundException("User with email " + email + " not found")
+                () -> new ResourceNotFoundException("User with email " + email + " not found")
         );
     }
 
@@ -121,8 +122,8 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no user is found with the given ID
-     * @throws IllegalArgumentException if the new email is already in use by another user
+     * @throws ResourceNotFoundException if no user is found with the given ID
+     * @throws DuplicateResourceException if the new email is already in use by another user
      */
     @Override
     @Transactional
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService {
 
         if (!existing.getEmail().equalsIgnoreCase(user.getEmail())
                 && userRepository.existsByEmailIgnoreCase(user.getEmail())) {
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                     String.format("Email '%s' is already registered", user.getEmail()));
         }
 
@@ -145,7 +146,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no user is found with the given ID
+     * @throws ResourceNotFoundException if no user is found with the given ID
      */
     @Override
     @Transactional
@@ -158,7 +159,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no user is found with the given ID
+     * @throws ResourceNotFoundException if no user is found with the given ID
      */
     @Override
     @Transactional

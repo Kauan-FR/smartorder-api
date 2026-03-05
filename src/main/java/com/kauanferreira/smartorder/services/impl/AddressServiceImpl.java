@@ -1,10 +1,10 @@
 package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.Address;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.AddressRepository;
 import com.kauanferreira.smartorder.services.interfaces.AddressService;
 import com.kauanferreira.smartorder.services.interfaces.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +38,7 @@ public class AddressServiceImpl implements AddressService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the associated user does not exist
+     * @throws ResourceNotFoundException if the associated user does not exist
      */
     @Override
     @Transactional
@@ -50,13 +50,13 @@ public class AddressServiceImpl implements AddressService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no address is found with the given id
+     * @throws ResourceNotFoundException if no address is found with the given id
      */
     @Override
     @Transactional(readOnly = true)
     public Address findById(Long id) {
         return addressRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Address with id %d not found", id))
+                () -> new ResourceNotFoundException(String.format("Address with id %d not found", id))
         );
     }
 
@@ -78,7 +78,7 @@ public class AddressServiceImpl implements AddressService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the user does not exist
+     * @throws ResourceNotFoundException if the user does not exist
      */
     @Override
     @Transactional(readOnly = true)
@@ -120,7 +120,7 @@ public class AddressServiceImpl implements AddressService {
      * <p>Updates the following fields: street, number, complement,
      * city, state, zip code, and country.</p>
      *
-     * @throws EntityNotFoundException if no address is found with the given id
+     * @throws ResourceNotFoundException if no address is found with the given id
      */
     @Override
     @Transactional
@@ -140,7 +140,7 @@ public class AddressServiceImpl implements AddressService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no address is found with the given id
+     * @throws ResourceNotFoundException if no address is found with the given id
      */
     @Override
     @Transactional

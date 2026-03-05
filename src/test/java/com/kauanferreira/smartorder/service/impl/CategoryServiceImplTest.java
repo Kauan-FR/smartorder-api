@@ -1,9 +1,9 @@
 package com.kauanferreira.smartorder.service.impl;
 
 import com.kauanferreira.smartorder.entity.Category;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.CategoryRepository;
 import com.kauanferreira.smartorder.services.impl.CategoryServiceImpl;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -125,7 +125,7 @@ public class CategoryServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> categoryService.findById(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(categoryRepository).findById(99L);
@@ -309,7 +309,7 @@ public class CategoryServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> categoryService.update(99L, updateData))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(categoryRepository, never()).save(any());
@@ -344,7 +344,7 @@ public class CategoryServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> categoryService.delete(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
         verify(categoryRepository, never()).delete(any());

@@ -1,10 +1,11 @@
 package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.Product;
+import com.kauanferreira.smartorder.exception.DuplicateResourceException;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.ProductRepository;
 import com.kauanferreira.smartorder.services.interfaces.CategoryService;
 import com.kauanferreira.smartorder.services.interfaces.ProductService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,14 +40,14 @@ public class ProductServiceImpl implements ProductService {
     /**
      * {@inheritDoc}
      *
-     * @throws IllegalArgumentException if a product with the same name already exists
-     * @throws EntityNotFoundException if the category does not exist
+     * @throws DuplicateResourceException if a product with the same name already exists
+     * @throws ResourceNotFoundException if the category does not exist
      */
     @Override
     @Transactional
     public Product create(Product product) {
         if (productRepository.findByNameIgnoreCase(product.getName()).isPresent()) {
-            throw new IllegalArgumentException(String.format("Product with name %s already exists", product.getName()));
+            throw new DuplicateResourceException(String.format("Product with name %s already exists", product.getName()));
         }
         categoryService.findById(product.getCategory().getId());
         return productRepository.save(product);
@@ -55,13 +56,13 @@ public class ProductServiceImpl implements ProductService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no product is found with the given ID
+     * @throws ResourceNotFoundException if no product is found with the given ID
      */
     @Override
     @Transactional(readOnly = true)
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Product with ID %d not found", id))
+                () -> new ResourceNotFoundException(String.format("Product with ID %d not found", id))
         );
     }
 
@@ -151,9 +152,9 @@ public class ProductServiceImpl implements ProductService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no product is found with the given ID
-     * @throws EntityNotFoundException if the category does not exist
-     * @throws IllegalArgumentException if a product with the new name already exists
+     * @throws ResourceNotFoundException if no product is found with the given ID
+     * @throws ResourceNotFoundException if the category does not exist
+     * @throws DuplicateResourceException if a product with the new name already exists
      */
     @Override
     @Transactional
@@ -163,7 +164,7 @@ public class ProductServiceImpl implements ProductService {
 
         if (productRepository.findByNameIgnoreCase(product.getName()).isPresent()
                 && !existing.getName().equalsIgnoreCase(product.getName())) {
-            throw new IllegalArgumentException(
+            throw new DuplicateResourceException(
                     String.format("Product with name '%s' already exists", product.getName()));
         }
 
@@ -180,7 +181,7 @@ public class ProductServiceImpl implements ProductService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no product is found with the given ID
+     * @throws ResourceNotFoundException if no product is found with the given ID
      */
     @Override
     @Transactional
@@ -193,7 +194,7 @@ public class ProductServiceImpl implements ProductService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no product is found with the given ID
+     * @throws ResourceNotFoundException if no product is found with the given ID
      */
     @Override
     @Transactional
@@ -206,7 +207,7 @@ public class ProductServiceImpl implements ProductService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no product is found with the given ID
+     * @throws ResourceNotFoundException if no product is found with the given ID
      */
     @Override
     @Transactional

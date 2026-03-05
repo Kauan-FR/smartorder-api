@@ -3,10 +3,10 @@ package com.kauanferreira.smartorder.service.impl;
 import com.kauanferreira.smartorder.entity.Address;
 import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.Role;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.AddressRepository;
 import com.kauanferreira.smartorder.services.impl.AddressServiceImpl;
 import com.kauanferreira.smartorder.services.interfaces.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -117,10 +117,10 @@ public class AddresServiceImplTest {
     @DisplayName("Should throw exception when creating address with non-existent user")
     void shouldThrowExceptionWhenCreatingAddressWithNonExistentUser() {
         when(userService.findById(1L)).thenThrow(
-                new EntityNotFoundException("User not found. Id: 1"));
+                new ResourceNotFoundException("User not found. Id: 1"));
 
         assertThatThrownBy(() -> addressService.create(address1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("User not found");
 
         verify(userService).findById(1L);
@@ -152,7 +152,7 @@ public class AddresServiceImplTest {
         when(addressRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> addressService.findById(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Address with id 99 not found");
 
         verify(addressRepository).findById(99L);
@@ -242,10 +242,10 @@ public class AddresServiceImplTest {
     @DisplayName("Should throw exception when finding addresses by non-existent user id")
     void shouldThrowExceptionWhenFindingByNonExistentUserId() {
         when(userService.findById(99L)).thenThrow(
-                new EntityNotFoundException("User not found. Id: 99"));
+                new ResourceNotFoundException("User not found. Id: 99"));
 
         assertThatThrownBy(() -> addressService.findByUserId(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("User not found");
 
         verify(userService).findById(99L);
@@ -405,7 +405,7 @@ public class AddresServiceImplTest {
         when(addressRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> addressService.update(99L, address1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Address with id 99 not found");
 
         verify(addressRepository).findById(99L);
@@ -435,7 +435,7 @@ public class AddresServiceImplTest {
         when(addressRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> addressService.delete(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Address with id 99 not found");
 
         verify(addressRepository).findById(99L);

@@ -2,11 +2,11 @@ package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.Order;
 import com.kauanferreira.smartorder.enums.OrderStatus;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.OrderRepository;
 import com.kauanferreira.smartorder.services.interfaces.AddressService;
 import com.kauanferreira.smartorder.services.interfaces.OrderService;
 import com.kauanferreira.smartorder.services.interfaces.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the associated user or address does not exist
+     * @throws ResourceNotFoundException if the associated user or address does not exist
      */
     @Override
     @Transactional
@@ -56,13 +56,13 @@ public class OrderServiceImpl implements OrderService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no order is found with the given id
+     * @throws ResourceNotFoundException if no order is found with the given id
      */
     @Override
     @Transactional(readOnly = true)
     public Order findById(Long id) {
         return orderRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Order with id %d not found", id))
+                () -> new ResourceNotFoundException(String.format("Order with id %d not found", id))
         );
     }
 
@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the user does not exist
+     * @throws ResourceNotFoundException if the user does not exist
      */
     @Override
     @Transactional(readOnly = true)
@@ -103,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if the user does not exist
+     * @throws ResourceNotFoundException if the user does not exist
      */
     @Override
     @Transactional(readOnly = true)
@@ -136,7 +136,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no order is found with the given id
+     * @throws ResourceNotFoundException if no order is found with the given id
      */
     @Override
     @Transactional
@@ -152,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
      * <p>Updates the following fields: status, total amount, and address.
      * The order date is not updatable as it is set on creation.</p>
      *
-     * @throws EntityNotFoundException if no order is found with the given id
+     * @throws ResourceNotFoundException if no order is found with the given id
      *         or if the new address does not exist
      */
     @Override
@@ -170,7 +170,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * {@inheritDoc}
      *
-     * @throws EntityNotFoundException if no order is found with the given id
+     * @throws ResourceNotFoundException if no order is found with the given id
      */
     @Override
     @Transactional

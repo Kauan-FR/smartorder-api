@@ -8,11 +8,11 @@ import com.kauanferreira.smartorder.entity.Address;
 import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.OrderStatus;
 import com.kauanferreira.smartorder.enums.Role;
+import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.OrderItemRepository;
 import com.kauanferreira.smartorder.services.impl.OrderItemServiceImpl;
 import com.kauanferreira.smartorder.services.interfaces.OrderService;
 import com.kauanferreira.smartorder.services.interfaces.ProductService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -164,10 +164,10 @@ public class OrderItemServiceImplTest {
     @DisplayName("Should throw exception when creating order item with non-existent order")
     void shouldThrowExceptionWhenCreatingWithNonExistentOrder() {
         when(orderService.findById(1L)).thenThrow(
-                new EntityNotFoundException("Order not found. Id: 1"));
+                new ResourceNotFoundException("Order not found. Id: 1"));
 
         assertThatThrownBy(() -> orderItemService.create(orderItem1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Order not found");
 
         verify(orderService).findById(1L);
@@ -181,10 +181,10 @@ public class OrderItemServiceImplTest {
     void shouldThrowExceptionWhenCreatingWithNonExistentProduct() {
         when(orderService.findById(1L)).thenReturn(order);
         when(productService.findById(1L)).thenThrow(
-                new EntityNotFoundException("Product not found. Id: 1"));
+                new ResourceNotFoundException("Product not found. Id: 1"));
 
         assertThatThrownBy(() -> orderItemService.create(orderItem1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Product not found");
 
         verify(orderService).findById(1L);
@@ -217,7 +217,7 @@ public class OrderItemServiceImplTest {
         when(orderItemRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderItemService.findById(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("OrderItem with id 99 not found");
 
         verify(orderItemRepository).findById(99L);
@@ -307,10 +307,10 @@ public class OrderItemServiceImplTest {
     @DisplayName("Should throw exception when finding items by non-existent order id")
     void shouldThrowExceptionWhenFindingByNonExistentOrderId() {
         when(orderService.findById(99L)).thenThrow(
-                new EntityNotFoundException("Order not found. Id: 99"));
+                new ResourceNotFoundException("Order not found. Id: 99"));
 
         assertThatThrownBy(() -> orderItemService.findByOrderId(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Order not found");
 
         verify(orderService).findById(99L);
@@ -354,10 +354,10 @@ public class OrderItemServiceImplTest {
     @DisplayName("Should throw exception when finding items by non-existent product id")
     void shouldThrowExceptionWhenFindingByNonExistentProductId() {
         when(productService.findById(99L)).thenThrow(
-                new EntityNotFoundException("Product not found. Id: 99"));
+                new ResourceNotFoundException("Product not found. Id: 99"));
 
         assertThatThrownBy(() -> orderItemService.findByProductId(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Product not found");
 
         verify(productService).findById(99L);
@@ -451,7 +451,7 @@ public class OrderItemServiceImplTest {
         when(orderItemRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderItemService.update(99L, orderItem1))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("OrderItem with id 99 not found");
 
         verify(orderItemRepository).findById(99L);
@@ -470,10 +470,10 @@ public class OrderItemServiceImplTest {
 
         when(orderItemRepository.findById(1L)).thenReturn(Optional.of(orderItem1));
         when(productService.findById(1L)).thenThrow(
-                new EntityNotFoundException("Product not found. Id: 1"));
+                new ResourceNotFoundException("Product not found. Id: 1"));
 
         assertThatThrownBy(() -> orderItemService.update(1L, updatedData))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Product not found");
 
         verify(orderItemRepository).findById(1L);
@@ -504,7 +504,7 @@ public class OrderItemServiceImplTest {
         when(orderItemRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderItemService.delete(99L))
-                .isInstanceOf(EntityNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("OrderItem with id 99 not found");
 
         verify(orderItemRepository).findById(99L);
