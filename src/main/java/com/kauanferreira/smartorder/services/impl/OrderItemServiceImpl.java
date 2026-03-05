@@ -135,7 +135,7 @@ public class OrderItemServiceImpl implements OrderItemService {
      * {@inheritDoc}
      *
      * @throws EntityNotFoundException if no order item is found with the given id
-     */ga
+     */
     @Override
     @Transactional
     public void delete(Long id) {
