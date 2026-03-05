@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  * <p>Inherits from {@link JpaRepository}, which already provides:
  * {@code save()}, {@code findById()}, {@code findAll()},
- * {@code deleteById()}, {@code count()}, and pagination support.</p>
+ * {@code delete()}, {@code count()}, and pagination support.</p>
  *
  * @author Kauan Santos Ferreira
  * @version 1.0
