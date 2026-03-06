@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDateTime;
-
 /**
  * DTO for creating and updating a {@link com.kauanferreira.smartorder.entity.User}.
  *
@@ -23,7 +21,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  * @since 2026
  */
-public record UserRequesty(
+public record UserRequest(
 
         @NotBlank(message = "Name is required")
         @Size(max = 100, message = "Name must not exceed 100 characters")

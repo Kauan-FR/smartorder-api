@@ -20,7 +20,7 @@ import java.math.BigDecimal;
  * @version 1.0
  * @since 2026
  */
-public record OrderRequesty(
+public record OrderRequest(
 
         @NotNull(message = "Order status is required")
         OrderStatus status,

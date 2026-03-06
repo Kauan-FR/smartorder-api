@@ -25,7 +25,7 @@ import java.math.BigDecimal;
  * @version 1.0
  * @since 2026
  */
-public record ProductRequesty(
+public record ProductRequest(
 
         @NotBlank(message = "Product name is required")
         @Size(max = 150, message = "Product name must not exceed 150 characters")

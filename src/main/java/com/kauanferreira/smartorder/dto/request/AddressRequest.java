@@ -22,7 +22,7 @@ import jakarta.validation.constraints.Size;
  * @version 1.0
  * @since 2026
  */
-public record AddressRequesty(
+public record AddressRequest(
 
         @NotBlank(message = "Street is required")
         @Size(max = 200, message = "Street must not exceed 200 characters")

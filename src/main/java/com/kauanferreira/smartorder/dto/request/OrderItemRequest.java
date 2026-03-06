@@ -21,7 +21,7 @@ import java.math.BigDecimal;
  * @version 1.0
  * @since 2026
  */
-public record OrderItemRequesty(
+public record OrderItemRequest(
 
         @NotNull(message = "Quantity is required")
         @Min(value = 1, message = "Quantity must be at least 1")
