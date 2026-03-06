@@ -1,7 +1,9 @@
 package com.kauanferreira.smartorder.dto.request;
 
+import com.kauanferreira.smartorder.validation.NotBlankField;
+import com.kauanferreira.smartorder.validation.PositiveOrZeroDecimal;
+import com.kauanferreira.smartorder.validation.PositiveOrZeroInteger;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -27,19 +29,16 @@ import java.math.BigDecimal;
  */
 public record ProductRequest(
 
-        @NotBlank(message = "Product name is required")
-        @Size(max = 150, message = "Product name must not exceed 150 characters")
+        @NotBlankField(fieldName = "Product name", maxLength = 150)
         String name,
 
         @Size(max = 1000, message = "Description must not exceed 1000 characters")
         String description,
 
-        @NotNull(message = "Product price is required")
-        @Min(value = 0, message = "Product price must be zero or positive")
+        @PositiveOrZeroDecimal(fieldName = "Price")
         BigDecimal price,
 
-        @NotNull(message = "Stock quantity is required")
-        @Min(value = 0, message = "Stock quantity must be zero or positive")
+        @PositiveOrZeroInteger(fieldName = "Product Stock quantity")
         Integer stockQuantity,
 
         @Size(max = 500, message = "Image URL must not exceed 500 characters")

@@ -1,5 +1,6 @@
 package com.kauanferreira.smartorder.dto.request;
 
+import com.kauanferreira.smartorder.validation.NotBlankField;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -24,31 +25,25 @@ import jakarta.validation.constraints.Size;
  */
 public record AddressRequest(
 
-        @NotBlank(message = "Street is required")
-        @Size(max = 200, message = "Street must not exceed 200 characters")
+        @NotBlankField(fieldName = "Address street", maxLength = 200)
         String street,
 
-        @NotBlank(message = "Number is required")
-        @Size(max = 20, message = "Number must not exceed 20 characters")
+        @NotBlankField(fieldName = "Address number", maxLength = 20)
         String number,
 
         @Size(max = 100, message = "Complement must not exceed 100 characters")
         String complement,
 
-        @NotBlank(message = "City is required")
-        @Size(max = 100, message = "City must not exceed 100 characters")
+        @NotBlankField(fieldName = "Address city", maxLength = 100)
         String city,
 
-        @NotBlank(message = "State is required")
-        @Size(max = 50, message = "State must not exceed 50 characters")
+        @NotBlankField(fieldName = "Address state", maxLength = 50)
         String state,
 
-        @NotBlank(message = "Zip code is required")
-        @Size(max = 20, message = "Zip code must not exceed 20 characters")
+        @NotBlankField(fieldName = "Address Zip code", maxLength = 20)
         String zipCode,
 
-        @NotBlank(message = "Country is required")
-        @Size(max = 50, message = "Country must not exceed 50 characters")
+        @NotBlankField(fieldName = "Address country", maxLength = 50)
         String country,
 
         @NotNull(message = "User id is required")

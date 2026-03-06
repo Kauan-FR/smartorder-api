@@ -22,7 +22,7 @@ import com.kauanferreira.smartorder.entity.Product;
  */
 public final class ProductMapper {
 
-    public ProductMapper() {
+    private ProductMapper() {
     }
 
     /**

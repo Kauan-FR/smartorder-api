@@ -1,6 +1,8 @@
 package com.kauanferreira.smartorder.dto.request;
 
 import com.kauanferreira.smartorder.enums.OrderStatus;
+import com.kauanferreira.smartorder.validation.PositiveOrZeroDecimal;
+import com.kauanferreira.smartorder.validation.ValidOrderStatus;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -22,11 +24,10 @@ import java.math.BigDecimal;
  */
 public record OrderRequest(
 
-        @NotNull(message = "Order status is required")
+        @ValidOrderStatus
         OrderStatus status,
 
-        @NotNull(message = "Total amount is required")
-        @Min(value = 0, message = "Total amount must be zero or positive")
+        @PositiveOrZeroDecimal(fieldName = "Order Total amount")
         BigDecimal totalAmount,
 
         @NotNull(message = "User id is required")

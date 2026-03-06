@@ -1,6 +1,8 @@
 package com.kauanferreira.smartorder.dto.request;
 
 
+import com.kauanferreira.smartorder.validation.PositiveOrZeroDecimal;
+import com.kauanferreira.smartorder.validation.PositiveOrZeroInteger;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -23,14 +25,13 @@ import java.math.BigDecimal;
  */
 public record OrderItemRequest(
 
-        @NotNull(message = "Quantity is required")
-        @Min(value = 1, message = "Quantity must be at least 1")
+        @PositiveOrZeroInteger(fieldName = "Order item quantity", minValue = 1)
         Integer quantity,
 
-        @NotNull(message = "Price is required")
+        @PositiveOrZeroDecimal(fieldName = "Order item price")
         BigDecimal price,
 
-        @NotNull(message = "Subtotal is required")
+        @PositiveOrZeroDecimal(fieldName = "Order item subtotal")
         BigDecimal subtotal,
 
         @NotNull(message = "Order is required")

@@ -20,7 +20,7 @@ import com.kauanferreira.smartorder.entity.User;
  */
 public final class AddressMapper {
 
-    public AddressMapper() {
+    private AddressMapper() {
     }
 
     /**

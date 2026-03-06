@@ -20,7 +20,7 @@ import com.kauanferreira.smartorder.entity.User;
  */
 public final class UserMapper {
 
-    public UserMapper() {
+    private UserMapper() {
     }
 
     /**

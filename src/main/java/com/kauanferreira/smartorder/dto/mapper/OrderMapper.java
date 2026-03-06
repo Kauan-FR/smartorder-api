@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 public final class OrderMapper {
 
-    public OrderMapper() {
+    private OrderMapper() {
     }
 
     /**

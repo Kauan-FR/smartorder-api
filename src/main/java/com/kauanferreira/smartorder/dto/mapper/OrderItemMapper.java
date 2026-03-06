@@ -21,7 +21,7 @@ import com.kauanferreira.smartorder.entity.Product;
  */
 public final class OrderItemMapper {
 
-    public OrderItemMapper() {
+    private OrderItemMapper() {
     }
 
      /**

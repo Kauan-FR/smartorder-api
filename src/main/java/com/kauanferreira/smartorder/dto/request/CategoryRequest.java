@@ -1,6 +1,6 @@
 package com.kauanferreira.smartorder.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+import com.kauanferreira.smartorder.validation.NotBlankField;
 import jakarta.validation.constraints.Size;
 
 /**
@@ -18,8 +18,7 @@ import jakarta.validation.constraints.Size;
  */
 public record CategoryRequest(
 
-        @NotBlank(message = "Category name is required")
-        @Size(max = 100, message = "Category name must not exceed 100 characters")
+        @NotBlankField(fieldName = "Category name", maxLength = 100)
         String name,
 
         @Size(max = 1000, message = "Description must not exceed 1000 characters")

@@ -20,7 +20,7 @@ import com.kauanferreira.smartorder.entity.Category;
  */
 public final class CategoryMapper {
 
-    public CategoryMapper() {
+    private CategoryMapper() {
     }
 
     /**
