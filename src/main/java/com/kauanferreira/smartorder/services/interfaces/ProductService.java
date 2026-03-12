@@ -107,15 +107,6 @@ public interface ProductService {
     List<Product> findByPriceRange(BigDecimal minPrice, BigDecimal maxPrice);
 
     /**
-     * Updates an existing product.
-     *
-     * @param id the ID of the product to update
-     * @param product the updated product data
-     * @return the updated product
-     */
-    Product update(Long id, Product product);
-
-    /**
      * Activates a product, making it visible in the catalog.
      *
      * @param id the ID of the product to activate
@@ -130,6 +121,15 @@ public interface ProductService {
      * @return the deactivated product
      */
     Product deactivate(Long id);
+
+    /**
+     * Updates an existing product.
+     *
+     * @param id the ID of the product to update
+     * @param product the updated product data
+     * @return the updated product
+     */
+    Product update(Long id, Product product);
 
     /**
      * Deletes a product by its ID.
