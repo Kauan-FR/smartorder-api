@@ -92,7 +92,7 @@ public class CategoryController {
     public ResponseEntity<Page<CategoryResponse>> findAllPaged(Pageable pageable) {
         Page<CategoryResponse> responses = categoryService.findAll(pageable)
                 .map(CategoryMapper::toResponse);
-        return  ResponseEntity.ok(responses);
+        return ResponseEntity.ok(responses);
     }
 
     /**
