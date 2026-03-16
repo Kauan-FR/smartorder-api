@@ -133,7 +133,8 @@ public class CategoryController {
      * @return HTTP 200 with the updated category
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
+    public ResponseEntity<CategoryResponse> update(@PathVariable Long id,
+                                                   @Valid @RequestBody CategoryRequest request) {
 
         Category entity = CategoryMapper.toEntity(request);
         Category updated = categoryService.update(id, entity);
