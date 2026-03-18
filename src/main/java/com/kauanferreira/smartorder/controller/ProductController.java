@@ -131,7 +131,7 @@ public class ProductController {
      * @return HTTP 200 with the list of matching products
      */
     @GetMapping("/search")
-    public ResponseEntity<List<ProductResponse>> searchByName(@RequestBody String name) {
+    public ResponseEntity<List<ProductResponse>> searchByName(@RequestParam String name) {
         List<ProductResponse> responses = productService.searchByName(name)
                 .stream()
                 .map(ProductMapper::toResponse)

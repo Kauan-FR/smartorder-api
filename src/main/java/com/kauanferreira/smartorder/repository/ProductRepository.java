@@ -1,7 +1,11 @@
 package com.kauanferreira.smartorder.repository;
 
 import com.kauanferreira.smartorder.entity.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -25,6 +29,15 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+    @Query("SELECT p FROM Product p JOIN FETCH p.category")
+    List<Product> findAll();
+
+    @Query(value = "SELECT p FROM Product p JOIN FETCH p.category",
+            countQuery = "SELECT COUNT(p) FROM Product p")
+    Page<Product> findAll(Pageable pageable);
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.id = :id")
+    Optional<Product> findById(@Param("id") Long id);
     /**
      * Finds a product by its exact name, ignoring case.
      *
@@ -39,7 +52,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      * @param name the partial name to search for
      * @return a list of products matching the search term
      */
-    List<Product> findByNameContainingIgnoreCase(String name);
+    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<Product> findByNameContainingIgnoreCase(@Param("name") String name);
 
     /**
      * Finds all products belonging to a specific category.
@@ -55,7 +69,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      * @param active true for active products, false for inactive
      * @return a list of products filtered by active status
      */
-    List<Product> findByActive(Boolean active);
+    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.active = :active")
+    List<Product> findByActive(@Param("active") Boolean active);
 
     /**
      * Finds active products belonging to a specific category.
@@ -73,13 +88,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      * @param maxPrice maximum price (inclusive)
      * @return a list of products within the price range
      */
-    List<Product> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
+    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.price BETWEEN :minPrice AND :maxPrice")
+    List<Product> findByPriceBetween(@Param("minPrice") BigDecimal minPrice, @Param("maxPrice") BigDecimal maxPrice);
 
     /**
      * Finds all products ordered by price ascending.
      *
      * @return a list of products sorted by price (cheapest first)
      */
+    @Query("SELECT p FROM Product p JOIN FETCH p.category ORDER BY p.price ASC")
     List<Product> findAllByOrderByPriceAsc();
 
     /**
@@ -87,5 +104,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      *
      * @return a list of products sorted alphabetically by name
      */
+    @Query("SELECT p FROM Product p JOIN FETCH p.category ORDER BY p.name ASC")
     List<Product> findAllByOrderByNameAsc();
 }
