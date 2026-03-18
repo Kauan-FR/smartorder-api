@@ -153,6 +153,20 @@ public class UserController {
     }
 
     /**
+     * Updates the password of an existing user.
+     *
+     * @param id          the id of the user to update
+     * @param newPassword the new password
+     * @return HTTP 200 with the updated user
+     */
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<UserResponse> updatePassword(@PathVariable Long id,
+                                                       @RequestParam String newPassword) {
+        User updated = userService.updatePassword(id, newPassword);
+        return ResponseEntity.ok(UserMapper.toResponse(updated));
+    }
+
+    /**
      * Updates an existing user.
      *
      * @param id      the id of the user to update
@@ -164,20 +178,6 @@ public class UserController {
                                                @Valid @RequestBody UserRequest request) {
         User entity = UserMapper.toEntity(request);
         User updated = userService.update(id, entity);
-        return ResponseEntity.ok(UserMapper.toResponse(updated));
-    }
-
-    /**
-     * Updates the password of an existing user.
-     *
-     * @param id          the id of the user to update
-     * @param newPassword the new password
-     * @return HTTP 200 with the updated user
-     */
-    @PutMapping("/updatePassword")
-    public ResponseEntity<UserResponse> updatePassword(@PathVariable Long id,
-                                                       @RequestParam String newPassword) {
-        User updated = userService.updatePassword(id, newPassword);
         return ResponseEntity.ok(UserMapper.toResponse(updated));
     }
 
