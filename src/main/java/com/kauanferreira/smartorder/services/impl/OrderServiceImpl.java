@@ -48,8 +48,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Order create(Order order) {
-        userService.findById(order.getUser().getId());
-        addressService.findById(order.getAddress().getId());
+        var user = userService.findById(order.getUser().getId());
+        var address = addressService.findById(order.getAddress().getId());
+        order.setUser(user);
+        order.setAddress(address);
         return orderRepository.save(order);
     }
 
@@ -159,11 +161,11 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public Order update(Long id, Order order) {
         Order existing = findById(id);
-        addressService.findById(order.getAddress().getId());
+        var address = addressService.findById(order.getAddress().getId());
 
         existing.setStatus(order.getStatus());
         existing.setTotalAmount(order.getTotalAmount());
-        existing.setAddress(order.getAddress());
+        existing.setAddress(address);
         return orderRepository.save(existing);
     }
 

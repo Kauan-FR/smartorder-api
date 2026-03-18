@@ -2,10 +2,15 @@ package com.kauanferreira.smartorder.repository;
 
 import com.kauanferreira.smartorder.entity.Order;
 import com.kauanferreira.smartorder.enums.OrderStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository interface for {@link Order} entity.
@@ -20,13 +25,24 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items")
+    List<Order> findAll();
+
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.id = :id")
+    Optional<Order> findById(@Param("id") Long id);
+
+    @Query(value = "SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items",
+            countQuery = "SELECT COUNT(o) FROM Order o")
+    Page<Order> findAll(Pageable pageable);
+
     /**
      * Finds all orders placed by a specific user, ordered by date descending.
      *
      * @param userId the ID of the user
      * @return a list of orders for the given user (most recent first)
      */
-    List<Order> findByUserIdOrderByOrderDateDesc(Long userId);
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.user.id = :userId ORDER BY o.orderDate DESC")
+    List<Order> findByUserIdOrderByOrderDateDesc(@Param("userId") Long userId);
 
     /**
      * Finds all orders with a specific status.
@@ -34,7 +50,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param status the order status to filter by
      * @return a list of orders with the given status
      */
-    List<Order> findByStatus(OrderStatus status);
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.status = :status")
+    List<Order> findByStatus(@Param("status") OrderStatus status);
 
     /**
      * Finds all orders for a specific user with a specific status.
@@ -43,7 +60,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param status the order status to filter by
      * @return a list of matching orders
      */
-    List<Order> findByUserIdAndStatus(Long userId, OrderStatus status);
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.user.id = :userId AND o.status = :status")
+    List<Order> findByUserIdAndStatus(@Param("userId") Long userId, @Param("status") OrderStatus status);
 
     /**
      * Finds all orders shipped to a specific address.
@@ -51,7 +69,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param addressId the ID of the address
      * @return a list of orders for the given address
      */
-    List<Order> findByAddressId(Long addressId);
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.address.id = :addressId")
+    List<Order> findByAddressId(@Param("addressId") Long addressId);
 
     /**
      * Counts how many orders a user has placed.

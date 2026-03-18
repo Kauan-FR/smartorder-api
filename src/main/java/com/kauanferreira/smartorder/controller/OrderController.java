@@ -47,7 +47,8 @@ public class OrderController {
     public ResponseEntity<OrderResponse> create(@Valid @RequestBody OrderRequest request) {
         Order entity = OrderMapper.toEntity(request);
         Order created = orderService.create(entity);
-        OrderResponse response = OrderMapper.toResponser(created);
+        Order fullOrder = orderService.findById(created.getId());
+        OrderResponse response = OrderMapper.toResponser(fullOrder);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -188,11 +189,12 @@ public class OrderController {
      * @param status the new order status
      * @return HTTP 200 with the updated order
      */
-    @PutMapping("/{id}/status/{status}")
+    @PatchMapping("/{id}/status/{status}")
     public ResponseEntity<OrderResponse> updateStatus(@PathVariable Long id,
                                                       @PathVariable OrderStatus status) {
         Order updated = orderService.updateStatus(id, status);
-        return ResponseEntity.ok(OrderMapper.toResponser(updated));
+        Order fullOrder = orderService.findById(updated.getId());
+        return ResponseEntity.ok(OrderMapper.toResponser(fullOrder));
     }
 
     /**
@@ -206,8 +208,9 @@ public class OrderController {
     public ResponseEntity<OrderResponse> update(@PathVariable Long id,
                                                 @Valid @RequestBody OrderRequest request) {
         Order entity = OrderMapper.toEntity(request);
-        Order updated = orderService.update(id,entity);
-        return ResponseEntity.ok(OrderMapper.toResponser(updated));
+        orderService.update(id,entity);
+        Order fullOrder = orderService.findById(id);
+        return ResponseEntity.ok(OrderMapper.toResponser(fullOrder));
     }
 
     /**
