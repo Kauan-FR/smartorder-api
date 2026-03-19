@@ -45,8 +45,10 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     @Transactional
     public OrderItem create(OrderItem orderItem) {
-        orderService.findById(orderItem.getOrder().getId());
-        productService.findById(orderItem.getProduct().getId());
+        var order = orderService.findById(orderItem.getOrder().getId());
+        var product = productService.findById(orderItem.getProduct().getId());
+        orderItem.setOrder(order);
+        orderItem.setProduct(product);
         return orderItemRepository.save(orderItem);
     }
 

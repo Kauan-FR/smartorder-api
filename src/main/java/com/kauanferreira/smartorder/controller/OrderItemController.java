@@ -45,7 +45,8 @@ public class OrderItemController {
     public ResponseEntity<OrderItemResponse> create(@Valid @RequestBody OrderItemRequest request) {
         OrderItem entity = OrderItemMapper.toEntity(request);
         OrderItem created = orderItemService.create(entity);
-        OrderItemResponse response = OrderItemMapper.toResponse(created);
+        OrderItem fullItem = orderItemService.findById(created.getId());
+        OrderItemResponse response = OrderItemMapper.toResponse(fullItem);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -147,8 +148,9 @@ public class OrderItemController {
     public ResponseEntity<OrderItemResponse> update(@PathVariable Long id,
                                                     @Valid @RequestBody OrderItemRequest request) {
         OrderItem entity = OrderItemMapper.toEntity(request);
-        OrderItem updated = orderItemService.update(id, entity);
-        return ResponseEntity.ok(OrderItemMapper.toResponse(updated));
+        orderItemService.update(id, entity);
+        OrderItem fullItem = orderItemService.findById(id);
+        return ResponseEntity.ok(OrderItemMapper.toResponse(fullItem));
     }
 
     /**
