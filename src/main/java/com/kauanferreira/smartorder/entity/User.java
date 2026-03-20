@@ -10,8 +10,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Entity representing a user in the SmartOrder system.
@@ -20,8 +25,10 @@ import java.time.LocalDateTime;
  * their access level and permissions within the application.</p>
  *
  * @author Kauan Santos Ferreira
- * @version 1.0
+ * @version 1.1
  * @since 2026
+ * @see Role
+ * @see UserDetails
  */
 @Entity
 @Table(name = "tb_user")
@@ -29,7 +36,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements UserDetails {
 
     /**
      * Unique identifier for the user.
@@ -88,4 +95,25 @@ public class User {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
+
+    /**
+     * Returns the authorities granted to the user.
+     * The role is prefixed with "ROLE_" as required by Spring Security.
+     *
+     * @return a collection containing the user's role as a granted authority
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+    }
+
+    /**
+     * Returns the email as the username for Spring Security authentication.
+     *
+     * @return the user's email address
+     */
+    @Override
+    public String getUsername() {
+        return email;
+    }
 }
