@@ -5,6 +5,10 @@ import com.kauanferreira.smartorder.dto.request.ProductRequest;
 import com.kauanferreira.smartorder.dto.response.ProductResponse;
 import com.kauanferreira.smartorder.entity.Product;
 import com.kauanferreira.smartorder.services.interfaces.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +36,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
+@Tag(name = "Products", description = "Endpoints for managing products")
 public class ProductController {
 
     private final ProductService productService;
@@ -42,6 +47,13 @@ public class ProductController {
      * @param request the product data
      * @return HTTP 201 with the created product and location header
      */
+    @Operation(summary = "Create a new product", description = "Creates a new product linked to an existing category.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Product created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Category not found"),
+            @ApiResponse(responseCode = "409", description = "Product name already exists")
+    })
     @PostMapping
     public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest request) {
         Product entity = ProductMapper.toEntity(request);
@@ -63,6 +75,11 @@ public class ProductController {
      * @param id the product id
      * @return HTTP 200 with the product data
      */
+    @Operation(summary = "Find product by ID", description = "Retrieves a single product by its unique identifier.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Product found"),
+            @ApiResponse(responseCode = "404", description = "Product not found")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> findById(@PathVariable Long id) {
         Product entity = productService.findById(id);
@@ -74,6 +91,8 @@ public class ProductController {
      *
      * @return HTTP 200 with the list of products
      */
+    @Operation(summary = "List all products", description = "Retrieves all products without pagination.")
+    @ApiResponse(responseCode = "200", description = "List of products retrieved successfully")
     @GetMapping
     public ResponseEntity<List<ProductResponse>> findAll() {
         List<ProductResponse> response = productService.findAll()
@@ -89,6 +108,8 @@ public class ProductController {
      * @param pageable pagination parameters (page, size, sort)
      * @return HTTP 200 with a page of products
      */
+    @Operation(summary = "List products with pagination", description = "Retrieves products with pagination support (page, size, sort).")
+    @ApiResponse(responseCode = "200", description = "Page of products retrieved successfully")
     @GetMapping("/paged")
     public ResponseEntity<Page<ProductResponse>> findAllPaged(Pageable pageable){
         Page<ProductResponse> responses = productService.findAll(pageable)
@@ -101,6 +122,8 @@ public class ProductController {
      *
      * @return HTTP 200 with the ordered list of products
      */
+    @Operation(summary = "List products ordered by name", description = "Retrieves all products sorted alphabetically by name.")
+    @ApiResponse(responseCode = "200", description = "Ordered list retrieved successfully")
     @GetMapping("/ordered/name")
     public ResponseEntity<List<ProductResponse>> findAllOrderByNameAsc() {
         List<ProductResponse> responses = productService.findAllOrderByNameAsc()
@@ -115,6 +138,8 @@ public class ProductController {
      *
      * @return HTTP 200 with the ordered list of products
      */
+    @Operation(summary = "List products ordered by price", description = "Retrieves all products sorted by price ascending.")
+    @ApiResponse(responseCode = "200", description = "Ordered list retrieved successfully")
     @GetMapping("/ordered/price")
     public ResponseEntity<List<ProductResponse>> findAllOrderByPriceAsc() {
         List<ProductResponse> responses = productService.findAllOrderByPriceAsc()
@@ -130,6 +155,8 @@ public class ProductController {
      * @param name the search term
      * @return HTTP 200 with the list of matching products
      */
+    @Operation(summary = "Search products by name", description = "Finds products whose name contains the search term (case-insensitive).")
+    @ApiResponse(responseCode = "200", description = "Search results retrieved successfully")
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponse>> searchByName(@RequestParam String name) {
         List<ProductResponse> responses = productService.searchByName(name)
@@ -145,6 +172,8 @@ public class ProductController {
      * @param categoryId the category id
      * @return HTTP 200 with the list of products
      */
+    @Operation(summary = "Find products by category", description = "Retrieves all products belonging to a specific category.")
+    @ApiResponse(responseCode = "200", description = "Products retrieved successfully")
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<ProductResponse>> findAllByCategoryId(@PathVariable Long categoryId) {
         List<ProductResponse> responses = productService.findByCategoryId(categoryId)
@@ -160,6 +189,8 @@ public class ProductController {
      * @param active the active status
      * @return HTTP 200 with the list of products
      */
+    @Operation(summary = "Find products by active status", description = "Retrieves products filtered by their active/inactive status.")
+    @ApiResponse(responseCode = "200", description = "Products retrieved successfully")
     @GetMapping("/active/{active}")
     public ResponseEntity<List<ProductResponse>> findAllByActive(@PathVariable Boolean active) {
         List<ProductResponse> responses = productService.findByActive(active)
@@ -175,6 +206,8 @@ public class ProductController {
      * @param categoryId the category id
      * @return HTTP 200 with the list of active products
      */
+    @Operation(summary = "Find active products by category", description = "Retrieves only active products belonging to a specific category.")
+    @ApiResponse(responseCode = "200", description = "Active products retrieved successfully")
     @GetMapping("/category/{categoryId}/active")
     public ResponseEntity<List<ProductResponse>> findAllActiveByCategoryId(@PathVariable Long categoryId) {
         List<ProductResponse> responses = productService.findActiveByCategoryId(categoryId)
@@ -191,6 +224,8 @@ public class ProductController {
      * @param max the maximum price
      * @return HTTP 200 with the list of products
      */
+    @Operation(summary = "Find products by price range", description = "Retrieves products within a minimum and maximum price range.")
+    @ApiResponse(responseCode = "200", description = "Products retrieved successfully")
     @GetMapping("/price")
     public ResponseEntity<List<ProductResponse>> findByPriceRange(@RequestParam BigDecimal min,
                                                                    BigDecimal max){
@@ -207,6 +242,11 @@ public class ProductController {
      * @param id the product id
      * @return HTTP 200 with the activated product
      */
+    @Operation(summary = "Activate a product", description = "Sets a product's active status to true.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Product activated successfully"),
+            @ApiResponse(responseCode = "404", description = "Product not found")
+    })
     @PatchMapping("/{id}/activate")
     public ResponseEntity<ProductResponse> activate(@PathVariable Long id) {
         Product activate = productService.activate(id);
@@ -219,6 +259,11 @@ public class ProductController {
      * @param id the product id
      * @return HTTP 200 with the deactivated product
      */
+    @Operation(summary = "Deactivate a product", description = "Sets a product's active status to false.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Product deactivated successfully"),
+            @ApiResponse(responseCode = "404", description = "Product not found")
+    })
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<ProductResponse> deactivate(@PathVariable Long id) {
         Product deactivate = productService.deactivate(id);
@@ -232,7 +277,13 @@ public class ProductController {
      * @param request the updated product data
      * @return HTTP 200 with the updated product
      */
-    @PutMapping("/{id}")
+    @Operation(summary = "Update a product", description = "Updates an existing product by its ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Product updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Product or category not found"),
+            @ApiResponse(responseCode = "409", description = "Product name already exists")
+    }) @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> update(@PathVariable Long id,
                                                   @Valid @RequestBody ProductRequest request) {
         Product entity = ProductMapper.toEntity(request);
@@ -246,6 +297,11 @@ public class ProductController {
      * @param id the id of the product to delete
      * @return HTTP 204 with no content
      */
+    @Operation(summary = "Delete a product", description = "Deletes a product by its ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Product deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Product not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<ProductResponse> delete(@PathVariable Long id) {
         productService.delete(id);
