@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -171,6 +172,30 @@ public class GlobalExceptionHandler {
                 "One or more fields have validation errors.",
                 request.getRequestURI(),
                 fieldErrors
+        );
+        return ResponseEntity.status(status).body(error);
+    }
+
+    /**
+     * Handles {@link BadCredentialsException}.
+     *
+     * <p>Triggered when a login attempt fails due to invalid
+     * email or password credentials.</p>
+     *
+     * @param ex      the exception thrown
+     * @param request the HTTP request that caused the exception
+     * @return a {@link ResponseEntity} with status 401 and a {@link StandardError} body
+     */
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<StandardError> handleBadCredentials(BadCredentialsException ex,
+                                                              HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        StandardError error = new StandardError(
+                Instant.now(),
+                status.value(),
+                "Authentication failed",
+                "Invalid email or password.",
+                request.getRequestURI()
         );
         return ResponseEntity.status(status).body(error);
     }
