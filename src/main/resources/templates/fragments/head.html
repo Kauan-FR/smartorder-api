@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <title th:text="${title} + ' — SmartOrder'">SmartOrder</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+    <!-- Base CSS (always loaded) -->
+    <link th:href="@{/css/base/variables.css}" rel="stylesheet">
+    <link th:href="@{/css/base/reset.css}" rel="stylesheet">
+    <link th:href="@{/css/base/utilities.css}" rel="stylesheet">
+
+    <!-- Theme initialization (prevents flash) -->
+    <script>
+        (function() {
+            var theme = localStorage.getItem('smartorder-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+</html>

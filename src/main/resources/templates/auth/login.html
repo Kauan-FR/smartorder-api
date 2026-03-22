@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Login')}">
+</head>
+<body>
+
+<!-- Page-specific CSS -->
+<link th:href="@{/css/components/buttons.css}" rel="stylesheet">
+<link th:href="@{/css/components/forms.css}" rel="stylesheet">
+<link th:href="@{/css/pages/login.css}" rel="stylesheet">
+
+<main class="auth-page">
+    <div class="auth-container">
+
+        <!-- Login Card -->
+        <div class="auth-card">
+
+            <!-- Header -->
+            <div class="auth-card__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+            </div>
+            <h1 class="auth-card__title">SmartOrder</h1>
+            <p class="auth-card__subtitle">Sign in to your account</p>
+
+            <!-- Error message -->
+            <div class="auth-error" id="errorMessage" style="display: none;"></div>
+
+            <!-- Login Form -->
+            <form class="auth-form" id="loginForm">
+
+                <div class="auth-form__group">
+                    <label class="label" for="email">Email</label>
+                    <input class="input"
+                           type="email"
+                           id="email"
+                           name="email"
+                           placeholder="your@email.com"
+                           required
+                           autocomplete="email">
+                </div>
+
+                <div class="auth-form__group">
+                    <label class="label" for="password">Password</label>
+                    <div class="input-password">
+                        <input class="input"
+                               type="password"
+                               id="password"
+                               name="password"
+                               placeholder="••••••••"
+                               required
+                               autocomplete="current-password">
+                        <button type="button" class="input-password__toggle" onclick="togglePassword()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+            </form>
+
+            <!-- Divider -->
+            <div class="auth-divider">
+                <span class="auth-divider__line"></span>
+                <span class="auth-divider__text">or</span>
+                <span class="auth-divider__line"></span>
+            </div>
+
+            <!-- Register link -->
+            <a th:href="@{/register}" class="btn btn-outline btn-block">Create an account</a>
+        </div>
+
+        <!-- Demo credentials -->
+        <div class="auth-demo">
+            <p class="auth-demo__title">Demo credentials</p>
+            <div class="auth-demo__grid">
+                <div class="auth-demo__item" onclick="fillCredentials('admin@smartorder.com', 'admin123')">
+                    <p class="auth-demo__label">Admin</p>
+                    <p class="auth-demo__email">admin@smartorder.com</p>
+                </div>
+                <div class="auth-demo__item" onclick="fillCredentials('maria@email.com', 'maria123')">
+                    <p class="auth-demo__label">Customer</p>
+                    <p class="auth-demo__email">maria@email.com</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <p class="auth-footer">SmartOrder API v1.0 — Kauan Santos Ferreira</p>
+    </div>
+</main>
+
+<script>
+    function togglePassword() {
+        var input = document.getElementById('password');
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function fillCredentials(email, password) {
+        document.getElementById('email').value = email;
+        document.getElementById('password').value = password;
+    }
+
+    function showError(message) {
+        var el = document.getElementById('errorMessage');
+        el.textContent = message;
+        el.style.display = 'block';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var btn = this.querySelector('button[type="submit"]');
+
+        btn.disabled = true;
+        btn.textContent = 'Signing in...';
+
+        fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
+        })
+        .then(function(response) {
+            if (response.ok) {
+                return response.json().then(function(data) {
+                    localStorage.setItem('smartorder-token', data.token);
+                    localStorage.setItem('smartorder-user', JSON.stringify({
+                        name: data.name,
+                        email: data.email,
+                        role: data.role
+                    }));
+
+                    if (data.role === 'ADMIN') {
+                        window.location.href = '/admin/dashboard';
+                    } else {
+                        window.location.href = '/store';
+                    }
+                });
+            } else {
+                return response.json().then(function(err) {
+                    showError(err.message || 'Invalid email or password');
+                });
+            }
+        })
+        .catch(function() {
+            showError('Connection error. Please try again.');
+        })
+        .finally(function() {
+            btn.disabled = false;
+            btn.textContent = 'Sign in';
+        });
+    });
+</script>
+
+</body>
+</html>

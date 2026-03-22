@@ -1,5 +1,7 @@
 package com.kauanferreira.smartorder.config.security;
 
+import lombok.RequiredArgsConstructor;
+import tools.jackson.databind.json.JsonMapper;
 import com.kauanferreira.smartorder.dto.response.StandardError;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,8 +25,10 @@ import java.time.Instant;
  * @see StandardError
  */
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    private final JsonMapper jsonMapper;
     /**
      * Handles unauthorized access attempts by returning a 401 response
      * with a {@link StandardError} JSON body.
@@ -49,6 +53,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), error);
+        jsonMapper.writeValue(response.getOutputStream(), error);
     }
 }

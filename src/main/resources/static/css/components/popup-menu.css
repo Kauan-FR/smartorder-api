@@ -1,0 +1,166 @@
+/* ===== Popup Container ===== */
+.popup-menu {
+    position: absolute;
+    width: 220px;
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-popup);
+    z-index: var(--z-popup);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity var(--transition-fast),
+                visibility var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+.popup-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ===== Positioning: opens upward from sidebar avatar ===== */
+.popup-menu--up {
+    bottom: 100%;
+    left: 0;
+    margin-bottom: var(--space-2);
+}
+
+/* ===== Positioning: opens downward from navbar avatar ===== */
+.popup-menu--down {
+    top: 100%;
+    right: 0;
+    margin-top: var(--space-2);
+}
+
+/* ===== Popup Header (user info) ===== */
+.popup-menu__header {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 0.5px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup-menu__name {
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+/* ===== Menu Section ===== */
+.popup-menu__section {
+    padding: var(--space-2) var(--space-2);
+}
+
+.popup-menu__section + .popup-menu__section {
+    border-top: 0.5px solid var(--border-light);
+}
+
+/* ===== Menu Item ===== */
+.popup-menu__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+    position: relative;
+}
+
+.popup-menu__item:hover {
+    background-color: var(--bg-secondary);
+}
+
+.popup-menu__item svg {
+    width: 15px;
+    height: 15px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+/* ===== Item with submenu arrow ===== */
+.popup-menu__item--has-sub {
+    justify-content: space-between;
+}
+
+.popup-menu__item--has-sub .popup-menu__arrow {
+    width: 12px;
+    height: 12px;
+    color: var(--text-tertiary);
+}
+
+/* ===== Danger item (sign out) ===== */
+.popup-menu__item--danger {
+    color: var(--color-danger);
+}
+
+.popup-menu__item--danger svg {
+    color: var(--color-danger);
+}
+
+.popup-menu__item--danger:hover {
+    background-color: var(--color-danger-light);
+}
+
+/* ===== Submenu (appears on hover) ===== */
+.popup-submenu {
+    position: absolute;
+    left: calc(100% + 4px);
+    top: -8px;
+    width: 200px;
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-popup);
+    padding: var(--space-2) var(--space-2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-4px);
+    transition: opacity var(--transition-fast),
+                visibility var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+/* ===== Submenu opens on parent hover ===== */
+.popup-menu__item--has-sub:hover .popup-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* ===== Submenu Item ===== */
+.popup-submenu__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+}
+
+.popup-submenu__item:hover {
+    background-color: var(--bg-secondary);
+}
+
+.popup-submenu__item svg {
+    width: 14px;
+    height: 14px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+/* ===== Submenu Divider ===== */
+.popup-submenu__divider {
+    height: 0.5px;
+    background-color: var(--border-light);
+    margin: var(--space-1) 0;
+}

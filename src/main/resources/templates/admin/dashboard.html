@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Dashboard')}">
+</head>
+<body>
+
+<link th:href="@{/css/components/buttons.css}" rel="stylesheet">
+<link th:href="@{/css/components/cards.css}" rel="stylesheet">
+<link th:href="@{/css/components/badges.css}" rel="stylesheet">
+<link th:href="@{/css/components/table.css}" rel="stylesheet">
+<link th:href="@{/css/layouts/sidebar.css}" rel="stylesheet">
+<link th:href="@{/css/pages/admin-dashboard.css}" rel="stylesheet">
+
+<h1 style="padding: 40px; font-family: var(--font-sans); color: var(--text-primary);">
+    Admin Dashboard — coming soon
+</h1>
+<p style="padding: 0 40px; font-family: var(--font-sans); color: var(--text-secondary);">
+    Login successful! This page will be built in Phase 2.
+</p>
+
+<script>
+    var user = JSON.parse(localStorage.getItem('smartorder-user') || '{}');
+    if (user.name) {
+        document.querySelector('h1').textContent = 'Welcome, ' + user.name + '!';
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+/* ===== Hero Carousel ===== */
+.carousel {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-2);
+}
+
+.carousel__track {
+    display: flex;
+    transition: transform var(--transition-slow);
+}
+
+.carousel__slide {
+    min-width: 100%;
+    padding: 44px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, var(--hero-gradient-start) 0%, var(--hero-gradient-end) 100%);
+}
+
+.carousel__slide-content {
+    max-width: 55%;
+}
+
+.carousel__slide-tag {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--hero-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-2);
+}
+
+.carousel__slide-title {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-medium);
+    color: var(--hero-text-primary);
+    line-height: 1.2;
+    margin-bottom: var(--space-2);
+}
+
+.carousel__slide-description {
+    font-size: var(--text-base);
+    color: var(--hero-text-secondary);
+    margin-bottom: var(--space-5);
+}
+
+.carousel__slide-image {
+    width: 150px;
+    height: 150px;
+    border-radius: var(--radius-lg);
+    background-color: rgba(255, 255, 255, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel__slide-image svg {
+    width: 64px;
+    height: 64px;
+    color: var(--hero-text-secondary);
+}
+
+/* ===== Carousel Navigation Arrows ===== */
+.carousel__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: background-color var(--transition-fast);
+    z-index: 2;
+}
+
+[data-theme="dark"] .carousel__arrow {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.carousel__arrow:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] .carousel__arrow:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.carousel__arrow svg {
+    width: 14px;
+    height: 14px;
+    color: var(--hero-text-secondary);
+}
+
+.carousel__arrow--prev {
+    left: var(--space-4);
+}
+
+.carousel__arrow--next {
+    right: var(--space-4);
+}
+
+/* ===== Carousel Dots ===== */
+.carousel__dots {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 40px;
+    display: flex;
+    gap: var(--space-2);
+}
+
+.carousel__dot {
+    width: 24px;
+    height: 4px;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.carousel__dot--active {
+    background-color: var(--hero-text-secondary);
+}
+
+.carousel__dot--inactive {
+    background-color: rgba(24, 95, 165, 0.25);
+}
+
+[data-theme="dark"] .carousel__dot--inactive {
+    background-color: rgba(147, 197, 253, 0.25);
+}
+
+.carousel__hint {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-bottom: var(--space-8);
+}
+
+/* ===== Deals Horizontal Scroll ===== */
+.deals-scroll {
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    padding-bottom: var(--space-1);
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.deals-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.deals-scroll::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: var(--radius-full);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .carousel__slide {
+        padding: var(--space-6);
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .carousel__slide-content {
+        max-width: 100%;
+    }
+
+    .carousel__slide-title {
+        font-size: var(--text-xl);
+    }
+
+    .carousel__slide-image {
+        display: none;
+    }
+
+    .carousel__dots {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}

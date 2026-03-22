@@ -1,0 +1,231 @@
+/* ===== Base Card ===== */
+.card {
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+}
+
+/* ===== Card without padding (for cards with image headers) ===== */
+.card-flush {
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+/* ===== Metric Card (dashboard) ===== */
+.card-metric {
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+}
+
+.card-metric__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-metric__label {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.card-metric__value {
+    font-size: 1.5rem;
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.card-metric__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-metric__trend {
+    font-size: var(--text-xs);
+    margin-top: var(--space-2);
+}
+
+.card-metric__trend--up {
+    color: var(--color-success);
+}
+
+.card-metric__trend--down {
+    color: var(--color-danger);
+}
+
+.card-metric__trend--neutral {
+    color: var(--text-secondary);
+}
+
+/* ===== Product Card (store) ===== */
+.card-product {
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+}
+
+.card-product:hover {
+    border-color: var(--border-strong);
+}
+
+.card-product__image {
+    height: 150px;
+    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.card-product__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-product__body {
+    padding: var(--space-3);
+}
+
+.card-product__category {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-1);
+}
+
+.card-product__name {
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-product__price {
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.card-product__price-old {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    margin-left: var(--space-2);
+}
+
+.card-product__rating {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+}
+
+.card-product__stars {
+    color: var(--star-filled);
+    font-size: var(--text-xs);
+}
+
+.card-product__reviews {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+}
+
+/* ===== Deal Card (today's deals) ===== */
+.card-deal {
+    min-width: 165px;
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color var(--transition-fast);
+}
+
+.card-deal:hover {
+    border-color: var(--border-strong);
+}
+
+.card-deal__image {
+    height: 120px;
+    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.card-deal__body {
+    padding: 10px var(--space-3);
+}
+
+.card-deal__name {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-deal__price {
+    font-size: 15px;
+    font-weight: var(--font-medium);
+    color: var(--color-deal);
+}
+
+.card-deal__price-old {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    margin-left: var(--space-2);
+}
+
+.card-deal__progress {
+    height: 6px;
+    background-color: var(--bg-secondary);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: var(--space-2);
+}
+
+.card-deal__progress-fill {
+    height: 100%;
+    background-color: var(--color-deal);
+    border-radius: 3px;
+    transition: width var(--transition-slow);
+}
+
+.card-deal__stock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.card-deal__sold {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+}
+
+.card-deal__remaining {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--color-deal);
+}

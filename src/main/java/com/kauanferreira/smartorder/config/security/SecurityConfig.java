@@ -75,6 +75,22 @@ public class SecurityConfig {
                                 "/v3/api-docs/**"
                         ).permitAll()
 
+                        // Public - Pages (Thymeleaf templates)
+                        .requestMatchers(
+                                "/",
+                                "/login",
+                                "/register",
+                                "/error",
+                                "/store",
+                                "/store/**",
+                                "/admin/**",
+                                "/profile",
+                                "/settings"
+                        ).permitAll()
+
+                        // Public - Static resources
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.svg").permitAll()
+
                         // Public - Storefront (anyone can browse products and categories)
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
