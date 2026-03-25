@@ -1,0 +1,113 @@
+/* ===== CRUD Page Header ===== */
+.crud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+.crud-header__left h1 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.crud-header__subtitle {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.crud-header__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+/* ===== Table Actions Column ===== */
+.table__actions {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: flex-end;
+}
+
+.table__action-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.table__action-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.table__action-btn--edit {
+    color: var(--brand-primary);
+}
+
+.table__action-btn--edit:hover {
+    background-color: var(--color-info-light);
+}
+
+.table__action-btn--delete {
+    color: var(--color-danger);
+}
+
+.table__action-btn--delete:hover {
+    background-color: var(--color-danger-light);
+}
+
+/* ===== Empty State ===== */
+.empty-state {
+    text-align: center;
+    padding: var(--space-12) var(--space-6);
+    color: var(--text-tertiary);
+}
+
+.empty-state__icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto var(--space-4);
+    color: var(--text-tertiary);
+}
+
+.empty-state__title {
+    font-size: var(--text-md);
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.empty-state__text {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    margin-bottom: var(--space-4);
+}
+
+/* ===== Table Description Cell ===== */
+.table__cell--description {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-secondary);
+}
+
+/* ===== Search + Filter Bar ===== */
+.crud-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.crud-toolbar .search-bar {
+    flex: 1;
+    max-width: 320px;
+}

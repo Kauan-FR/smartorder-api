@@ -105,6 +105,7 @@
     flex: 1;
     font-size: var(--text-base);
     color: var(--text-primary);
+    outline: none;
 }
 
 .search-bar input::placeholder {

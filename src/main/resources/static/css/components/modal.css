@@ -1,0 +1,183 @@
+/* ===== Modal Backdrop ===== */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay-backdrop);
+    z-index: var(--z-modal-backdrop);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+}
+
+.modal-backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== Modal Container ===== */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    z-index: var(--z-modal);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast),
+                visibility var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+.modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ===== Modal Header ===== */
+.modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 0.5px solid var(--border-light);
+}
+
+.modal__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.modal__close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-tertiary);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.modal__close:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.modal__close svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ===== Modal Body ===== */
+.modal__body {
+    padding: var(--space-6);
+}
+
+.modal__form-group {
+    margin-bottom: var(--space-4);
+}
+
+.modal__form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* ===== Modal Footer ===== */
+.modal__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
+    border-top: 0.5px solid var(--border-light);
+}
+
+/* ===== Delete Confirmation Modal ===== */
+.modal__confirm-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-danger-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-4);
+}
+
+.modal__confirm-icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--color-danger);
+}
+
+.modal__confirm-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: var(--space-2);
+}
+
+.modal__confirm-text {
+    font-size: var(--text-md);
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: var(--space-6);
+}
+
+/* ===== Error inside modal ===== */
+.modal__error {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger-text);
+    font-size: var(--text-sm);
+    padding: 10px var(--space-3);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    display: none;
+}
+
+.modal__error.is-visible {
+    display: block;
+}
+
+/* ===== Success toast ===== */
+.toast {
+    position: fixed;
+    top: var(--space-6);
+    right: var(--space-6);
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    z-index: var(--z-toast);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    pointer-events: none;
+}
+
+.toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-success {
+    background-color: var(--color-success-light);
+    color: var(--color-success-text);
+    border: 0.5px solid var(--color-success);
+}
+
+.toast-danger {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger-text);
+    border: 0.5px solid var(--color-danger);
+}
