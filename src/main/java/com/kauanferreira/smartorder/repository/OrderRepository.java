@@ -25,13 +25,16 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items")
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH " +
+            "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category")
     List<Order> findAll();
 
-    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.id = :id")
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH " +
+            "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category WHERE o.id = :id")
     Optional<Order> findById(@Param("id") Long id);
 
-    @Query(value = "SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items",
+    @Query(value = "SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH " +
+            "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category",
             countQuery = "SELECT COUNT(o) FROM Order o")
     Page<Order> findAll(Pageable pageable);
 
@@ -41,7 +44,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param userId the ID of the user
      * @return a list of orders for the given user (most recent first)
      */
-    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.user.id = :userId ORDER BY o.orderDate DESC")
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH " +
+            "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category WHERE o.user.id = :userId ORDER BY o.orderDate DESC")
     List<Order> findByUserIdOrderByOrderDateDesc(@Param("userId") Long userId);
 
     /**
@@ -50,7 +54,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param status the order status to filter by
      * @return a list of orders with the given status
      */
-    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.status = :status")
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH " +
+            "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category WHERE o.status = :status")
     List<Order> findByStatus(@Param("status") OrderStatus status);
 
     /**
@@ -60,7 +65,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param status the order status to filter by
      * @return a list of matching orders
      */
-    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.user.id = :userId AND o.status = :status")
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH " +
+            "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category WHERE o.user.id = :userId AND o.status = :status")
     List<Order> findByUserIdAndStatus(@Param("userId") Long userId, @Param("status") OrderStatus status);
 
     /**
@@ -69,7 +75,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param addressId the ID of the address
      * @return a list of orders for the given address
      */
-    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH o.items WHERE o.address.id = :addressId")
+    @Query("SELECT o FROM Order o JOIN FETCH o.user JOIN FETCH o.address a JOIN FETCH a.user LEFT JOIN FETCH " +
+            "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category WHERE o.address.id = :addressId")
     List<Order> findByAddressId(@Param("addressId") Long addressId);
 
     /**
