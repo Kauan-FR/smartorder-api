@@ -111,3 +111,192 @@
     flex: 1;
     max-width: 320px;
 }
+
+/* ==================== Product Thumbnail ==================== */
+
+.table__thumbnail {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.table__thumbnail:hover {
+    opacity: 0.8;
+}
+
+.table__thumbnail-placeholder {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+}
+
+/* ==================== Status Icon (Active/Inactive) ==================== */
+
+.status-icon {
+    font-weight: 700;
+    font-size: var(--text-md);
+}
+
+.status-icon--active {
+    color: var(--color-success);
+}
+
+.status-icon--inactive {
+    color: var(--color-danger);
+}
+
+/* ==================== Toggle Switch ==================== */
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.toggle-switch input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-switch__slider {
+    width: 44px;
+    height: 24px;
+    background: var(--bg-tertiary);
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.toggle-switch__slider::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s;
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch__slider {
+    background: var(--color-success);
+}
+
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch__slider::after {
+    transform: translateX(20px);
+}
+
+.toggle-switch__label {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+/* ==================== Modal Form Row (side by side) ==================== */
+
+.modal__form-row {
+    display: flex;
+    gap: var(--space-4);
+}
+
+.modal__form-row .modal__form-group {
+    flex: 1;
+}
+
+/* ==================== Image Preview Modal ==================== */
+
+.modal--image-preview {
+    background: transparent;
+    box-shadow: none;
+    max-width: fit-content;
+    max-height: fit-content;
+    padding: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.modal__close--image {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    z-index: 1;
+    transition: background 0.2s;
+}
+
+.modal__close--image:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.modal__preview-image {
+    max-width: 80vw;
+    max-height: 80vh;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+    display: block;
+}
+/* ==================== Category Badge ==================== */
+
+.badge-category {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+/* ==================== Customer Badge ==================== */
+
+.badge-customer {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+/* ==================== Password Wrapper ==================== */
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .input {
+    padding-right: 40px;
+    width: 100%;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+}
