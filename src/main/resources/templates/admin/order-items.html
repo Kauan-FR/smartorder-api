@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Order Items')}">
+</head>
+<body>
+
+<link th:href="@{/css/components/buttons.css}" rel="stylesheet">
+<link th:href="@{/css/components/cards.css}" rel="stylesheet">
+<link th:href="@{/css/components/badges.css}" rel="stylesheet">
+<link th:href="@{/css/components/table.css}" rel="stylesheet">
+<link th:href="@{/css/components/avatar.css}" rel="stylesheet">
+<link th:href="@{/css/components/popup-menu.css}" rel="stylesheet">
+<link th:href="@{/css/components/forms.css}" rel="stylesheet">
+<link th:href="@{/css/components/modal.css}" rel="stylesheet">
+<link th:href="@{/css/layouts/sidebar.css}" rel="stylesheet">
+<link th:href="@{/css/pages/admin-crud.css}" rel="stylesheet">
+
+<aside th:replace="~{fragments/sidebar :: sidebar('order-items')}"></aside>
+
+<main class="admin-content" id="adminContent">
+
+    <div class="crud-header">
+        <div class="crud-header__left">
+            <h1>Order Items</h1>
+            <p class="crud-header__subtitle">Manage items within orders</p>
+        </div>
+        <div class="crud-header__right">
+            <button class="btn btn-primary" onclick="openCreateModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                New item
+            </button>
+        </div>
+    </div>
+
+    <div class="crud-toolbar">
+        <div class="search-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search items..." id="searchInput" oninput="searchItems(this.value)">
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Order</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Subtotal</th>
+                <th style="text-align:right;">Actions</th>
+            </tr>
+            </thead>
+            <tbody id="itemsTableBody">
+            <tr>
+                <td colspan="7" style="text-align:center;padding:24px;color:var(--text-tertiary);">Loading items...</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="text-align:center;font-size:var(--text-xs);color:var(--text-tertiary);margin-top:var(--space-6);">SmartOrder API v1.0 — Admin panel</p>
+</main>
+
+<!-- Create/Edit Modal -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
+<div class="modal" id="itemModal">
+    <div class="modal__header">
+        <h2 class="modal__title" id="modalTitle">New item</h2>
+        <div class="modal__close" onclick="closeModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+    </div>
+    <div class="modal__body">
+        <div class="modal__error" id="modalError"></div>
+        <input type="hidden" id="itemId">
+
+        <div class="modal__form-row">
+            <div class="modal__form-group">
+                <label class="label" for="itemOrder">Order</label>
+                <select class="input" id="itemOrder">
+                    <option value="">Select an order...</option>
+                </select>
+            </div>
+            <div class="modal__form-group">
+                <label class="label" for="itemProduct">Product</label>
+                <select class="input" id="itemProduct" onchange="fillProductPrice()">
+                    <option value="">Select a product...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="modal__form-row">
+            <div class="modal__form-group">
+                <label class="label" for="itemQuantity">Quantity</label>
+                <input class="input" type="number" id="itemQuantity" placeholder="1" min="1" step="1" oninput="calculateSubtotal()">
+            </div>
+            <div class="modal__form-group">
+                <label class="label" for="itemPrice">Unit price (R$)</label>
+                <input class="input" type="number" id="itemPrice" placeholder="0.00" min="0" step="0.01" oninput="calculateSubtotal()">
+            </div>
+            <div class="modal__form-group">
+                <label class="label" for="itemSubtotal">Subtotal (R$)</label>
+                <input class="input" type="number" id="itemSubtotal" placeholder="0.00" min="0" step="0.01" readonly style="background:var(--bg-tertiary);">
+            </div>
+        </div>
+
+    </div>
+    <div class="modal__footer">
+        <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" id="modalSubmitBtn" onclick="saveItem()">Create</button>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="deleteModal">
+    <div class="modal__body" style="padding-top:var(--space-8);">
+        <div class="modal__confirm-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+        </div>
+        <p class="modal__confirm-title">Delete item</p>
+        <p class="modal__confirm-text" id="deleteText">Are you sure you want to delete this item? This action cannot be undone.</p>
+        <div class="modal__error" id="deleteError"></div>
+    </div>
+    <div class="modal__footer">
+        <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" id="deleteConfirmBtn" onclick="confirmDelete()">Delete</button>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/admin-order-items.js}"></script>
+
+</body>
+</html>

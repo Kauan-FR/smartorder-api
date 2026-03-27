@@ -24,6 +24,7 @@ public record OrderItemResponse(
         Integer quantity,
         BigDecimal price,
         BigDecimal subtotal,
+        Long orderId,
         ProductResponse product
 ) {
 }

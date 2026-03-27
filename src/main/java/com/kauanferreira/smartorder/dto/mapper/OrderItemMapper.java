@@ -64,6 +64,7 @@ public final class OrderItemMapper {
                 orderItem.getQuantity(),
                 orderItem.getPrice(),
                 orderItem.getSubtotal(),
+                orderItem.getOrder().getId(),
                 ProductMapper.toResponse(orderItem.getProduct())
         );
     }
