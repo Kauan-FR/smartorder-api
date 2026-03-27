@@ -8,6 +8,7 @@
 const AuthManager = {
     TOKEN_KEY: 'smartorder-token',
     USER_KEY: 'smartorder-user',
+    EXPIRY_CHECK_INTERVAL: 30000,
 
     /**
      * Returns the stored JWT token.
@@ -61,6 +62,47 @@ const AuthManager = {
      */
     isAdmin() {
         return this.getRole() === 'ADMIN';
+    },
+
+    // NEW: Decodes the JWT payload and checks expiration
+    /**
+     * Checks if the stored JWT token has expired.
+     * Decodes the Base64 payload and compares the 'exp' claim against current time.
+     *
+     * @returns {boolean} true if token is expired or invalid, false if still valid
+     */
+    isTokenExpired() {
+        var token = this.getToken();
+        if (!token) return true;
+
+        try {
+            var parts = token.split('.');
+            if (parts.length !== 3) return true;
+
+            var payload = JSON.parse(atob(parts[1]));
+            if (!payload.exp) return true;
+
+            // exp is in seconds, Date.now() is in milliseconds
+            return (payload.exp * 1000) < Date.now();
+        } catch (e) {
+            return true;
+        }
+    },
+
+    // NEW: Starts periodic expiration check
+    /**
+     * Starts a periodic interval that checks token expiration.
+     * When the token expires, clears auth data and redirects to login.
+     * Only runs on protected pages (not login/register/store).
+     */
+    startExpiryCheck() {
+        var self = this;
+        this._expiryInterval = setInterval(function() {
+            if (self.isTokenExpired()) {
+                clearInterval(self._expiryInterval);
+                self.logout();
+            }
+        }, this.EXPIRY_CHECK_INTERVAL);
     },
 
     /**
