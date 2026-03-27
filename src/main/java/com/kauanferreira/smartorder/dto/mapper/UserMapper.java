@@ -1,6 +1,7 @@
 package com.kauanferreira.smartorder.dto.mapper;
 
 import com.kauanferreira.smartorder.dto.request.UserRequest;
+import com.kauanferreira.smartorder.dto.request.UserUpdateRequest;
 import com.kauanferreira.smartorder.dto.response.UserResponse;
 import com.kauanferreira.smartorder.entity.User;
 
@@ -72,5 +73,23 @@ public final class UserMapper {
         user.setEmail(request.email());
         user.setPhone(request.phone());
         user.setRole(request.role());
+    }
+
+    /**
+     * Converts a {@link UserUpdateRequest} to a {@link User} entity.
+     * <p>
+     * Password is not set since update operations do not modify passwords.
+     * </p>
+     *
+     * @param request the update request DTO
+     * @return a User entity without password
+     */
+    public static User toEntity(UserUpdateRequest request) {
+        User user = new User();
+        user.setName(request.name());
+        user.setEmail(request.email());
+        user.setRole(request.role());
+        user.setPhone(request.phone());
+        return user;
     }
 }

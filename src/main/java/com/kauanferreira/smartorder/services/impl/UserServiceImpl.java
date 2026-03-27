@@ -9,6 +9,7 @@ import com.kauanferreira.smartorder.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * {@inheritDoc}
@@ -152,7 +154,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User updatePassword(Long id, String newPassword) {
         User existing = findById(id);
-        existing.setPassword(newPassword);
+        existing.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(existing);
     }
 

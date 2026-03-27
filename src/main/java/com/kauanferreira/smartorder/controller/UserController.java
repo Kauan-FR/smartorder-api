@@ -2,6 +2,7 @@ package com.kauanferreira.smartorder.controller;
 
 import com.kauanferreira.smartorder.dto.mapper.UserMapper;
 import com.kauanferreira.smartorder.dto.request.UserRequest;
+import com.kauanferreira.smartorder.dto.request.UserUpdateRequest;
 import com.kauanferreira.smartorder.dto.response.UserResponse;
 import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.Role;
@@ -218,7 +219,7 @@ public class UserController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@PathVariable Long id,
-                                               @Valid @RequestBody UserRequest request) {
+                                               @Valid @RequestBody UserUpdateRequest request) {
         User entity = UserMapper.toEntity(request);
         User updated = userService.update(id, entity);
         return ResponseEntity.ok(UserMapper.toResponse(updated));
