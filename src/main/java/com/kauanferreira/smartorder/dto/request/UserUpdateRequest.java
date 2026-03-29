@@ -33,6 +33,9 @@ public record UserUpdateRequest(
         @NotNull(message = "Role is required")
         Role role,
 
+        @Size(max = 500, message = "Image URL must not exceed 500 characters")
+        String profileImageUrl,
+
         @Size(max = 20, message = "Phone number must not exceed 20 characters")
         String phone
 ) {

@@ -89,6 +89,14 @@ public class User implements UserDetails {
     private String phone;
 
     /**
+     * Optional URL pointing to the user's profile image.
+     * Currently stores an external URL; file upload support is planned for Phase 2.
+     */
+    @Size(max = 500, message = "Profile Image URL must not exceed 500 characters")
+    @Column(name = "profile_image_url", length = 500)
+    private String profileImageUrl;
+
+    /**
      * Timestamp of when the user account was created.
      * Automatically set on entity creation and cannot be updated.
      */

@@ -37,6 +37,7 @@ public final class UserMapper {
         user.setPassword(request.password());
         user.setRole(request.role());
         user.setPhone(request.phone());
+        user.setProfileImageUrl(request.profileImageUrl());
         return user;
     }
 
@@ -55,7 +56,9 @@ public final class UserMapper {
                 user.getEmail(),
                 user.getRole(),
                 user.getPhone(),
+                user.getProfileImageUrl(),
                 user.getCreatedAt()
+
         );
     }
 
@@ -73,6 +76,7 @@ public final class UserMapper {
         user.setEmail(request.email());
         user.setPhone(request.phone());
         user.setRole(request.role());
+        user.setProfileImageUrl(request.profileImageUrl());
     }
 
     /**
@@ -90,6 +94,7 @@ public final class UserMapper {
         user.setEmail(request.email());
         user.setRole(request.role());
         user.setPhone(request.phone());
+        user.setProfileImageUrl(request.profileImageUrl());
         return user;
     }
 }

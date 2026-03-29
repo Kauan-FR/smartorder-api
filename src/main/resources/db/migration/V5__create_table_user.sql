@@ -8,5 +8,6 @@ CREATE TABLE tb_user (
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'CUSTOMER',
     phone VARCHAR(20),
+    profile_image_url VARCHAR(500),
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
