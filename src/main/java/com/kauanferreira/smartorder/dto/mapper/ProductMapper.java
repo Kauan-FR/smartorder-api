@@ -5,6 +5,9 @@ import com.kauanferreira.smartorder.dto.response.ProductResponse;
 import com.kauanferreira.smartorder.entity.Category;
 import com.kauanferreira.smartorder.entity.Product;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * Mapper class for converting between {@link Product} entity
  * and its corresponding DTOs.
@@ -44,6 +47,11 @@ public final class ProductMapper {
         product.setImageUrl(request.imageUrl());
         product.setActive(request.active() != null ? request.active() : true);
 
+        product.setDiscountPercent(request.discountPercent());
+        product.setInitialStock(request.initialStock());
+        product.setDealExpiresAt(request.dealExpiresAt());
+        product.setFeatured(request.featured() != null ? request.featured() : false);
+
         Category category = new Category();
         category.setId(request.categoryId());
         product.setCategory(category);
@@ -54,12 +62,23 @@ public final class ProductMapper {
     /**
      * Converts a {@link Product} entity to a {@link ProductResponse} DTO.
      *
-     * <p>Uses {@link CategoryMapper#toResponse} for the nested category.</p>
+     * <p>Uses {@link CategoryMapper#toResponse} for the nested category.
+     * Calculates the {@code finalPrice} by applying the discount percentage
+     * to the original price. If no discount is set, finalPrice equals price.</p>
      *
      * @param product the product entity
      * @return a new ProductResponse with fields populated from the entity
      */
     public static ProductResponse toResponse(Product product) {
+
+        // Calculate final price with discount applied
+        BigDecimal finalPrice = product.getPrice();
+        if (product.getDiscountPercent() != null && product.getDiscountPercent() > 0) {
+            BigDecimal discount = product.getPrice()
+                    .multiply(BigDecimal.valueOf(product.getDiscountPercent()))
+                    .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+            finalPrice = product.getPrice().subtract(discount);
+        }
         return  new ProductResponse(
                 product.getId(),
                 product.getName(),
@@ -68,6 +87,11 @@ public final class ProductMapper {
                 product.getStockQuantity(),
                 product.getImageUrl(),
                 product.getActive(),
+                product.getDiscountPercent(),
+                product.getInitialStock(),
+                product.getDealExpiresAt(),
+                product.getFeatured(),
+                finalPrice,
                 CategoryMapper.toResponse(product.getCategory())
         );
     }
@@ -85,6 +109,11 @@ public final class ProductMapper {
         product.setStockQuantity(request.stockQuantity());
         product.setImageUrl(request.imageUrl());
         product.setActive(request.active() != null ? request.active() : true);
+
+        product.setDiscountPercent(request.discountPercent());
+        product.setInitialStock(request.initialStock());
+        product.setDealExpiresAt(request.dealExpiresAt());
+        product.setFeatured(request.featured() != null ? request.featured() : false);
 
         Category category = new Category();
         category.setId(request.categoryId());

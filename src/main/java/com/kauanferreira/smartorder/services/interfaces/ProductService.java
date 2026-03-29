@@ -137,4 +137,18 @@ public interface ProductService {
      * @param id the ID of the product to delete
      */
     void delete(Long id);
+
+    /**
+     * Finds all products with an active deal (discount applied and not expired).
+     *
+     * @return a list of products currently on sale
+     */
+    List<Product> findActiveDeals();
+
+    /**
+     * Finds all featured products for highlighted store sections.
+     *
+     * @return a list of featured products
+     */
+    List<Product> findFeatured();
 }

@@ -237,6 +237,38 @@ public class ProductController {
     }
 
     /**
+     * Retrieves all products with active deals (discount applied and not expired).
+     *
+     * @return HTTP 200 with the list of products on sale
+     */
+    @Operation(summary = "Find products with active deals", description = "Retrieves products that have a discount percentage greater than zero and a deal expiration date in the future.")
+    @ApiResponse(responseCode = "200", description = "Active deals retrieved successfully")
+    @GetMapping("/deals")
+    public ResponseEntity<List<ProductResponse>> findActiveDeals() {
+        List<ProductResponse> responses = productService.findActiveDeals()
+                .stream()
+                .map(ProductMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
+    }
+
+    /**
+     * Retrieves all featured products for highlighted store sections.
+     *
+     * @return HTTP 200 with the list of featured products
+     */
+    @Operation(summary = "Find featured products", description = "Retrieves products marked as featured for hero carousel and highlighted sections.")
+    @ApiResponse(responseCode = "200", description = "Featured products retrieved successfully")
+    @GetMapping("/featured")
+    public ResponseEntity<List<ProductResponse>> findFeatured() {
+        List<ProductResponse> responses = productService.findFeatured()
+                .stream()
+                .map(ProductMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
+    }
+
+    /**
      * Activates a product.
      *
      * @param id the product id

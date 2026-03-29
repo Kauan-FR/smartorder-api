@@ -3,11 +3,13 @@ package com.kauanferreira.smartorder.dto.request;
 import com.kauanferreira.smartorder.validation.NotBlankField;
 import com.kauanferreira.smartorder.validation.PositiveOrZeroDecimal;
 import com.kauanferreira.smartorder.validation.PositiveOrZeroInteger;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * DTO for creating and updating a {@link com.kauanferreira.smartorder.entity.Product}.
@@ -45,6 +47,17 @@ public record ProductRequest(
         String imageUrl,
 
         Boolean active,
+
+        @Max(value = 100, message = "Discount percent must not exceed 100")
+        @PositiveOrZeroInteger(fieldName = "Discount percent")
+        Integer discountPercent,
+
+        @PositiveOrZeroInteger(fieldName = "Initial stock quantity")
+        Integer initialStock,
+
+        LocalDateTime dealExpiresAt,
+
+        Boolean featured,
 
         @NotNull(message = "Category id is required")
         Long categoryId

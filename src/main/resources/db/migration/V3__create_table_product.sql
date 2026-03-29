@@ -6,6 +6,10 @@ CREATE TABLE tb_product (
     stock_quantity INTEGER NOT NULL DEFAULT 0,
     image_url VARCHAR(500),
     active BOOLEAN NOT NULL DEFAULT TRUE,
+    discount_percent INTEGER,
+    initial_stock INTEGER,
+    deal_expires_at TIMESTAMP,
+    featured BOOLEAN DEFAULT FALSE,
     category_id BIGINT NOT NULL,
 
     CONSTRAINT fk_product_category

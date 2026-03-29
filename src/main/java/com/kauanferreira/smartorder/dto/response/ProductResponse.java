@@ -1,6 +1,7 @@
 package com.kauanferreira.smartorder.dto.response;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * DTO for returning {@link com.kauanferreira.smartorder.entity.Product} data to the client.
@@ -30,6 +31,11 @@ public record ProductResponse(
         Integer stockQuantity,
         String imageUrl,
         Boolean active,
+        Integer discountPercent,
+        Integer initialStock,
+        LocalDateTime dealExpiresAt,
+        Boolean featured,
+        BigDecimal finalPrice,
         CategoryResponse category
 ) {
 }

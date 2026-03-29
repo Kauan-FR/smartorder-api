@@ -1,16 +1,14 @@
 package com.kauanferreira.smartorder.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * Entity representing a product in the SmartOrder system.
@@ -86,6 +84,41 @@ public class Product {
     @NotNull(message = "Active status is required")
     @Column(nullable = false, name = "active", columnDefinition = "BOOLEAN")
     private Boolean active;
+
+    /**
+     * Discount percentage applied to the product's original price.
+     * Nullable — if null or zero, the product has no active promotion.
+     * The final price is calculated as: price - (price * discountPercent / 100).
+     */
+    @Min(value = 0, message = "Discount percent must be zero or positive")
+    @Max(value = 100, message = "Discount percent must not exceed 100")
+    @Column(name = "discount_percent")
+    private Integer discountPercent;
+
+    /**
+     * Original stock quantity when the product was first listed or restocked.
+     * Used to calculate the "sold percentage" for deal progress bars:
+     * soldPercent = ((initialStock - stockQuantity) / initialStock) * 100.
+     */
+    @Min(value = 0, message = "Initial stock must be zero or positive")
+    @Column(name = "initial_stock", columnDefinition = "INT")
+    private Integer initialStock;
+
+    /**
+     * Expiration date and time for the product's deal/promotion.
+     * Nullable — if null, the discount has no expiration.
+     * Used for countdown timers in the store's "Today's Deals" section.
+     */
+    @Column(name = "deal_expires_at")
+    private LocalDateTime dealExpiresAt;
+
+    /**
+     * Indicates whether the product is featured in highlighted sections
+     * such as the hero carousel or "Picked for you" grid.
+     * Defaults to false in the database.
+     */
+    @Column(name = "featured", columnDefinition = "BOOLEAN")
+    private Boolean featured;
 
     /**
      * Category to which the product belongs.

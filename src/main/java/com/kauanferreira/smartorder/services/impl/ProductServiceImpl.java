@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -175,6 +176,10 @@ public class ProductServiceImpl implements ProductService {
         existing.setImageUrl(product.getImageUrl());
         existing.setActive(product.getActive());
         existing.setCategory(product.getCategory());
+        existing.setDiscountPercent(product.getDiscountPercent());
+        existing.setInitialStock(product.getInitialStock());
+        existing.setDealExpiresAt(product.getDealExpiresAt());
+        existing.setFeatured(product.getFeatured());
         return productRepository.save(existing);
     }
 
@@ -214,5 +219,23 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Long id) {
         Product existing = findById(id);
         productRepository.delete(existing);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Product> findActiveDeals() {
+        return productRepository.findActiveDeals(0, LocalDateTime.now());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Product> findFeatured() {
+        return productRepository.findByFeaturedTrue();
     }
 }

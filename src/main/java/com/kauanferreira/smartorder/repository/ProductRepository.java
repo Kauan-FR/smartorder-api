@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,4 +107,22 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      */
     @Query("SELECT p FROM Product p JOIN FETCH p.category ORDER BY p.name ASC")
     List<Product> findAllByOrderByNameAsc();
+
+    /**
+     * Finds all products with an active deal (discount > 0 and expiration in the future).
+     *
+     * @param percent the minimum discount percent (exclusive)
+     * @param now the current date/time to compare against deal expiration
+     * @return a list of products with active deals
+     */
+    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.discountPercent > :percent AND p.dealExpiresAt > :now")
+    List<Product> findActiveDeals(@Param("percent") Integer percent, @Param("now") LocalDateTime now);
+
+    /**
+     * Finds all featured products for highlighted sections.
+     *
+     * @return a list of featured products
+     */
+    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.featured = true")
+    List<Product> findByFeaturedTrue();
 }
