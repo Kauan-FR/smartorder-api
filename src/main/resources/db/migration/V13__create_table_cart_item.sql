@@ -20,4 +20,4 @@ CREATE TABLE tb_cart_item (
 
     CONSTRAINT uk_cart_item_user_product
         UNIQUE (user_id, product_id)
-)
+);
