@@ -51,13 +51,14 @@ public final class ReviewMapper {
      * Converts a {@link Review} entity to a {@link ReviewResponse} DTO.
      *
      * <p>Uses {@link UserMapper#toResponse} and {@link ProductMapper#toResponse}
-     * for the nested objects. The likesCount is hardcoded to 0 until
-     * the ReviewLike feature is implemented.</p>
+     * for the nested objects. Receives the likes count as a parameter
+     * since the mapper is a static utility class without dependency injection.</p>
      *
-     * @param review the review entity
+     * @param review     the review entity
+     * @param likesCount the number of likes for this review
      * @return a new ReviewResponse with fields populated from the entity
      */
-    public static ReviewResponse toResponse(Review review) {
+    public static ReviewResponse toResponse(Review review, Integer likesCount) {
         return new ReviewResponse(
                 review.getId(),
                 UserMapper.toResponse(review.getUser()),
@@ -65,7 +66,7 @@ public final class ReviewMapper {
                 review.getRating(),
                 review.getComment(),
                 review.getCreatedAt(),
-                0
+                likesCount
         );
     }
 

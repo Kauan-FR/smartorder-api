@@ -4,6 +4,7 @@ import com.kauanferreira.smartorder.dto.mapper.ReviewMapper;
 import com.kauanferreira.smartorder.dto.request.ReviewRequest;
 import com.kauanferreira.smartorder.dto.response.ReviewResponse;
 import com.kauanferreira.smartorder.entity.Review;
+import com.kauanferreira.smartorder.services.interfaces.ReviewLikeService;
 import com.kauanferreira.smartorder.services.interfaces.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -39,6 +40,7 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final ReviewLikeService reviewLikeService;
 
     /**
      * Retrieves all reviews for a specific product.
