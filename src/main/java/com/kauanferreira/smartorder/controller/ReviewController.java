@@ -58,8 +58,7 @@ public class ReviewController {
     public ResponseEntity<List<ReviewResponse>> getByProduct(@PathVariable Long productId) {
         List<ReviewResponse> responses = reviewService.getByProduct(productId)
                 .stream()
-                .map(ReviewMapper::toResponse)
-                .toList();
+                .map(review -> ReviewMapper.toResponse(review, reviewLikeService.countLikes(review.getId())))                .toList();
         return ResponseEntity.ok(responses);
     }
 
@@ -75,8 +74,7 @@ public class ReviewController {
     public ResponseEntity<List<ReviewResponse>> getMyReviews(Authentication authentication) {
         List<ReviewResponse> responses = reviewService.getMyReviews(authentication.getName())
                 .stream()
-                .map(ReviewMapper::toResponse)
-                .toList();
+                .map(review -> ReviewMapper.toResponse(review, reviewLikeService.countLikes(review.getId())))                .toList();
         return ResponseEntity.ok(responses);
     }
 
@@ -100,7 +98,7 @@ public class ReviewController {
                                                  @Valid @RequestBody ReviewRequest request) {
         Review entity = ReviewMapper.toEntity(request);
         Review created = reviewService.create(authentication.getName(), entity);
-        ReviewResponse response = ReviewMapper.toResponse(created);
+        ReviewResponse response = ReviewMapper.toResponse(created, reviewLikeService.countLikes(created.getId()));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -131,7 +129,7 @@ public class ReviewController {
                                                  @Valid @RequestBody ReviewRequest request) {
         Review entity = ReviewMapper.toEntity(request);
         Review updated = reviewService.update(authentication.getName(), id, entity);
-        return ResponseEntity.ok(ReviewMapper.toResponse(updated));
+        return ResponseEntity.ok(ReviewMapper.toResponse(updated, reviewLikeService.countLikes(updated.getId())));
     }
 
     /**
