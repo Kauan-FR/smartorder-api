@@ -88,6 +88,10 @@ public class SecurityConfig {
                                 "/settings"
                         ).permitAll()
 
+                        // Public - WebSocket
+                        .requestMatchers("/ws/**")
+                        .permitAll()
+
                         // Public - Static resources
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.svg").permitAll()
 
