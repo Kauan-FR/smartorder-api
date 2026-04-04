@@ -97,7 +97,7 @@ public class AuthController {
             @ApiResponse(responseCode = "401", description = "Invalid email or password")
     })
     @PostMapping("/login")
-public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequent request) {
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequent request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())
         );

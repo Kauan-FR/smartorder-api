@@ -38,23 +38,6 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
 
     /**
-     * Retrieves all favorited products for the authenticated user.
-     *
-     * @param authentication the authenticated user's security context
-     * @return HTTP 200 with the list of favorited products
-     */
-    @Operation(summary = "Get favorites", description = "Retrieves all favorited products for the authenticated user.")
-    @ApiResponse(responseCode = "200", description = "Favorites retrieved successfully")
-    @GetMapping
-    public ResponseEntity<List<FavoriteResponse>> getFavorites(Authentication authentication) {
-        List<FavoriteResponse> responses = favoriteService.getFavorites(authentication.getName())
-                .stream()
-                .map(FavoriteMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
-    }
-
-    /**
      * Adds a product to the authenticated user's favorites.
      * If the product is already favorited, returns the existing favorite.
      *
@@ -83,6 +66,38 @@ public class FavoriteController {
     }
 
     /**
+     * Retrieves all favorited products for the authenticated user.
+     *
+     * @param authentication the authenticated user's security context
+     * @return HTTP 200 with the list of favorited products
+     */
+    @Operation(summary = "Get favorites", description = "Retrieves all favorited products for the authenticated user.")
+    @ApiResponse(responseCode = "200", description = "Favorites retrieved successfully")
+    @GetMapping
+    public ResponseEntity<List<FavoriteResponse>> getFavorites(Authentication authentication) {
+        List<FavoriteResponse> responses = favoriteService.getFavorites(authentication.getName())
+                .stream()
+                .map(FavoriteMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
+    }
+
+    /**
+     * Checks if a product is favorited by the authenticated user.
+     *
+     * @param authentication the authenticated user's security context
+     * @param productId      the ID of the product to check
+     * @return HTTP 200 with true if favorited, false otherwise
+     */
+    @Operation(summary = "Check if favorited", description = "Checks if a product is in the authenticated user's favorites.")
+    @ApiResponse(responseCode = "200", description = "Favorite status retrieved successfully")
+    @GetMapping("/{productId}/check")
+    public ResponseEntity<Boolean> isFavorited(Authentication authentication,
+                                               @PathVariable Long productId) {
+        return ResponseEntity.ok(favoriteService.isFavorited(authentication.getName(), productId));
+    }
+
+    /**
      * Removes a product from the authenticated user's favorites.
      *
      * @param authentication the authenticated user's security context
@@ -99,20 +114,5 @@ public class FavoriteController {
                                                @PathVariable Long productId) {
         favoriteService.removeFavorite(authentication.getName(), productId);
         return ResponseEntity.noContent().build();
-    }
-
-    /**
-     * Checks if a product is favorited by the authenticated user.
-     *
-     * @param authentication the authenticated user's security context
-     * @param productId      the ID of the product to check
-     * @return HTTP 200 with true if favorited, false otherwise
-     */
-    @Operation(summary = "Check if favorited", description = "Checks if a product is in the authenticated user's favorites.")
-    @ApiResponse(responseCode = "200", description = "Favorite status retrieved successfully")
-    @GetMapping("/{productId}/check")
-    public ResponseEntity<Boolean> isFavorited(Authentication authentication,
-                                               @PathVariable Long productId) {
-        return ResponseEntity.ok(favoriteService.isFavorited(authentication.getName(), productId));
     }
 }

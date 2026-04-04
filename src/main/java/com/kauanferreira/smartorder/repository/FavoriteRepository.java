@@ -22,6 +22,9 @@ import java.util.Optional;
 @Repository
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
+    @Query("SELECT f FROM Favorite f JOIN FETCH f.product p JOIN FETCH p.category JOIN FETCH f.user WHERE f.id = :id")
+    Optional<Favorite> findById(@Param("id") Long id);
+
     /**
      * Finds all favorites belonging to a specific user.
      * Eagerly fetches the product and its category to avoid LazyInitializationException.

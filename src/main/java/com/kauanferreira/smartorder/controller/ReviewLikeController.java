@@ -49,6 +49,21 @@ public class ReviewLikeController {
     }
 
     /**
+     * Checks if the authenticated user has liked a review.
+     *
+     * @param authentication the authenticated user's security context
+     * @param reviewId       the ID of the review to check
+     * @return HTTP 200 with true if liked, false otherwise
+     */
+    @Operation(summary = "Check if liked", description = "Checks if the authenticated user has liked a review.")
+    @ApiResponse(responseCode = "200", description = "Like status retrieved successfully")
+    @GetMapping("/{reviewId}/like/check")
+    public ResponseEntity<Boolean> isLiked(Authentication authentication,
+                                           @PathVariable Long reviewId) {
+        return ResponseEntity.ok(reviewLikeService.isLiked(authentication.getName(), reviewId));
+    }
+
+    /**
      * Unlikes a review.
      *
      * @param authentication the authenticated user's security context
@@ -67,18 +82,4 @@ public class ReviewLikeController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Checks if the authenticated user has liked a review.
-     *
-     * @param authentication the authenticated user's security context
-     * @param reviewId       the ID of the review to check
-     * @return HTTP 200 with true if liked, false otherwise
-     */
-    @Operation(summary = "Check if liked", description = "Checks if the authenticated user has liked a review.")
-    @ApiResponse(responseCode = "200", description = "Like status retrieved successfully")
-    @GetMapping("/{reviewId}/like/check")
-    public ResponseEntity<Boolean> isLiked(Authentication authentication,
-                                           @PathVariable Long reviewId) {
-        return ResponseEntity.ok(reviewLikeService.isLiked(authentication.getName(), reviewId));
-    }
 }

@@ -40,23 +40,6 @@ public class CartItemController {
     private final CartItemService cartItemService;
 
     /**
-     * Retrieves all items in the authenticated user's cart.
-     *
-     * @param authentication the authenticated user's security context
-     * @return HTTP 200 with the list of cart items
-     */
-    @Operation(summary = "Get cart items", description = "Retrieves all items in the authenticated user's shopping cart.")
-    @ApiResponse(responseCode = "200", description = "Cart items retrieved successfully")
-    @GetMapping
-    public ResponseEntity<List<CartItemResponse>> getCart(Authentication authentication) {
-        List<CartItemResponse> responses = cartItemService.getCart(authentication.getName())
-                .stream()
-                .map(CartItemMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
-    }
-
-    /**
      * Adds a product to the authenticated user's cart.
      * If the product is already in the cart, the quantity is added to the existing amount.
      *
@@ -84,6 +67,23 @@ public class CartItemController {
                 .toUri();
 
         return ResponseEntity.created(location).body(response);
+    }
+
+    /**
+     * Retrieves all items in the authenticated user's cart.
+     *
+     * @param authentication the authenticated user's security context
+     * @return HTTP 200 with the list of cart items
+     */
+    @Operation(summary = "Get cart items", description = "Retrieves all items in the authenticated user's shopping cart.")
+    @ApiResponse(responseCode = "200", description = "Cart items retrieved successfully")
+    @GetMapping
+    public ResponseEntity<List<CartItemResponse>> getCart(Authentication authentication) {
+        List<CartItemResponse> responses = cartItemService.getCart(authentication.getName())
+                .stream()
+                .map(CartItemMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
     }
 
     /**

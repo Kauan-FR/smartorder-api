@@ -41,23 +41,6 @@ public class QuickReplyController {
     private final QuickReplyService quickReplyService;
 
     /**
-     * Retrieves all quick replies for the authenticated vendor.
-     *
-     * @param authentication the authenticated user's security context
-     * @return HTTP 200 with the list of quick replies
-     */
-    @Operation(summary = "Get my quick replies", description = "Retrieves all quick reply templates for the authenticated vendor.")
-    @ApiResponse(responseCode = "200", description = "Quick replies retrieved successfully")
-    @GetMapping
-    public ResponseEntity<List<QuickReplyResponse>> getMyQuickReplies(Authentication authentication) {
-        List<QuickReplyResponse> responses = quickReplyService.getMyQuickReplies(authentication.getName())
-                .stream()
-                .map(QuickReplyMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
-    }
-
-    /**
      * Creates a new quick reply for the authenticated vendor.
      *
      * @param authentication the authenticated user's security context
@@ -83,6 +66,23 @@ public class QuickReplyController {
                 .toUri();
 
         return ResponseEntity.created(location).body(response);
+    }
+
+    /**
+     * Retrieves all quick replies for the authenticated vendor.
+     *
+     * @param authentication the authenticated user's security context
+     * @return HTTP 200 with the list of quick replies
+     */
+    @Operation(summary = "Get my quick replies", description = "Retrieves all quick reply templates for the authenticated vendor.")
+    @ApiResponse(responseCode = "200", description = "Quick replies retrieved successfully")
+    @GetMapping
+    public ResponseEntity<List<QuickReplyResponse>> getMyQuickReplies(Authentication authentication) {
+        List<QuickReplyResponse> responses = quickReplyService.getMyQuickReplies(authentication.getName())
+                .stream()
+                .map(QuickReplyMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
     }
 
     /**

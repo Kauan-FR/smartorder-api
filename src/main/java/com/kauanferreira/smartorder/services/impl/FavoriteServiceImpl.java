@@ -8,6 +8,7 @@ import com.kauanferreira.smartorder.repository.FavoriteRepository;
 import com.kauanferreira.smartorder.repository.UserRepository;
 import com.kauanferreira.smartorder.services.interfaces.FavoriteService;
 import com.kauanferreira.smartorder.services.interfaces.ProductService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final FavoriteRepository favoriteRepository;
     private final UserRepository userRepository;
     private final ProductService productService;
+    private final EntityManager entityManager;
 
     /**
      * {@inheritDoc}
@@ -73,7 +75,10 @@ public class FavoriteServiceImpl implements FavoriteService {
         product.setId(productId);
         favorite.setProduct(product);
 
-        return favoriteRepository.save(favorite);
+        Favorite saved = favoriteRepository.save(favorite);
+        entityManager.flush();
+        entityManager.clear();
+        return favoriteRepository.findById(saved.getId()).orElse(saved);
     }
 
     /**

@@ -43,6 +43,37 @@ public class ReviewController {
     private final ReviewLikeService reviewLikeService;
 
     /**
+     * Creates a new review for a product.
+     * Each user can only review a product once.
+     *
+     * @param authentication the authenticated user's security context
+     * @param request        the review data (product ID, rating, comment)
+     * @return HTTP 201 with the created review and location header
+     */
+    @Operation(summary = "Create a review", description = "Creates a new review for a product. Each user can only review a product once.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Review created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Product not found"),
+            @ApiResponse(responseCode = "409", description = "User has already reviewed this product")
+    })
+    @PostMapping
+    public ResponseEntity<ReviewResponse> create(Authentication authentication,
+                                                 @Valid @RequestBody ReviewRequest request) {
+        Review entity = ReviewMapper.toEntity(request);
+        Review created = reviewService.create(authentication.getName(), entity);
+        ReviewResponse response = ReviewMapper.toResponse(created, reviewLikeService.countLikes(created.getId()));
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(response);
+    }
+
+    /**
      * Retrieves all reviews for a specific product.
      * This endpoint is public and does not require authentication.
      *
@@ -76,37 +107,6 @@ public class ReviewController {
                 .stream()
                 .map(review -> ReviewMapper.toResponse(review, reviewLikeService.countLikes(review.getId())))                .toList();
         return ResponseEntity.ok(responses);
-    }
-
-    /**
-     * Creates a new review for a product.
-     * Each user can only review a product once.
-     *
-     * @param authentication the authenticated user's security context
-     * @param request        the review data (product ID, rating, comment)
-     * @return HTTP 201 with the created review and location header
-     */
-    @Operation(summary = "Create a review", description = "Creates a new review for a product. Each user can only review a product once.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Review created successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input data"),
-            @ApiResponse(responseCode = "404", description = "Product not found"),
-            @ApiResponse(responseCode = "409", description = "User has already reviewed this product")
-    })
-    @PostMapping
-    public ResponseEntity<ReviewResponse> create(Authentication authentication,
-                                                 @Valid @RequestBody ReviewRequest request) {
-        Review entity = ReviewMapper.toEntity(request);
-        Review created = reviewService.create(authentication.getName(), entity);
-        ReviewResponse response = ReviewMapper.toResponse(created, reviewLikeService.countLikes(created.getId()));
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(created.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).body(response);
     }
 
     /**

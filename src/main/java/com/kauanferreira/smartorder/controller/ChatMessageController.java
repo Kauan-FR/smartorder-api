@@ -78,6 +78,19 @@ public class ChatMessageController {
     }
 
     /**
+     * Counts the total number of unread messages for the authenticated user.
+     *
+     * @param authentication the authenticated user's security context
+     * @return HTTP 200 with the unread message count
+     */
+    @Operation(summary = "Count unread messages", description = "Returns the total number of unread messages for the authenticated user.")
+    @ApiResponse(responseCode = "200", description = "Unread count retrieved successfully")
+    @GetMapping("/unread/count")
+    public ResponseEntity<Integer> countUnread(Authentication authentication) {
+        return ResponseEntity.ok(chatMessageService.countUnread(authentication.getName()));
+    }
+
+    /**
      * Marks all unread messages from a specific sender about a product as read.
      *
      * @param authentication the authenticated user's security context
@@ -93,18 +106,5 @@ public class ChatMessageController {
                                            @PathVariable Long productId) {
         chatMessageService.markAsRead(authentication.getName(), senderId, productId);
         return ResponseEntity.noContent().build();
-    }
-
-    /**
-     * Counts the total number of unread messages for the authenticated user.
-     *
-     * @param authentication the authenticated user's security context
-     * @return HTTP 200 with the unread message count
-     */
-    @Operation(summary = "Count unread messages", description = "Returns the total number of unread messages for the authenticated user.")
-    @ApiResponse(responseCode = "200", description = "Unread count retrieved successfully")
-    @GetMapping("/unread/count")
-    public ResponseEntity<Integer> countUnread(Authentication authentication) {
-        return ResponseEntity.ok(chatMessageService.countUnread(authentication.getName()));
     }
 }

@@ -8,6 +8,7 @@ import com.kauanferreira.smartorder.repository.ReviewRepository;
 import com.kauanferreira.smartorder.repository.UserRepository;
 import com.kauanferreira.smartorder.services.interfaces.ProductService;
 import com.kauanferreira.smartorder.services.interfaces.ReviewService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final ProductService productService;
+    private final EntityManager entityManager;
 
     /**
      * {@inheritDoc}
@@ -76,7 +78,11 @@ public class ReviewServiceImpl implements ReviewService {
                 });
 
         review.setUser(user);
-        return reviewRepository.save(review);
+        Review saved = reviewRepository.save(review);
+        entityManager.flush();
+        entityManager.clear();
+        return reviewRepository.findByIdWithRelations(saved.getId())
+                .orElse(saved);
     }
 
     /**
@@ -132,7 +138,7 @@ public class ReviewServiceImpl implements ReviewService {
      *         or does not belong to the user
      */
     private Review findReviewByIdAndUser(Long reviewId, Long userId) {
-        Review review = reviewRepository.findById(reviewId)
+        Review review = reviewRepository.findByIdWithRelations(reviewId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         String.format("Review with ID %d not found", reviewId)));
 

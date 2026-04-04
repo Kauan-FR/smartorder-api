@@ -7,6 +7,7 @@ import com.kauanferreira.smartorder.repository.CartItemRepository;
 import com.kauanferreira.smartorder.repository.UserRepository;
 import com.kauanferreira.smartorder.services.interfaces.CartItemService;
 import com.kauanferreira.smartorder.services.interfaces.ProductService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
     private final UserRepository userRepository;
     private final ProductService productService;
+    private final EntityManager entityManager;
 
     /**
      * {@inheritDoc}
@@ -65,11 +67,17 @@ public class CartItemServiceImpl implements CartItemService {
         if (existing.isPresent()) {
             CartItem existingItem = existing.get();
             existingItem.setQuantity(existingItem.getQuantity() + cartItem.getQuantity());
-            return cartItemRepository.save(existingItem);
+            CartItem saved = cartItemRepository.save(existingItem);
+            return cartItemRepository.findByUserIdAndProductId(user.getId(), saved.getProduct().getId())
+                    .orElse(saved);
         }
 
         cartItem.setUser(user);
-        return cartItemRepository.save(cartItem);
+        CartItem saved = cartItemRepository.save(cartItem);
+        entityManager.flush();
+        entityManager.clear();
+        return cartItemRepository.findByUserIdAndProductId(user.getId(), saved.getProduct().getId())
+                .orElse(saved);
     }
 
     /**

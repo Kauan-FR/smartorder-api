@@ -48,11 +48,11 @@ public record ProductRequest(
 
         Boolean active,
 
+        @Min(value = 0, message = "Discount percent must be zero or positive")
         @Max(value = 100, message = "Discount percent must not exceed 100")
-        @PositiveOrZeroInteger(fieldName = "Discount percent")
         Integer discountPercent,
 
-        @PositiveOrZeroInteger(fieldName = "Initial stock quantity")
+        @Min(value = 0, message = "Initial stock must be zero or positive")
         Integer initialStock,
 
         LocalDateTime dealExpiresAt,

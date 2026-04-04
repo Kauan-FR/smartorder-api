@@ -22,6 +22,9 @@ import java.util.Optional;
 @Repository
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
+    @Query("SELECT ci FROM CartItem ci JOIN FETCH ci.product p JOIN FETCH p.category JOIN FETCH ci.user WHERE ci.id = :id")
+    Optional<CartItem> findById(@Param("id") Long id);
+
     /**
      * Finds all cart items belonging to a specific user.
      * Eagerly fetches the product and its category to avoid LazyInitializationException.
@@ -40,7 +43,7 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
      * @param productId the ID of the product
      * @return an Optional containing the cart item if found
      */
-    @Query("SELECT ci FROM CartItem ci JOIN FETCH ci.product p JOIN FETCH p.category WHERE ci.user.id = :userId AND ci.product.id = :productId")
+    @Query("SELECT ci FROM CartItem ci JOIN FETCH ci.product p JOIN FETCH p.category JOIN FETCH ci.user WHERE ci.user.id = :userId AND ci.product.id = :productId")
     Optional<CartItem> findByUserIdAndProductId(@Param("userId") Long userId, @Param("productId") Long productId);
 
     /**
