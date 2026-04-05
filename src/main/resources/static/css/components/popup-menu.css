@@ -108,11 +108,11 @@
     background-color: var(--color-danger-light);
 }
 
-/* ===== Submenu (appears on hover) ===== */
+/* ===== Submenu (appears on hover — opens to the right) ===== */
 .popup-submenu {
     position: absolute;
     left: calc(100% + 4px);
-    top: -8px;
+    bottom: 0;
     width: 200px;
     background-color: var(--bg-primary);
     border: 0.5px solid var(--border-default);
@@ -125,6 +125,17 @@
     transition: opacity var(--transition-fast),
                 visibility var(--transition-fast),
                 transform var(--transition-fast);
+    pointer-events: none;
+}
+
+/* Invisible bridge to prevent hover loss */
+.popup-submenu::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 8px;
+    height: 100%;
 }
 
 /* ===== Submenu opens on parent hover ===== */
@@ -132,6 +143,7 @@
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
+    pointer-events: auto;
 }
 
 /* ===== Submenu Item ===== */

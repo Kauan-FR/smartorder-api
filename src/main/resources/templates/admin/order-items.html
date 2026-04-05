@@ -14,6 +14,7 @@
 <link th:href="@{/css/components/modal.css}" rel="stylesheet">
 <link th:href="@{/css/layouts/sidebar.css}" rel="stylesheet">
 <link th:href="@{/css/pages/admin-crud.css}" rel="stylesheet">
+<link th:href="@{/css/components/help-modals.css}" rel="stylesheet">
 
 <aside th:replace="~{fragments/sidebar :: sidebar('order-items')}"></aside>
 
@@ -129,9 +130,12 @@
     </div>
 </div>
 
+<div th:replace="~{fragments/help-modals :: helpModals}"></div>
+
 <div class="toast" id="toast"></div>
 
 <script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/admin-help.js}"></script>
 <script th:src="@{/js/admin-order-items.js}"></script>
 
 </body>

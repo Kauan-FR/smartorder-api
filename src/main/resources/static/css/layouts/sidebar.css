@@ -12,7 +12,8 @@
     padding: var(--space-5) 0;
     z-index: var(--z-navbar);
     transition: width var(--transition-slow);
-    overflow: hidden;
+    overflow: clip;
+    overflow-clip-margin: 220px;
 }
 
 /* ===== Collapsed State ===== */

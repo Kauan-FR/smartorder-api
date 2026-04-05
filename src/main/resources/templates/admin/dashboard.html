@@ -14,6 +14,7 @@
 <link th:href="@{/css/components/forms.css}" rel="stylesheet">
 <link th:href="@{/css/layouts/sidebar.css}" rel="stylesheet">
 <link th:href="@{/css/pages/admin-dashboard.css}" rel="stylesheet">
+<link th:href="@{/css/components/help-modals.css}" rel="stylesheet">
 
 <!-- Sidebar -->
 <aside th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></aside>
@@ -166,8 +167,11 @@
 
 </main>
 
+<div th:replace="~{fragments/help-modals :: helpModals}"></div>
+
 <!-- Scripts -->
 <script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/admin-help.js}"></script>
 <script th:src="@{/js/admin-dashboard.js}"></script>
 
 </body>

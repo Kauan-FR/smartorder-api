@@ -1,0 +1,498 @@
+/* ==========================================================================
+   HELP MODALS — styles for Help Center, Release Notes, Terms, Report a Bug
+   ========================================================================== */
+
+/* ===== Modal Overlay ===== */
+.help-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast),
+                visibility var(--transition-fast);
+}
+
+.help-modal-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== Modal Container ===== */
+.help-modal {
+    background-color: var(--bg-primary);
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-popup);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(16px) scale(0.98);
+    transition: transform var(--transition-fast);
+}
+
+.help-modal-overlay.is-open .help-modal {
+    transform: translateY(0) scale(1);
+}
+
+/* Small variant for Report a Bug */
+.help-modal--sm {
+    max-width: 480px;
+}
+
+/* ===== Modal Header ===== */
+.help-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 0.5px solid var(--border-light);
+    flex-shrink: 0;
+}
+
+.help-modal__title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.help-modal__title-group svg {
+    color: var(--color-info-text);
+    flex-shrink: 0;
+}
+
+.help-modal__title-group h2 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.help-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-tertiary);
+    transition: background-color var(--transition-fast),
+                color var(--transition-fast);
+}
+
+.help-modal__close:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* ===== Modal Body ===== */
+.help-modal__body {
+    padding: var(--space-5) var(--space-6);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.help-modal__description {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-5);
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   HELP CENTER — FAQ Accordion
+   ========================================================================== */
+
+.help-faq {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.help-faq__item {
+    border: 0.5px solid var(--border-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.help-faq__item + .help-faq__item {
+    margin-top: var(--space-2);
+}
+
+.help-faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    text-align: left;
+    transition: background-color var(--transition-fast);
+}
+
+.help-faq__question:hover {
+    background-color: var(--bg-secondary);
+}
+
+.help-faq__question svg {
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+}
+
+.help-faq__item.is-open .help-faq__question svg {
+    transform: rotate(180deg);
+}
+
+.help-faq__answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.help-faq__item.is-open .help-faq__answer {
+    max-height: 300px;
+}
+
+.help-faq__answer p {
+    padding: 0 var(--space-4) var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.help-faq__answer p + p {
+    padding-top: var(--space-1);
+}
+
+/* ==========================================================================
+   RELEASE NOTES
+   ========================================================================== */
+
+.help-release {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.help-release__item {
+    padding-bottom: var(--space-5);
+    border-bottom: 0.5px solid var(--border-light);
+}
+
+.help-release__item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.help-release__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+
+.help-release__version {
+    font-size: var(--text-md);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+}
+
+.help-release__date {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+}
+
+.help-release__tag {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
+
+.help-release__tag--latest {
+    background-color: var(--color-success-light);
+    color: var(--color-success-text);
+}
+
+.help-release__changes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.help-release__change {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.help-release__badge {
+    font-size: 10px;
+    font-weight: var(--font-semibold);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.help-release__badge--feat {
+    background-color: var(--color-info-light);
+    color: var(--color-info-text);
+}
+
+.help-release__badge--improve {
+    background-color: var(--color-success-light);
+    color: var(--color-success-text);
+}
+
+.help-release__badge--fix {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-text);
+}
+
+/* ==========================================================================
+   TERMS & POLICIES — Tabs + Content
+   ========================================================================== */
+
+.help-tabs {
+    display: flex;
+    gap: 2px;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 3px;
+    margin-bottom: var(--space-5);
+}
+
+.help-tabs__tab {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-tertiary);
+    transition: background-color var(--transition-fast),
+                color var(--transition-fast);
+    white-space: nowrap;
+}
+
+.help-tabs__tab:hover {
+    color: var(--text-secondary);
+}
+
+.help-tabs__tab--active {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.help-terms__content {
+    display: none;
+}
+
+.help-terms__content--active {
+    display: block;
+}
+
+.help-terms__updated {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    font-style: italic;
+    margin-bottom: var(--space-4);
+}
+
+.help-terms__section {
+    margin-bottom: var(--space-4);
+}
+
+.help-terms__section:last-child {
+    margin-bottom: 0;
+}
+
+.help-terms__section h3 {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2) 0;
+}
+
+.help-terms__section p {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.help-terms__section p + p {
+    margin-top: var(--space-2);
+}
+
+/* ==========================================================================
+   REPORT A BUG — Form
+   ========================================================================== */
+
+.help-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.help-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.help-form__label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.help-form__input,
+.help-form__select,
+.help-form__textarea {
+    padding: 10px 12px;
+    border: 0.5px solid var(--border-default);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    font-family: inherit;
+    transition: border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+}
+
+.help-form__input:focus,
+.help-form__select:focus,
+.help-form__textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-info-light);
+}
+
+.help-form__input::placeholder,
+.help-form__textarea::placeholder {
+    color: var(--text-tertiary);
+}
+
+.help-form__select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 32px;
+}
+
+.help-form__textarea {
+    resize: vertical;
+    min-height: 80px;
+    max-height: 200px;
+}
+
+.help-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+}
+
+.help-form__btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    border: none;
+    transition: background-color var(--transition-fast),
+                opacity var(--transition-fast);
+}
+
+.help-form__btn--cancel {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+.help-form__btn--cancel:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.help-form__btn--submit {
+    background-color: var(--brand-primary);
+    color: #ffffff;
+}
+
+.help-form__btn--submit:hover {
+    opacity: 0.9;
+}
+
+.help-form__btn--submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    .help-modal {
+        width: 95%;
+        max-height: 85vh;
+    }
+
+    .help-modal__header {
+        padding: var(--space-4) var(--space-4);
+    }
+
+    .help-modal__body {
+        padding: var(--space-4) var(--space-4);
+    }
+
+    .help-tabs {
+        flex-direction: column;
+    }
+
+    .help-form__actions {
+        flex-direction: column;
+    }
+
+    .help-form__btn {
+        justify-content: center;
+    }
+}
