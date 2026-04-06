@@ -13,15 +13,19 @@
 <link th:href="@{/css/components/popup-menu.css}" rel="stylesheet">
 <link th:href="@{/css/components/forms.css}" rel="stylesheet">
 <link th:href="@{/css/components/modal.css}" rel="stylesheet">
+<link th:href="@{/css/layouts/topbar.css}" rel="stylesheet">
 <link th:href="@{/css/layouts/sidebar.css}" rel="stylesheet">
 <link th:href="@{/css/pages/admin-crud.css}" rel="stylesheet">
 <link th:href="@{/css/components/help-modals.css}" rel="stylesheet">
 
 <!-- Sidebar Fragment -->
 <aside th:replace="~{fragments/sidebar :: sidebar('users')}"></aside>
+<header th:replace="~{fragments/topbar :: topbar}"></header>
 
 <!-- Main Content -->
 <main class="admin-content" id="adminContent">
+
+
 
     <!-- Page Header -->
     <div class="crud-header">
@@ -184,6 +188,7 @@
 
 <!-- Scripts -->
 <script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/admin-topbar.js}"></script>
 <script th:src="@{/js/admin-help.js}"></script>
 <script th:src="@{/js/admin-users.js}"></script>
 

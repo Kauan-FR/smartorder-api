@@ -13,11 +13,13 @@
 <link th:href="@{/css/components/popup-menu.css}" rel="stylesheet">
 <link th:href="@{/css/components/forms.css}" rel="stylesheet">
 <link th:href="@{/css/layouts/sidebar.css}" rel="stylesheet">
+<link th:href="@{/css/layouts/topbar.css}" rel="stylesheet">
 <link th:href="@{/css/pages/admin-dashboard.css}" rel="stylesheet">
 <link th:href="@{/css/components/help-modals.css}" rel="stylesheet">
 
 <!-- Sidebar -->
 <aside th:replace="~{fragments/sidebar :: sidebar('dashboard')}"></aside>
+<header th:replace="~{fragments/topbar :: topbar}"></header>
 
 <!-- Main Content -->
 <main class="admin-content" id="adminContent">
@@ -27,22 +29,6 @@
         <div class="dashboard-header__left">
             <h1>Dashboard</h1>
             <p class="dashboard-header__subtitle" id="welcomeText">Welcome back</p>
-        </div>
-        <div class="dashboard-header__right">
-            <div class="search-bar" style="width:200px;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                </svg>
-                <input type="text" placeholder="Search...">
-            </div>
-            <button class="btn-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                    <path d="M13.73 21a2 2 0 01-3.46 0"/>
-                </svg>
-            </button>
         </div>
     </div>
 
@@ -171,6 +157,7 @@
 
 <!-- Scripts -->
 <script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/admin-topbar.js}"></script>
 <script th:src="@{/js/admin-help.js}"></script>
 <script th:src="@{/js/admin-dashboard.js}"></script>
 
