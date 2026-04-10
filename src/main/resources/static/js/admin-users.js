@@ -79,7 +79,7 @@ function loadUsers() {
         })
         .catch(function() {
             document.getElementById('usersTableBody').innerHTML =
-                '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-tertiary);">Failed to load users</td></tr>';
+                '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('usersJs.failedUsers') +'</td></tr>';
         });
 }
 
@@ -92,9 +92,9 @@ function renderTable(users) {
         tbody.innerHTML = '<tr><td colspan="7">'
             + '<div class="empty-state">'
             + '<svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>'
-            + '<p class="empty-state__title">No users yet</p>'
-            + '<p class="empty-state__text">Create your first user to get started</p>'
-            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">Create user</button>'
+            + '<p class="empty-state__title">'+ I18n.get('usersJs.noUsers') +'</p>'
+            + '<p class="empty-state__text">'+ I18n.get('usersJs.createUsersText') +'</p>'
+            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">'+ I18n.get('usersJs.createUsers') +'</button>'
             + '</div></td></tr>';
         return;
     }
@@ -102,8 +102,8 @@ function renderTable(users) {
     var html = '';
     users.forEach(function(u) {
         var roleBadge = u.role === 'ADMIN'
-            ? '<span class="badge badge-admin">Admin</span>'
-            : '<span class="badge badge-customer">Customer</span>';
+            ? '<span class="badge badge-admin">'+ I18n.get('common.admin') +'</span>'
+            : '<span class="badge badge-customer">'+ I18n.get('common.customes') +'</span>';
 
         var createdAt = u.createdAt ? formatDate(u.createdAt) : '—';
 
@@ -165,8 +165,8 @@ function searchUsers(term) {
 
 function openCreateModal() {
     editingId = null;
-    document.getElementById('modalTitle').textContent = 'New user';
-    document.getElementById('modalSubmitBtn').textContent = 'Create';
+    document.getElementById('modalTitle').textContent = I18n.get('users.newUser');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.create');
     document.getElementById('userId').value = '';
     document.getElementById('userName').value = '';
     document.getElementById('userEmail').value = '';
@@ -189,8 +189,8 @@ function openEditModal(id) {
     if (!u) return;
 
     editingId = id;
-    document.getElementById('modalTitle').textContent = 'Edit user';
-    document.getElementById('modalSubmitBtn').textContent = 'Save changes';
+    document.getElementById('modalTitle').textContent = I18n.get('usersJs.editUser');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.saveChanges');
     document.getElementById('userId').value = id;
     document.getElementById('userName').value = u.name;
     document.getElementById('userEmail').value = u.email;
@@ -239,17 +239,17 @@ function saveUser() {
             if (r.ok) {
                 closeModal();
                 loadUsers();
-                showToast('User updated successfully', 'success');
+                showToast(I18n.get('usersJs.usersUpdate'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to update user'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('usersJs.failedUsersUpdate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     } else {
         // Create (with password)
         var password = document.getElementById('userPassword').value;
-        if (!password) { showModalError('Password is required.'); btn.disabled = false; return; }
+        if (!password) { showModalError(I18n.get('usersJs.requestPassword')); btn.disabled = false; return; }
 
         var createBody = JSON.stringify({
             name: name,
@@ -268,12 +268,12 @@ function saveUser() {
             if (r.ok || r.status === 201) {
                 closeModal();
                 loadUsers();
-                showToast('User created successfully', 'success');
+                showToast(I18n.get('usersJs.usersCreate'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to create user'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('usersJs.failedUsersCreate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     }
 }
@@ -282,7 +282,7 @@ function saveUser() {
 
 function openDeleteModal(id, name) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = 'Are you sure you want to delete "' + name + '"? This action cannot be undone.';
+    document.getElementById('deleteText').textContent = I18n.get('common.sure') + "'" + name + "' ?" + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');
@@ -308,12 +308,12 @@ function confirmDelete() {
         if (r.ok || r.status === 204) {
             closeDeleteModal();
             loadUsers();
-            showToast('User deleted successfully', 'success');
+            showToast(I18n.get('usersJs.deleteUser'), I18n.get('common.success'));
         } else {
-            return r.json().then(function(err) { showDeleteError(err.message || 'Failed to delete user'); });
+            return r.json().then(function(err) { showDeleteError(err.message || I18n.get('usersJs.failedUsersDelete')); });
         }
     })
-    .catch(function() { showDeleteError('Connection error'); })
+    .catch(function() { showDeleteError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 
@@ -343,7 +343,7 @@ function closePasswordModal() {
 
 function savePassword() {
     var newPassword = document.getElementById('newPassword').value;
-    if (!newPassword) { showPasswordError('New password is required.'); return; }
+    if (!newPassword) { showPasswordError(I18n.get('usersJs.requiredPassword')); return; }
 
     var btn = document.getElementById('passwordSubmitBtn');
     btn.disabled = true;
@@ -355,12 +355,12 @@ function savePassword() {
     .then(function(r) {
         if (r.ok) {
             closePasswordModal();
-            showToast('Password updated successfully', 'success');
+            showToast(I18n.get('usersJs.updatePassword'), I18n.get('common.success'));
         } else {
-            return r.json().then(function(err) { showPasswordError(err.message || 'Failed to update password'); });
+            return r.json().then(function(err) { showPasswordError(err.message || I18n.get('usersJs.failedUserPassword')); });
         }
     })
-    .catch(function() { showPasswordError('Connection error'); })
+    .catch(function() { showPasswordError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 

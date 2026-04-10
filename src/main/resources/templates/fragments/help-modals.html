@@ -12,88 +12,88 @@
             <div class="help-modal__header">
                 <div class="help-modal__title-group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-                    <h2>Help Center</h2>
+                    <h2 data-i18n="helpCenter.title">Help Center</h2>
                 </div>
                 <button class="help-modal__close" onclick="closeHelpModal('helpCenterOverlay')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
             <div class="help-modal__body">
-                <p class="help-modal__description">Find answers to frequently asked questions about the SmartOrder admin panel.</p>
+                <p class="help-modal__description" data-i18n="helpCenter.description">Find answers to frequently asked questions about the SmartOrder admin panel.</p>
 
                 <!-- FAQ Accordion -->
                 <div class="help-faq">
                     <div class="help-faq__item">
                         <button class="help-faq__question" onclick="toggleFaq(this)">
-                            <span>How do I add a new product?</span>
+                            <span data-i18n="helpCenter.faq1q">How do I add a new product?</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                         </button>
                         <div class="help-faq__answer">
-                            <p>Navigate to <strong>Products</strong> in the sidebar, click the <strong>"New product"</strong> button in the top right corner, fill in the product details (name, description, price, stock, category, and image URL), then click <strong>"Save"</strong>. You can also set a discount percentage and mark the product as featured.</p>
+                            <p data-i18n="helpCenter.faq1a">Navigate to <strong>Products</strong> in the sidebar, click the <strong>"New product"</strong> button in the top right corner, fill in the product details (name, description, price, stock, category, and image URL), then click <strong>"Save"</strong>. You can also set a discount percentage and mark the product as featured.</p>
                         </div>
                     </div>
 
                     <div class="help-faq__item">
                         <button class="help-faq__question" onclick="toggleFaq(this)">
-                            <span>How do I change my password?</span>
+                            <span data-i18n="helpCenter.faq2q">How do I change my password?</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                         </button>
                         <div class="help-faq__answer">
-                            <p>Go to <strong>Profile</strong> from the popup menu at the bottom of the sidebar. In the security section, click <strong>"Change password"</strong>, enter your current password followed by the new password and confirmation, then save.</p>
+                            <p data-i18n="helpCenter.faq2a">Go to <strong>Profile</strong> from the popup menu at the bottom of the sidebar. In the security section, click <strong>"Change password"</strong>, enter your current password followed by the new password and confirmation, then save.</p>
                         </div>
                     </div>
 
                     <div class="help-faq__item">
                         <button class="help-faq__question" onclick="toggleFaq(this)">
-                            <span>What do the order statuses mean?</span>
+                            <span data-i18n="helpCenter.faq3q">What do the order statuses mean?</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                         </button>
                         <div class="help-faq__answer">
-                            <p><strong>Pending</strong> — Order was placed but not yet confirmed by the store.</p>
-                            <p><strong>Confirmed</strong> — Store accepted the order and is preparing it.</p>
-                            <p><strong>Shipped</strong> — Order has been dispatched for delivery.</p>
-                            <p><strong>Delivered</strong> — Order successfully delivered to the customer.</p>
-                            <p><strong>Cancelled</strong> — Order was cancelled by the store or customer.</p>
+                            <p data-i18n="helpCenter.faq3aPending"><strong>Pending</strong> — Order was placed but not yet confirmed by the store.</p>
+                            <p data-i18n="helpCenter.faq3aConfirmed"><strong>Confirmed</strong> — Store accepted the order and is preparing it.</p>
+                            <p data-i18n="helpCenter.faq3aShipped"><strong>Shipped</strong> — Order has been dispatched for delivery.</p>
+                            <p data-i18n="helpCenter.faq3aDelivered"><strong>Delivered</strong> — Order successfully delivered to the customer.</p>
+                            <p data-i18n="helpCenter.faq3aCancelled"><strong>Cancelled</strong> — Order was cancelled by the store or customer.</p>
                         </div>
                     </div>
 
                     <div class="help-faq__item">
                         <button class="help-faq__question" onclick="toggleFaq(this)">
-                            <span>How do I create a new category?</span>
+                            <span data-i18n="helpCenter.faq4q">How do I create a new category?</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                         </button>
                         <div class="help-faq__answer">
-                            <p>Navigate to <strong>Categories</strong> in the sidebar, click <strong>"New category"</strong>, enter the category name and an optional description, then click <strong>"Save"</strong>. Products can then be assigned to this category.</p>
+                            <p data-i18n="helpCenter.faq4a">Navigate to <strong>Categories</strong> in the sidebar, click <strong>"New category"</strong>, enter the category name and an optional description, then click <strong>"Save"</strong>. Products can then be assigned to this category.</p>
                         </div>
                     </div>
 
                     <div class="help-faq__item">
                         <button class="help-faq__question" onclick="toggleFaq(this)">
-                            <span>Can I delete a user account?</span>
+                            <span data-i18n="helpCenter.faq5q">Can I delete a user account?</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                         </button>
                         <div class="help-faq__answer">
-                            <p>Yes. Go to <strong>Users</strong>, find the user in the table, and click the delete icon. A confirmation dialog will appear. Note that you <strong>cannot delete your own account</strong> from the admin panel for security reasons.</p>
+                            <p data-i18n="helpCenter.faq5a">Yes. Go to <strong>Users</strong>, find the user in the table, and click the delete icon. A confirmation dialog will appear. Note that you <strong>cannot delete your own account</strong> from the admin panel for security reasons.</p>
                         </div>
                     </div>
 
                     <div class="help-faq__item">
                         <button class="help-faq__question" onclick="toggleFaq(this)">
-                            <span>How do I set up a product deal/promotion?</span>
+                            <span data-i18n="helpCenter.faq6q">How do I set up a product deal/promotion?</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                         </button>
                         <div class="help-faq__answer">
-                            <p>Edit the product and fill in the <strong>Discount %</strong> field (e.g., 30 for 30% off). Optionally set a <strong>Deal expires at</strong> date. The final price will be calculated automatically. You can also set <strong>Initial stock</strong> to show a progress bar of how much has been sold.</p>
+                            <p data-i18n="helpCenter.faq6a">Edit the product and fill in the <strong>Discount %</strong> field (e.g., 30 for 30% off). Optionally set a <strong>Deal expires at</strong> date. The final price will be calculated automatically. You can also set <strong>Initial stock</strong> to show a progress bar of how much has been sold.</p>
                         </div>
                     </div>
 
                     <div class="help-faq__item">
                         <button class="help-faq__question" onclick="toggleFaq(this)">
-                            <span>How does the search bar work?</span>
+                            <span data-i18n="helpCenter.faq7q">How does the search bar work?</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                         </button>
                         <div class="help-faq__answer">
-                            <p>The search bar at the top of each CRUD page filters the table in real-time by name. Simply type and the results will update instantly — no need to press Enter.</p>
+                            <p data-i18n="helpCenter.faq7a">The search bar at the top of each CRUD page filters the table in real-time by name. Simply type and the results will update instantly — no need to press Enter.</p>
                         </div>
                     </div>
                 </div>
@@ -107,41 +107,41 @@
             <div class="help-modal__header">
                 <div class="help-modal__title-group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    <h2>Release Notes</h2>
+                    <h2 data-i18n="releaseNotes.title">Release Notes</h2>
                 </div>
                 <button class="help-modal__close" onclick="closeHelpModal('releaseNotesOverlay')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
             <div class="help-modal__body">
-                <p class="help-modal__description">Track what's new and improved in SmartOrder.</p>
+                <p class="help-modal__description" data-i18n="releaseNotes.description">Track what's new and improved in SmartOrder.</p>
 
                 <!-- Version entries -->
                 <div class="help-release">
                     <div class="help-release__item">
                         <div class="help-release__header">
                             <span class="help-release__version">v1.2.0</span>
-                            <span class="help-release__date">March 2026</span>
-                            <span class="help-release__tag help-release__tag--latest">Latest</span>
+                            <span class="help-release__date" data-i18n="releaseNotes.march">March 2026</span>
+                            <span class="help-release__tag help-release__tag--latest" data-i18n="releaseNotes.latest">Latest</span>
                         </div>
                         <ul class="help-release__changes">
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v120">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Real-time chat via WebSocket (STOMP + SockJS)
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v120b">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Product reviews with star ratings and like system
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v120c">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Favorites system for customers
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v120d">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Shopping cart persisted in database
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v120e">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Quick replies for sellers in chat
                             </li>
@@ -151,22 +151,22 @@
                     <div class="help-release__item">
                         <div class="help-release__header">
                             <span class="help-release__version">v1.1.0</span>
-                            <span class="help-release__date">February 2026</span>
+                            <span class="help-release__date" data-i18n="releaseNotes.february">February 2026</span>
                         </div>
                         <ul class="help-release__changes">
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v110">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Admin dashboard with metrics and status bars
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v110b">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Full CRUD for all entities (categories, products, users, addresses, orders, order items)
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v110c">
                                 <span class="help-release__badge help-release__badge--improve">Improved</span>
                                 Dark/light theme with system preference detection
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v110d">
                                 <span class="help-release__badge help-release__badge--improve">Improved</span>
                                 Collapsible sidebar with state persistence
                             </li>
@@ -176,22 +176,22 @@
                     <div class="help-release__item">
                         <div class="help-release__header">
                             <span class="help-release__version">v1.0.0</span>
-                            <span class="help-release__date">January 2026</span>
+                            <span class="help-release__date" data-i18n="releaseNotes.january">January 2026</span>
                         </div>
                         <ul class="help-release__changes">
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v100">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Initial release with Spring Boot 4.0 backend
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v100b">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 JWT authentication with role-based access
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v100c">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Swagger/OpenAPI documentation
                             </li>
-                            <li class="help-release__change">
+                            <li class="help-release__change" data-i18n="releaseNotes.v100d">
                                 <span class="help-release__badge help-release__badge--feat">New</span>
                                 Flyway database migrations (24 migrations)
                             </li>
@@ -208,7 +208,7 @@
             <div class="help-modal__header">
                 <div class="help-modal__title-group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <h2>Terms & Policies</h2>
+                    <h2 data-i18n="terms.title">Terms & Policies</h2>
                 </div>
                 <button class="help-modal__close" onclick="closeHelpModal('termsPoliciesOverlay')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -217,72 +217,72 @@
             <div class="help-modal__body">
                 <!-- Tab navigation -->
                 <div class="help-tabs">
-                    <button class="help-tabs__tab help-tabs__tab--active" onclick="switchTermsTab(this, 'termsOfUse')">Terms of Use</button>
-                    <button class="help-tabs__tab" onclick="switchTermsTab(this, 'privacyPolicy')">Privacy Policy</button>
-                    <button class="help-tabs__tab" onclick="switchTermsTab(this, 'cookiePolicy')">Cookie Policy</button>
+                    <button class="help-tabs__tab help-tabs__tab--active" onclick="switchTermsTab(this, 'termsOfUse')" data-i18n="terms.tabTerms">Terms of Use</button>
+                    <button class="help-tabs__tab" onclick="switchTermsTab(this, 'privacyPolicy')" data-i18n="terms.tabPrivacy">Privacy Policy</button>
+                    <button class="help-tabs__tab" onclick="switchTermsTab(this, 'cookiePolicy')" data-i18n="terms.tabCookie">Cookie Policy</button>
                 </div>
 
                 <!-- Terms of Use -->
                 <div class="help-terms__content help-terms__content--active" id="termsOfUse">
-                    <p class="help-terms__updated">Last updated: March 2026</p>
+                    <p class="help-terms__updated" data-i18n="terms.lastUpdated">Last updated: March 2026</p>
                     <div class="help-terms__section">
-                        <h3>1. Acceptance of Terms</h3>
-                        <p>By accessing and using the SmartOrder platform, you agree to be bound by these Terms of Use. If you do not agree with any part of these terms, you must not use the platform.</p>
+                        <h3 data-i18n="terms.t1title">1. Acceptance of Terms</h3>
+                        <p data-i18n="terms.t1text">By accessing and using the SmartOrder platform, you agree to be bound by these Terms of Use. If you do not agree with any part of these terms, you must not use the platform.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>2. Use of the Platform</h3>
-                        <p>SmartOrder provides e-commerce management tools for authorized administrators and customers. You agree to use the platform only for lawful purposes and in accordance with these terms. You are responsible for maintaining the confidentiality of your account credentials.</p>
+                        <h3 data-i18n="terms.t2title">2. Use of the Platform</h3>
+                        <p data-i18n="terms.t2text">SmartOrder provides e-commerce management tools for authorized administrators and customers. You agree to use the platform only for lawful purposes and in accordance with these terms. You are responsible for maintaining the confidentiality of your account credentials.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>3. User Accounts</h3>
-                        <p>You must provide accurate and complete information when creating an account. Each user is responsible for all activities that occur under their account. Administrators have elevated privileges and must exercise them responsibly.</p>
+                        <h3 data-i18n="terms.t3title">3. User Accounts</h3>
+                        <p data-i18n="terms.t3text">You must provide accurate and complete information when creating an account. Each user is responsible for all activities that occur under their account. Administrators have elevated privileges and must exercise them responsibly.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>4. Intellectual Property</h3>
-                        <p>All content, designs, and functionality of SmartOrder are the property of the platform owner. You may not reproduce, distribute, or create derivative works without explicit written permission.</p>
+                        <h3 data-i18n="terms.t4title">4. Intellectual Property</h3>
+                        <p data-i18n="terms.t4text">All content, designs, and functionality of SmartOrder are the property of the platform owner. You may not reproduce, distribute, or create derivative works without explicit written permission.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>5. Limitation of Liability</h3>
-                        <p>SmartOrder is provided "as is" without warranties of any kind. We shall not be liable for any indirect, incidental, or consequential damages arising from your use of the platform.</p>
+                        <h3 data-i18n="terms.t5title">5. Limitation of Liability</h3>
+                        <p data-i18n="terms.t5text">SmartOrder is provided "as is" without warranties of any kind. We shall not be liable for any indirect, incidental, or consequential damages arising from your use of the platform.</p>
                     </div>
                 </div>
 
                 <!-- Privacy Policy -->
                 <div class="help-terms__content" id="privacyPolicy">
-                    <p class="help-terms__updated">Last updated: March 2026</p>
+                    <p class="help-terms__updated" data-i18n="terms.lastUpdated">Last updated: March 2026</p>
                     <div class="help-terms__section">
-                        <h3>1. Information We Collect</h3>
-                        <p>We collect information you provide directly: name, email address, phone number, and delivery addresses. We also collect usage data such as login timestamps and order history to improve the platform experience.</p>
+                        <h3 data-i18n="terms.p1title">1. Information We Collect</h3>
+                        <p data-i18n="terms.p1text">We collect information you provide directly: name, email address, phone number, and delivery addresses. We also collect usage data such as login timestamps and order history to improve the platform experience.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>2. How We Use Your Information</h3>
-                        <p>Your information is used to process orders, manage your account, communicate important updates, and improve our services. We do not sell or share your personal data with third parties for marketing purposes.</p>
+                        <h3 data-i18n="terms.p2title">2. How We Use Your Information</h3>
+                        <p data-i18n="terms.p2text">Your information is used to process orders, manage your account, communicate important updates, and improve our services. We do not sell or share your personal data with third parties for marketing purposes.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>3. Data Security</h3>
-                        <p>We implement industry-standard security measures including JWT authentication, password encryption (BCrypt), and HTTPS encryption to protect your data. However, no method of transmission over the internet is 100% secure.</p>
+                        <h3 data-i18n="terms.p3title">3. Data Security</h3>
+                        <p data-i18n="terms.p3text">We implement industry-standard security measures including JWT authentication, password encryption (BCrypt), and HTTPS encryption to protect your data. However, no method of transmission over the internet is 100% secure.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>4. Your Rights (LGPD)</h3>
-                        <p>In accordance with Brazil's General Data Protection Law (LGPD), you have the right to access, correct, delete, or export your personal data. You may request account deletion through your profile settings or by contacting support.</p>
+                        <h3 data-i18n="terms.p4title">4. Your Rights (LGPD)</h3>
+                        <p data-i18n="terms.p4text">In accordance with Brazil's General Data Protection Law (LGPD), you have the right to access, correct, delete, or export your personal data. You may request account deletion through your profile settings or by contacting support.</p>
                     </div>
                 </div>
 
                 <!-- Cookie Policy -->
                 <div class="help-terms__content" id="cookiePolicy">
-                    <p class="help-terms__updated">Last updated: March 2026</p>
+                    <p class="help-terms__updated" data-i18n="terms.lastUpdated">Last updated: March 2026</p>
                     <div class="help-terms__section">
-                        <h3>1. What Are Cookies</h3>
-                        <p>Cookies are small text files stored on your device when you visit our platform. We use them to remember your preferences and improve your experience.</p>
+                        <h3 data-i18n="terms.c1title">1. What Are Cookies</h3>
+                        <p data-i18n="terms.c1text">Cookies are small text files stored on your device when you visit our platform. We use them to remember your preferences and improve your experience.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>2. Cookies We Use</h3>
-                        <p><strong>Essential cookies:</strong> Required for authentication (JWT token storage) and basic platform functionality. These cannot be disabled.</p>
-                        <p><strong>Preference cookies:</strong> Store your theme preference (dark/light mode) and sidebar state. These enhance your experience but are not strictly necessary.</p>
+                        <h3 data-i18n="terms.c2title">2. Cookies We Use</h3>
+                        <p data-i18n="terms.c2textEssential"><strong>Essential cookies:</strong> Required for authentication (JWT token storage) and basic platform functionality. These cannot be disabled.</p>
+                        <p data-i18n="terms.c2textPreference"><strong>Preference cookies:</strong> Store your theme preference (dark/light mode) and sidebar state. These enhance your experience but are not strictly necessary.</p>
                     </div>
                     <div class="help-terms__section">
-                        <h3>3. Managing Cookies</h3>
-                        <p>You can manage cookies through your browser settings. Note that disabling essential cookies will prevent you from logging into the platform.</p>
+                        <h3 data-i18n="terms.c3title">3. Managing Cookies</h3>
+                        <p data-i18n="terms.c3text">You can manage cookies through your browser settings. Note that disabling essential cookies will prevent you from logging into the platform.</p>
                     </div>
                 </div>
             </div>
@@ -295,39 +295,39 @@
             <div class="help-modal__header">
                 <div class="help-modal__title-group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <h2>Report a Bug</h2>
+                    <h2 data-i18n="reportBug.title">Report a Bug</h2>
                 </div>
                 <button class="help-modal__close" onclick="closeHelpModal('reportBugOverlay')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
             <div class="help-modal__body">
-                <p class="help-modal__description">Found something wrong? Let us know and we'll fix it as soon as possible.</p>
+                <p class="help-modal__description" data-i18n="reportBug.description">Found something wrong? Let us know and we'll fix it as soon as possible.</p>
 
                 <div class="help-form">
                     <div class="help-form__group">
-                        <label class="help-form__label" for="bugTitle">Title</label>
-                        <input class="help-form__input" type="text" id="bugTitle" placeholder="Brief description of the issue">
+                        <label class="help-form__label" for="bugTitle" data-i18n="reportBug.labelTitle">Title</label>
+                        <input class="help-form__input" type="text" id="bugTitle" placeholder="Brief description of the issue" data-i18n-placeholder="reportBug.placeholderTitle">
                     </div>
                     <div class="help-form__group">
-                        <label class="help-form__label" for="bugCategory">Category</label>
+                        <label class="help-form__label" for="bugCategory" data-i18n="reportBug.labelCategory">Category</label>
                         <select class="help-form__select" id="bugCategory">
-                            <option value="" disabled selected>Select a category</option>
-                            <option value="ui">UI / Visual issue</option>
-                            <option value="functionality">Functionality not working</option>
-                            <option value="performance">Performance / Slow loading</option>
-                            <option value="data">Data not saving / displaying</option>
-                            <option value="auth">Login / Authentication issue</option>
-                            <option value="other">Other</option>
+                            <option value="" disabled selected data-i18n="reportBug.categoryDefault">Select a category</option>
+                            <option value="ui" data-i18n="reportBug.categoryUi">UI / Visual issue</option>
+                            <option value="functionality" data-i18n="reportBug.categoryFunc">Functionality not working</option>
+                            <option value="performance" data-i18n="reportBug.categoryPerf">Performance / Slow loading</option>
+                            <option value="data" data-i18n="reportBug.categoryData">Data not saving / displaying</option>
+                            <option value="auth" data-i18n="reportBug.categoryAuth">Login / Authentication issue</option>
+                            <option value="other" data-i18n="reportBug.categoryOther">Other</option>
                         </select>
                     </div>
                     <div class="help-form__group">
-                        <label class="help-form__label" for="bugDescription">Description</label>
-                        <textarea class="help-form__textarea" id="bugDescription" rows="4" placeholder="Describe what happened, what you expected, and steps to reproduce..."></textarea>
+                        <label class="help-form__label" for="bugDescription" data-i18n="reportBug.labelDescription">Description</label>
+                        <textarea class="help-form__textarea" id="bugDescription" rows="4" placeholder="Describe what happened, what you expected, and steps to reproduce..." data-i18n-placeholder="reportBug.placeholderDescription"></textarea>
                     </div>
                     <div class="help-form__actions">
-                        <button class="help-form__btn help-form__btn--cancel" onclick="closeHelpModal('reportBugOverlay')">Cancel</button>
-                        <button class="help-form__btn help-form__btn--submit" onclick="submitBugReport()">
+                        <button class="help-form__btn help-form__btn--cancel" onclick="closeHelpModal('reportBugOverlay')" data-i18n="reportBug.btnCancel">Cancel</button>
+                        <button class="help-form__btn help-form__btn--submit" onclick="submitBugReport()" data-i18n="reportBug.btnSubmit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                             Submit report
                         </button>

@@ -118,7 +118,7 @@ function submitBugReport() {
 
     // Show success toast (uses showToast from each admin page)
     if (typeof showToast === 'function') {
-        showToast('Bug report submitted successfully! Our team will review it.', 'success');
+        showToast(I18n.get('helpJs.msgSubmitted'), I18n.get('common.success'));
     }
 }
 

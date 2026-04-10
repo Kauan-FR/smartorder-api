@@ -27,8 +27,8 @@
     <!-- Dashboard Header -->
     <div class="dashboard-header">
         <div class="dashboard-header__left">
-            <h1>Dashboard</h1>
-            <p class="dashboard-header__subtitle" id="welcomeText">Welcome back</p>
+            <h1 data-i18n="dashboard.title">Dashboard</h1>
+            <p class="dashboard-header__subtitle" id="welcomeText" data-i18n="dashboard.welcome">Welcome back</p>
         </div>
     </div>
 
@@ -37,7 +37,7 @@
         <div class="card-metric">
             <div class="card-metric__header">
                 <div>
-                    <p class="card-metric__label">Total orders</p>
+                    <p class="card-metric__label" data-i18n="dashboard.totalOrders">Total orders</p>
                     <p class="card-metric__value" id="metricOrders">--</p>
                 </div>
                 <div class="card-metric__icon" style="background-color:var(--color-info-light);">
@@ -53,7 +53,7 @@
         <div class="card-metric">
             <div class="card-metric__header">
                 <div>
-                    <p class="card-metric__label">Revenue</p>
+                    <p class="card-metric__label" data-i18n="dashboard.revenue">Revenue</p>
                     <p class="card-metric__value" id="metricRevenue">--</p>
                 </div>
                 <div class="card-metric__icon" style="background-color:var(--color-success-light);">
@@ -69,7 +69,7 @@
         <div class="card-metric">
             <div class="card-metric__header">
                 <div>
-                    <p class="card-metric__label">Users</p>
+                    <p class="card-metric__label" data-i18n="dashboard.users">Users</p>
                     <p class="card-metric__value" id="metricUsers">--</p>
                 </div>
                 <div class="card-metric__icon" style="background-color:#EEEDFE;">
@@ -84,7 +84,7 @@
         <div class="card-metric">
             <div class="card-metric__header">
                 <div>
-                    <p class="card-metric__label">Products</p>
+                    <p class="card-metric__label" data-i18n="dashboard.products">Products</p>
                     <p class="card-metric__value" id="metricProducts">--</p>
                 </div>
                 <div class="card-metric__icon" style="background-color:#FAEEDA;">
@@ -103,20 +103,20 @@
         <!-- Recent Orders Table -->
         <div class="table-container">
             <div class="table-container__header">
-                <p class="table-container__title">Recent orders</p>
+                <p class="table-container__title" data-i18n="dashboard.recentOrders">Recent orders</p>
             </div>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Order</th>
-                    <th>Customer</th>
-                    <th>Total</th>
-                    <th>Status</th>
+                    <th data-i18n="dashboard.thOrder">Order</th>
+                    <th data-i18n="dashboard.thCustomer">Customer</th>
+                    <th data-i18n="dashboard.thTotal">Total</th>
+                    <th data-i18n="dashboard.thStatus">Status</th>
                 </tr>
                 </thead>
                 <tbody id="ordersTableBody">
                 <tr>
-                    <td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">Loading orders...</td>
+                    <td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);" data-i18n="dashboard.loadingOrders">Loading orders...</td>
                 </tr>
                 </tbody>
             </table>
@@ -124,7 +124,7 @@
 
         <!-- Orders by Status + Quick Actions -->
         <div class="card">
-            <p style="font-size:var(--text-md);font-weight:var(--font-medium);color:var(--text-primary);margin-bottom:var(--space-5);">Orders by status</p>
+            <p style="font-size:var(--text-md);font-weight:var(--font-medium);color:var(--text-primary);margin-bottom:var(--space-5);" data-i18n="dashboard.ordersByStatus">Orders by status</p>
 
             <div class="status-bars" id="statusBars">
                 <p style="color:var(--text-tertiary);font-size:var(--text-sm);">Loading...</p>
@@ -132,15 +132,15 @@
 
             <!-- Quick Actions -->
             <div class="quick-actions">
-                <p class="quick-actions__title">Quick actions</p>
+                <p class="quick-actions__title" data-i18n="dashboard.quickActions">Quick actions</p>
                 <div class="quick-actions__list">
-                    <a href="/admin/products" class="quick-action">
+                    <a href="/admin/products" class="quick-action" data-i18n="dashboard.newProduct">
                         <span class="quick-action__icon">+</span> New product
                     </a>
-                    <a href="/admin/categories" class="quick-action">
+                    <a href="/admin/categories" class="quick-action" data-i18n="dashboard.newCategory">
                         <span class="quick-action__icon">+</span> New category
                     </a>
-                    <a href="/admin/users" class="quick-action">
+                    <a href="/admin/users" class="quick-action" data-i18n="dashboard.addAdminUser">
                         <span class="quick-action__icon">+</span> Add admin user
                     </a>
                 </div>
@@ -149,13 +149,16 @@
     </div>
 
     <!-- Footer -->
-    <p style="text-align:center;font-size:var(--text-xs);color:var(--text-tertiary);">SmartOrder API v1.0 — Admin panel</p>
+    <p style="text-align:center;font-size:var(--text-xs);color:var(--text-tertiary);" data-i18n="common.footer">SmartOrder API v1.0 — Admin panel</p>
 
 </main>
 
 <div th:replace="~{fragments/help-modals :: helpModals}"></div>
 
 <!-- Scripts -->
+<script th:src="@{/js/i18n.js}"></script>
+<script th:src="@{/js/lang/en.js}"></script>
+<script th:src="@{/js/lang/pt.js}"></script>
 <script th:src="@{/js/auth.js}"></script>
 <script th:src="@{/js/admin-topbar.js}"></script>
 <script th:src="@{/js/admin-help.js}"></script>

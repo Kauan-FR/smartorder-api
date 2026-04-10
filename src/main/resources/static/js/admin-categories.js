@@ -76,7 +76,7 @@ function loadCategories() {
         })
         .catch(function() {
             document.getElementById('categoriesTableBody').innerHTML =
-                '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">Failed to load categories</td></tr>';
+                '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('categoriesJs.failedCategories') +'</td></tr>';
         });
 }
 
@@ -89,9 +89,9 @@ function renderTable(categories) {
         tbody.innerHTML = '<tr><td colspan="4">'
             + '<div class="empty-state">'
             + '<svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>'
-            + '<p class="empty-state__title">No categories yet</p>'
-            + '<p class="empty-state__text">Create your first category to organize products</p>'
-            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">Create category</button>'
+            + '<p class="empty-state__title">'+ I18n.get('categoriesJs.noCategories') +'</p>'
+            + '<p class="empty-state__text">'+ I18n.get('categoriesJs.createCategoriesText') +'</p>'
+            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">'+ I18n.get('categoriesJs.createCategories') +'</button>'
             + '</div></td></tr>';
         return;
     }
@@ -132,8 +132,8 @@ function searchCategories(term) {
 
 function openCreateModal() {
     editingId = null;
-    document.getElementById('modalTitle').textContent = 'New category';
-    document.getElementById('modalSubmitBtn').textContent = 'Create';
+    document.getElementById('modalTitle').textContent = I18n.get('categories.newCategory');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.create');
     document.getElementById('categoryId').value = '';
     document.getElementById('categoryName').value = '';
     document.getElementById('categoryDescription').value = '';
@@ -148,8 +148,8 @@ function openEditModal(id) {
     if (!cat) return;
 
     editingId = id;
-    document.getElementById('modalTitle').textContent = 'Edit category';
-    document.getElementById('modalSubmitBtn').textContent = 'Save changes';
+    document.getElementById('modalTitle').textContent = I18n.get('categoriesJs.editTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.saveChanges');
     document.getElementById('categoryId').value = id;
     document.getElementById('categoryName').value = cat.name;
     document.getElementById('categoryDescription').value = cat.description || '';
@@ -164,7 +164,7 @@ function saveCategory() {
     var description = document.getElementById('categoryDescription').value.trim();
 
     if (!name) {
-        showModalError('Category name is required.');
+        showModalError(I18n.get('categoriesJs.categoryRequired'));
         return;
     }
 
@@ -183,12 +183,12 @@ function saveCategory() {
             if (r.ok) {
                 closeModal();
                 loadCategories();
-                showToast('Category updated successfully', 'success');
+                showToast(I18n.get('categoriesJs.categoryUpdate'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to update category'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('categoriesJs.failedCategoryUpdate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     } else {
         // Create
@@ -201,12 +201,12 @@ function saveCategory() {
             if (r.ok || r.status === 201) {
                 closeModal();
                 loadCategories();
-                showToast('Category created successfully', 'success');
+                showToast(I18n.get('categoriesJs.createSuccessCategories'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to create category'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('categoriesJs.failedCategoryCreate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     }
 }
@@ -215,7 +215,7 @@ function saveCategory() {
 
 function openDeleteModal(id, name) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = 'Are you sure you want to delete "' + name + '"? This action cannot be undone.';
+    document.getElementById('deleteText').textContent = I18n.get('common.sure') + "'" + name + "'?" + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');
@@ -241,12 +241,12 @@ function confirmDelete() {
         if (r.ok || r.status === 204) {
             closeDeleteModal();
             loadCategories();
-            showToast('Category deleted successfully', 'success');
+            showToast(I18n.get('categoriesJs.deleteSuccessCategories'), I18n.get('common.success'));
         } else {
-            return r.json().then(function(err) { showDeleteError(err.message || 'Failed to delete category'); });
+            return r.json().then(function(err) { showDeleteError(err.message || I18n.get('categoriesJs.failedCategoryDelete')); });
         }
     })
-    .catch(function() { showDeleteError('Connection error'); })
+    .catch(function() { showDeleteError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 

@@ -18,7 +18,7 @@ if (user) {
     document.getElementById('sidebarAvatar').textContent = initials;
     document.getElementById('popupName').textContent = user.name;
     document.getElementById('popupAvatar').textContent = initials;
-    document.getElementById('welcomeText').textContent = 'Welcome back, ' + user.name.split(' ')[0];
+    document.getElementById('welcomeText').textContent = I18n.get('dashboardJs.welcome') + ', ' + user.name.split(' ')[0];
 }
 
 // ==================== Sidebar ====================
@@ -142,7 +142,7 @@ function loadDashboard() {
             renderStatusBars(orders);
         })
         .catch(function() {
-            document.getElementById('ordersTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">Failed to load orders</td></tr>';
+            document.getElementById('ordersTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('dashboardJs.failedOrders') +'</td></tr>';
         });
 
     // Fetch revenue (sum of all orders totalAmount)
@@ -172,7 +172,7 @@ function renderOrdersTable(orders) {
     var tbody = document.getElementById('ordersTableBody');
 
     if (orders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">No orders yet</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('dashboardJs.noOrders') +'</td></tr>';
         return;
     }
 
@@ -232,7 +232,7 @@ function renderStatusBars(orders) {
             statusBarsEl.innerHTML = html;
         })
         .catch(function() {
-            statusBarsEl.innerHTML = '<p style="color:var(--text-tertiary);font-size:var(--text-sm);">Failed to load</p>';
+            statusBarsEl.innerHTML = '<p style="color:var(--text-tertiary);font-size:var(--text-sm);">'+ I18n.get('dashboardJs.failedStatus')+'</p>';
         });
 }
 

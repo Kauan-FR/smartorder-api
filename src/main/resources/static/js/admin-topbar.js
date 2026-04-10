@@ -60,26 +60,21 @@ function toggleLangDropdown() {
  * For this showcase, it updates the label and shows a toast.
  */
 function setLanguage(lang, element) {
-    // Update active state
     var items = document.querySelectorAll('.topbar__dropdown-item');
     items.forEach(function(item) {
         item.classList.remove('topbar__dropdown-item--active');
     });
     element.classList.add('topbar__dropdown-item--active');
 
-    // Update label
     document.getElementById('currentLangLabel').textContent = LANG_LABELS[lang] || lang.toUpperCase();
 
-    // Store preference
-    localStorage.setItem('smartorder-lang', lang);
+    // Apply translations
+    I18n.setLanguage(lang);
 
-    // Close dropdown
     document.getElementById('langMenu').classList.remove('is-open');
 
-    // Show feedback
     if (typeof showToast === 'function') {
-        var langNames = { en: 'English', pt: 'Português', es: 'Español', fr: 'Français' };
-        showToast('Language changed to ' + langNames[lang], 'success');
+        showToast(I18n.get('lang.changed') + ' ' + I18n.get('lang.' + lang), 'success');
     }
 }
 
@@ -87,11 +82,10 @@ function setLanguage(lang, element) {
  * Initializes language from localStorage.
  */
 function initLanguage() {
+    I18n.init();
     var saved = localStorage.getItem('smartorder-lang');
     if (saved && LANG_LABELS[saved]) {
         document.getElementById('currentLangLabel').textContent = LANG_LABELS[saved];
-
-        // Mark correct item as active
         var items = document.querySelectorAll('.topbar__dropdown-item');
         items.forEach(function(item) {
             item.classList.remove('topbar__dropdown-item--active');
@@ -100,8 +94,8 @@ function initLanguage() {
             }
         });
     }
+    I18n.apply();
 }
-
 initLanguage();
 
 // ==================== Notifications ====================
@@ -125,7 +119,7 @@ function clearNotifications() {
     var list = document.getElementById('notifList');
     list.innerHTML = '<div class="topbar__notif-empty">'
         + '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>'
-        + '<span>No notifications yet</span>'
+        + '<span>' + I18n.get('topbar.notifEmpty') + '</span>'
         + '</div>';
 
     // Hide badge
@@ -257,7 +251,7 @@ function performGlobalSearch(query) {
 
         if (products.length > 0) {
             hasResults = true;
-            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">Products</p>';
+            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">' + I18n.get('products.title') + '</p>';
             products.forEach(function(p) {
                 html += '<div class="topbar__search-result" onclick="window.location.href=\'/admin/products\'">'
                     + '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>'
@@ -268,7 +262,7 @@ function performGlobalSearch(query) {
 
         if (categories.length > 0) {
             hasResults = true;
-            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">Categories</p>';
+            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">'+ I18n.get('categories.title') +'</p>';
             categories.forEach(function(c) {
                 html += '<div class="topbar__search-result" onclick="window.location.href=\'/admin/categories\'">'
                     + '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>'
@@ -279,7 +273,7 @@ function performGlobalSearch(query) {
 
         if (users.length > 0) {
             hasResults = true;
-            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">Users</p>';
+            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">'+ I18n.get('users.title') +'</p>';
             users.forEach(function(u) {
                 html += '<div class="topbar__search-result" onclick="window.location.href=\'/admin/users\'">'
                     + '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
@@ -290,7 +284,7 @@ function performGlobalSearch(query) {
 
         if (orders.length > 0) {
             hasResults = true;
-            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">Orders</p>';
+            html += '<div class="topbar__search-group"><p class="topbar__search-group-label">'+ I18n.get('orders.title') +'</p>';
             orders.forEach(function(o) {
                 html += '<div class="topbar__search-result" onclick="window.location.href=\'/admin/orders\'">'
                     + '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'

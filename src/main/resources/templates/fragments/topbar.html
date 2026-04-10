@@ -9,7 +9,7 @@
     <!-- Search -->
     <div class="topbar__search">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" class="topbar__search-input" id="globalSearch" placeholder="Search..." autocomplete="off">
+        <input type="text" class="topbar__search-input" id="globalSearch" data-i18n-placeholder="topbar.searchPlaceholder" placeholder="Search..." autocomplete="off">
         <!-- Search Results Dropdown -->
         <div class="topbar__search-results" id="globalSearchResults"></div>
     </div>
@@ -19,7 +19,7 @@
 
         <!-- Language Selector -->
         <div class="topbar__dropdown" id="langDropdown">
-            <button class="topbar__action-btn" onclick="toggleLangDropdown()" title="Language">
+            <button class="topbar__action-btn" onclick="toggleLangDropdown()" data-i18n-title="topbar.language" title="Language">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
                 <span class="topbar__action-label" id="currentLangLabel">EN</span>
             </button>
@@ -52,7 +52,7 @@
         </div>
 
         <!-- Theme Toggle -->
-        <button class="topbar__action-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle theme">
+        <button class="topbar__action-btn" id="themeToggleBtn" onclick="toggleTheme()" data-i18n-title="topbar.theme" title="Toggle theme">
             <!-- Sun icon (shown in dark mode) -->
             <svg class="topbar__icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
             <!-- Moon icon (shown in light mode) -->
@@ -60,20 +60,20 @@
         </button>
 
         <!-- Notifications Bell -->
-        <button class="topbar__action-btn topbar__action-btn--bell" id="notifBtn" onclick="toggleNotifications()" title="Notifications">
+        <button class="topbar__action-btn topbar__action-btn--bell" id="notifBtn" onclick="toggleNotifications()" data-i18n-title="topbar.notifications" title="Notifications">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
             <span class="topbar__notif-badge" id="notifBadge" style="display:none;">0</span>
         </button>
         <!-- Notifications Dropdown -->
         <div class="topbar__notif-dropdown" id="notifDropdown">
             <div class="topbar__notif-header">
-                <span>Notifications</span>
-                <button class="topbar__notif-clear" onclick="clearNotifications()">Clear all</button>
+                <span data-i18n="topbar.notifications">Notifications</span>
+                <button class="topbar__notif-clear" onclick="clearNotifications()" data-i18n="topbar.notifClearAll">Clear all</button>
             </div>
             <div class="topbar__notif-list" id="notifList">
                 <div class="topbar__notif-empty">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-                    <span>No notifications yet</span>
+                    <span data-i18n="topbar.notifEmpty">No notifications yet</span>
                 </div>
             </div>
         </div>
