@@ -215,7 +215,7 @@ function saveCategory() {
 
 function openDeleteModal(id, name) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = I18n.get('common.sure') + "'" + name + "'?" + I18n.get('common.undone');
+    document.getElementById('deleteText').textContent = I18n.get('common.sure') + ' "' + name + '"? ' + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');

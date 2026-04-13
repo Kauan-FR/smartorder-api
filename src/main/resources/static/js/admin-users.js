@@ -103,7 +103,7 @@ function renderTable(users) {
     users.forEach(function(u) {
         var roleBadge = u.role === 'ADMIN'
             ? '<span class="badge badge-admin">'+ I18n.get('common.admin') +'</span>'
-            : '<span class="badge badge-customer">'+ I18n.get('common.customes') +'</span>';
+            : '<span class="badge badge-customer">'+ I18n.get('common.customer') +'</span>';
 
         var createdAt = u.createdAt ? formatDate(u.createdAt) : '—';
 
@@ -282,7 +282,7 @@ function saveUser() {
 
 function openDeleteModal(id, name) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = I18n.get('common.sure') + "'" + name + "' ?" + I18n.get('common.undone');
+    document.getElementById('deleteText').textContent = I18n.get('common.sure') + ' "' + name + '"? ' + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');

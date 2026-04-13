@@ -251,12 +251,35 @@ I18n.register('pt', {
         formDealExpires: 'Promoção expira em',
         formFeatured: 'Destaque',
         selectCategory: 'Selecione uma categoria',
-        editTitle: 'Editar produto',
-        noImage: 'Sem imagem',
         searchProduct: 'Pesquisar produtos...',
         loadingProducts: 'Carregando produtos...',
         deleteProduct: 'Excluir produto',
-        deleteProductText: 'Tem certeza de que deseja excluir este produto? Esta ação não pode ser desfeita.'
+        deleteProductText: 'Tem certeza de que deseja excluir este produto? Esta ação não pode ser desfeita.',
+        thDiscount: 'Desconto',
+        thFeatured: 'Destaque',
+        featuredYes: 'Sim',
+        featuredNo: 'Não'
+    },
+
+    // ==================== Products JS ====================
+    productsJs: {
+        failedProducts: 'Falha ao carregar produtos',
+        noProducts: 'Nenhum produto ainda',
+        createProductsText: 'Crie seu primeiro produto para começar',
+        createProducts: 'Criar produto',
+        editTitle: 'Editar produto',
+        requiredName: 'O nome do produto é obrigatório.',
+        requiredPrice: 'O preço deve ser zero ou um valor positivo.',
+        requiredStock: 'A quantidade em estoque deve ser zero ou um valor positivo.',
+        requiredDiscount: 'A porcentagem de desconto deve estar entre 0 e 100.',
+        requiredInitialStock: 'O estoque inicial deve ser zero ou um valor positivo.',
+        selectCategory: 'Por favor, selecione uma categoria.',
+        failedProductUpdate: 'Falha ao atualizar produto',
+        failedProductCreate: 'Falha ao criar produto',
+        failedProductDelete: 'Falha ao excluir produto',
+        updateSuccessProduct: 'Produto atualizado com sucesso!',
+        createSuccessProducts: 'Produto criado com sucesso',
+        deleteSuccessProducts: 'Produto excluído com sucesso',
     },
 
     // ==================== Users Page ====================
@@ -311,7 +334,32 @@ I18n.register('pt', {
         formUser: 'Usuário',
         selectUser: 'Selecione um usuário',
         createTitle: 'Novo endereço',
-        editTitle: 'Editar endereço'
+        deleteAddresses: 'Excluir endereço',
+        deleteAddressText: 'Tem certeza de que deseja excluir este endereço? Esta ação não pode ser desfeita.'
+    },
+
+    // ==================== Addresses JS ====================
+    addressesJs: {
+        loading: 'Carregando endereços...',
+        failedLoad: 'Falha ao carregar endereços',
+        noAddresses: 'Nenhum endereço ainda',
+        createFirst: 'Crie seu primeiro endereço para começar',
+        createAddressBtn: 'Criar endereço',
+        editTitle: 'Editar endereço',
+        streetRequired: 'A rua é obrigatória.',
+        numberRequired: 'O número é obrigatório.',
+        cityRequired: 'A cidade é obrigatória.',
+        stateRequired: 'O estado é obrigatório.',
+        zipRequired: 'O CEP é obrigatório.',
+        countryRequired: 'O país é obrigatório.',
+        userRequired: 'Por favor, selecione um usuário.',
+        failedUpdate: 'Falha ao atualizar endereço',
+        failedCreate: 'Falha ao criar endereço',
+        failedDelete: 'Falha ao excluir endereço',
+        updateSuccess: 'Endereço atualizado com sucesso',
+        createSuccess: 'Endereço criado com sucesso',
+        deleteSuccess: 'Endereço excluído com sucesso',
+        searchPlaceholder: 'Pesquisar endereços...'
     },
 
     // ==================== Orders Page ====================
@@ -319,7 +367,6 @@ I18n.register('pt', {
         title: 'Pedidos',
         subtitle: 'Gerenciar pedidos dos clientes',
         newOrder: 'Novo pedido',
-        thId: 'Pedido',
         thDate: 'Data',
         thCustomer: 'Cliente',
         thTotal: 'Total',
@@ -334,11 +381,43 @@ I18n.register('pt', {
         selectAddress: 'Selecione um endereço',
         createTitle: 'Novo pedido',
         editTitle: 'Editar pedido',
+        searchPlaceholder: 'Pesquisar pedidos...',
+        loadingOrders: 'Carregando pedidos...',
+        totalAmount: 'Valor total (R$)',
+        updateStatus: 'Atualizar status',
         statusPending: 'Pendente',
         statusConfirmed: 'Confirmado',
         statusShipped: 'Enviado',
         statusDelivered: 'Entregue',
-        statusCancelled: 'Cancelado'
+        statusCancelled: 'Cancelado',
+        deleteConfirmTitle: 'Excluir pedido',
+        deleteConfirmText: 'Tem certeza de que deseja excluir este pedido? Isso também excluirá todos os seus itens. Esta ação não pode ser desfeita.'
+    },
+
+    ordersJs: {
+        failedLoad: 'Falha ao carregar pedidos',
+        noOrders: 'Nenhum pedido ainda',
+        firstOrderText: 'Crie seu primeiro pedido para começar',
+        createOrder: 'Criar pedido',
+        clickStatus: 'Clique para alterar o status',
+        selectUserPlaceholder: 'Selecione um usuário...',
+        selectUserFirst: 'Selecione um usuário primeiro...',
+        loading: 'Carregando...',
+        noAddresses: 'Nenhum endereço para este usuário',
+        failedAddresses: 'Falha ao carregar endereços',
+        requiredUser: 'Por favor, selecione um usuário.',
+        requiredAddress: 'Por favor, selecione um endereço.',
+        requiredStatus: 'Por favor, selecione um status.',
+        invalidTotal: 'O valor total deve ser zero ou positivo.',
+        updateSuccess: 'Pedido atualizado com sucesso',
+        createSuccess: 'Pedido criado com sucesso',
+        deleteSuccess: 'Pedido excluído com sucesso',
+        statusUpdateSuccess: 'Status atualizado para ',
+        failedUpdate: 'Falha ao atualizar pedido',
+        failedCreate: 'Falha ao criar pedido',
+        failedDelete: 'Falha ao excluir pedido',
+        failedStatus: 'Falha ao atualizar status',
+        connectionError: 'Erro de conexão',
     },
 
     // ==================== Order Items Page ====================

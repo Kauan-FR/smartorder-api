@@ -1,5 +1,6 @@
 /**
  * Admin Products — CRUD operations for products.
+ * Handles the 4 new fields: discountPercent, initialStock, dealExpiresAt, featured.
  *
  * @author Kauan Santos Ferreira
  * @since 2026
@@ -77,7 +78,7 @@ function loadProducts() {
         })
         .catch(function() {
             document.getElementById('productsTableBody').innerHTML =
-                '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text-tertiary);">Failed to load products</td></tr>';
+                '<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('productsJs.failedProducts') +'</td></tr>';
         });
 }
 
@@ -96,7 +97,7 @@ function loadCategories() {
 
 function populateCategoryDropdown(selectedId) {
     var select = document.getElementById('productCategory');
-    select.innerHTML = '<option value="">Select a category...</option>';
+    select.innerHTML = '<option value="">'+ I18n.get('products.selectCategory') +'</option>';
     allCategories.forEach(function(cat) {
         var option = document.createElement('option');
         option.value = cat.id;
@@ -114,12 +115,12 @@ function renderTable(products) {
     var tbody = document.getElementById('productsTableBody');
 
     if (products.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9">'
+        tbody.innerHTML = '<tr><td colspan="10">'
             + '<div class="empty-state">'
             + '<svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>'
-            + '<p class="empty-state__title">No products yet</p>'
-            + '<p class="empty-state__text">Create your first product to start selling</p>'
-            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">Create product</button>'
+            + '<p class="empty-state__title">'+ I18n.get('productsJs.noProducts') +'</p>'
+            + '<p class="empty-state__text">'+ I18n.get('productsJs.createProductsText') +'</p>'
+            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">'+ I18n.get('productsJs.createProducts') +'</button>'
             + '</div></td></tr>';
         return;
     }
@@ -130,6 +131,10 @@ function renderTable(products) {
             ? '<span class="status-icon status-icon--active" title="Active">&#10003;</span>'
             : '<span class="status-icon status-icon--inactive" title="Inactive">&#10007;</span>';
 
+        var featuredIcon = prod.featured
+            ? '<span class="status-icon status-icon--active" title="Featured">&#9733;</span>'
+            : '<span class="status-icon status-icon--inactive" title="Not featured">&#9734;</span>';
+
         var thumbnail = prod.imageUrl
             ? '<img class="table__thumbnail" src="' + escapeHtml(prod.imageUrl) + '" alt="' + escapeHtml(prod.name) + '" onclick="openImagePreview(\'' + escapeHtml(prod.imageUrl).replace(/'/g, "\\'") + '\')" onerror="this.style.display=\'none\'">'
             : '<div class="table__thumbnail-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>';
@@ -139,15 +144,21 @@ function renderTable(products) {
         var price = prod.price != null ? 'R$ ' + Number(prod.price).toFixed(2) : '—';
         var stock = prod.stockQuantity != null ? prod.stockQuantity : '—';
 
+        // Discount display: show percentage or dash
+        var discount = prod.discountPercent != null && prod.discountPercent > 0
+            ? '<span class="badge badge-deal">' + prod.discountPercent + '%</span>'
+            : '—';
+
         html += '<tr>'
             + '<td class="table__cell--primary">#' + prod.id + '</td>'
             + '<td>' + thumbnail + '</td>'
             + '<td class="table__cell--primary">' + escapeHtml(prod.name) + '</td>'
-            + '<td class="table__cell--description">' + escapeHtml(prod.description || '—') + '</td>'
             + '<td>' + price + '</td>'
             + '<td>' + stock + '</td>'
             + '<td>' + activeIcon + '</td>'
             + '<td><span class="badge badge-category">' + categoryName + '</span></td>'
+            + '<td>' + discount + '</td>'
+            + '<td>' + featuredIcon + '</td>'
             + '<td><div class="table__actions">'
             + '<div class="table__action-btn table__action-btn--edit" onclick="openEditModal(' + prod.id + ')" title="Edit">'
             + '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>'
@@ -180,8 +191,8 @@ function searchProducts(term) {
 
 function openCreateModal() {
     editingId = null;
-    document.getElementById('modalTitle').textContent = 'New product';
-    document.getElementById('modalSubmitBtn').textContent = 'Create';
+    document.getElementById('modalTitle').textContent = I18n.get('productsJs.editTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.create');
     document.getElementById('productId').value = '';
     document.getElementById('productName').value = '';
     document.getElementById('productDescription').value = '';
@@ -189,7 +200,12 @@ function openCreateModal() {
     document.getElementById('productStock').value = '';
     document.getElementById('productImageUrl').value = '';
     document.getElementById('productActive').checked = true;
+    document.getElementById('productDiscount').value = '';
+    document.getElementById('productInitialStock').value = '';
+    document.getElementById('productDealExpires').value = '';
+    document.getElementById('productFeatured').checked = false;
     updateToggleLabel();
+    updateFeaturedLabel();
     populateCategoryDropdown(null);
     hideModalError();
     openModal();
@@ -202,8 +218,8 @@ function openEditModal(id) {
     if (!prod) return;
 
     editingId = id;
-    document.getElementById('modalTitle').textContent = 'Edit product';
-    document.getElementById('modalSubmitBtn').textContent = 'Save changes';
+    document.getElementById('modalTitle').textContent = I18n.get('productsJs.editTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.saveChanges');
     document.getElementById('productId').value = id;
     document.getElementById('productName').value = prod.name;
     document.getElementById('productDescription').value = prod.description || '';
@@ -211,7 +227,26 @@ function openEditModal(id) {
     document.getElementById('productStock').value = prod.stockQuantity != null ? prod.stockQuantity : '';
     document.getElementById('productImageUrl').value = prod.imageUrl || '';
     document.getElementById('productActive').checked = prod.active !== false;
+    document.getElementById('productDiscount').value = prod.discountPercent != null ? prod.discountPercent : '';
+    document.getElementById('productInitialStock').value = prod.initialStock != null ? prod.initialStock : '';
+    document.getElementById('productFeatured').checked = prod.featured === true;
+
+    // Format LocalDateTime for datetime-local input (YYYY-MM-DDTHH:mm)
+    if (prod.dealExpiresAt) {
+        // Backend may return ISO string like "2026-12-31T23:59:00" or with timezone
+        var dateStr = prod.dealExpiresAt;
+        // Remove timezone suffix if present (e.g. "Z" or "+00:00")
+        if (dateStr.indexOf('Z') !== -1) {
+            dateStr = dateStr.replace('Z', '');
+        }
+        // Take only YYYY-MM-DDTHH:mm (first 16 chars)
+        document.getElementById('productDealExpires').value = dateStr.substring(0, 16);
+    } else {
+        document.getElementById('productDealExpires').value = '';
+    }
+
     updateToggleLabel();
+    updateFeaturedLabel();
     populateCategoryDropdown(prod.category ? prod.category.id : null);
     hideModalError();
     openModal();
@@ -227,34 +262,50 @@ function saveProduct() {
     var imageUrl = document.getElementById('productImageUrl').value.trim();
     var active = document.getElementById('productActive').checked;
     var categoryId = document.getElementById('productCategory').value;
+    var discount = document.getElementById('productDiscount').value;
+    var initialStock = document.getElementById('productInitialStock').value;
+    var dealExpires = document.getElementById('productDealExpires').value;
+    var featured = document.getElementById('productFeatured').checked;
 
     // Validation
     if (!name) {
-        showModalError('Product name is required.');
+        showModalError(I18n.get('productsJs.requiredName'));
         return;
     }
     if (price === '' || Number(price) < 0) {
-        showModalError('Price must be zero or a positive value.');
+        showModalError(I18n.get('productsJs.requiredPrice'));
         return;
     }
     if (stock === '' || Number(stock) < 0) {
-        showModalError('Stock quantity must be zero or a positive value.');
+        showModalError(I18n.get('productsJs.requiredStock'));
         return;
     }
     if (!categoryId) {
-        showModalError('Please select a category.');
+        showModalError(I18n.get('productsJs.selectCategory'));
+        return;
+    }
+    if (discount !== '' && (Number(discount) < 0 || Number(discount) > 100)) {
+        showModalError(I18n.get('productsJs.requiredDiscount'));
+        return;
+    }
+    if (initialStock !== '' && Number(initialStock) < 0) {
+        showModalError(I18n.get('productsJs.requiredInitialStock'));
         return;
     }
 
-    var body = JSON.stringify({
+    var body = {
         name: name,
         description: description || null,
         price: Number(price),
         stockQuantity: parseInt(stock),
         imageUrl: imageUrl || null,
         active: active,
-        categoryId: parseInt(categoryId)
-    });
+        categoryId: parseInt(categoryId),
+        discountPercent: discount !== '' ? parseInt(discount) : null,
+        initialStock: initialStock !== '' ? parseInt(initialStock) : null,
+        dealExpiresAt: dealExpires || null,
+        featured: featured
+    };
 
     var btn = document.getElementById('modalSubmitBtn');
     btn.disabled = true;
@@ -264,36 +315,36 @@ function saveProduct() {
         fetch('/api/products/' + editingId, {
             method: 'PUT',
             headers: getHeaders(),
-            body: body
+            body: JSON.stringify(body)
         })
         .then(function(r) {
             if (r.ok) {
                 closeModal();
                 loadProducts();
-                showToast('Product updated successfully', 'success');
+                showToast(I18n.get('productsJs.updateSuccessProduct'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to update product'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('productsJs.failedProductUpdate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     } else {
         // Create
         fetch('/api/products', {
             method: 'POST',
             headers: getHeaders(),
-            body: body
+            body: JSON.stringify(body)
         })
         .then(function(r) {
             if (r.ok || r.status === 201) {
                 closeModal();
                 loadProducts();
-                showToast('Product created successfully', 'success');
+                showToast(I18n.get('productsJs.createSuccessProducts'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to create product'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('productsJs.failedProductCreate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     }
 }
@@ -302,7 +353,7 @@ function saveProduct() {
 
 function openDeleteModal(id, name) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = 'Are you sure you want to delete "' + name + '"? This action cannot be undone.';
+document.getElementById('deleteText').textContent = I18n.get('common.sure') + ' "' + name + '"? ' + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');
@@ -328,12 +379,12 @@ function confirmDelete() {
         if (r.ok || r.status === 204) {
             closeDeleteModal();
             loadProducts();
-            showToast('Product deleted successfully', 'success');
+            showToast(I18n.get('productsJs.deleteSuccessProducts'), I18n.get('common.success'));
         } else {
-            return r.json().then(function(err) { showDeleteError(err.message || 'Failed to delete product'); });
+            return r.json().then(function(err) { showDeleteError(err.message || I18n.get('productsJs.failedProductDelete')); });
         }
     })
-    .catch(function() { showDeleteError('Connection error'); })
+    .catch(function() { showDeleteError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 
@@ -351,14 +402,20 @@ function closeImagePreview() {
     document.getElementById('previewImage').src = '';
 }
 
-// ==================== Toggle Switch ====================
+// ==================== Toggle Switches ====================
 
 function updateToggleLabel() {
     var checked = document.getElementById('productActive').checked;
     document.getElementById('toggleLabel').textContent = checked ? 'Active' : 'Inactive';
 }
 
+function updateFeaturedLabel() {
+    var checked = document.getElementById('productFeatured').checked;
+    document.getElementById('featuredToggleLabel').textContent = checked ? 'Yes' : 'No';
+}
+
 document.getElementById('productActive').addEventListener('change', updateToggleLabel);
+document.getElementById('productFeatured').addEventListener('change', updateFeaturedLabel);
 
 // ==================== Modal Helpers ====================
 

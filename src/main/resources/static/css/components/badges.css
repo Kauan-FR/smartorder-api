@@ -83,3 +83,10 @@
     align-items: center;
     justify-content: center;
 }
+
+/* Deal/Discount badge */
+.badge-deal {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger-text);
+    font-weight: 600;
+}

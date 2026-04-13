@@ -28,11 +28,11 @@
     <!-- Page Header -->
     <div class="crud-header">
         <div class="crud-header__left">
-            <h1>Addresses</h1>
-            <p class="crud-header__subtitle">Manage user addresses</p>
+            <h1 data-i18n="addresses.title">Addresses</h1>
+            <p class="crud-header__subtitle" data-i18n="addresses.subtitle">Manage user addresses</p>
         </div>
         <div class="crud-header__right">
-            <button class="btn btn-primary" onclick="openCreateModal()">
+            <button class="btn btn-primary" onclick="openCreateModal()" data-i18n="addresses.newAddress">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 New address
             </button>
@@ -43,7 +43,7 @@
     <div class="crud-toolbar">
         <div class="search-bar">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" placeholder="Search addresses..." id="searchInput" oninput="searchAddresses(this.value)">
+            <input type="text" data-i18n-placeholder="addressesJs.searchPlaceholder" placeholder="Search addresses..." id="searchInput" oninput="searchAddresses(this.value)">
         </div>
     </div>
 
@@ -53,32 +53,32 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Street</th>
-                <th>Number</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zip code</th>
-                <th>Country</th>
-                <th>User</th>
-                <th style="text-align:right;">Actions</th>
+                <th data-i18n="addresses.thStreet">Street</th>
+                <th data-i18n="addresses.thNumber">Number</th>
+                <th data-i18n="addresses.thCity">City</th>
+                <th data-i18n="addresses.thState">State</th>
+                <th data-i18n="addresses.formZipCode">Zip code</th>
+                <th data-i18n="addresses.formCountry">Country</th>
+                <th data-i18n="addresses.thUser">User</th>
+                <th style="text-align:right;" data-i18n="addresses.thActions">Actions</th>
             </tr>
             </thead>
             <tbody id="addressesTableBody">
             <tr>
-                <td colspan="9" style="text-align:center;padding:24px;color:var(--text-tertiary);">Loading addresses...</td>
+                <td colspan="9" style="text-align:center;padding:24px;color:var(--text-tertiary);" data-i18n="addressesJs.loading">Loading addresses...</td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <p style="text-align:center;font-size:var(--text-xs);color:var(--text-tertiary);margin-top:var(--space-6);">SmartOrder API v1.0 — Admin panel</p>
+    <p style="text-align:center;font-size:var(--text-xs);color:var(--text-tertiary);margin-top:var(--space-6);" data-i18n="common.footer">SmartOrder API v1.0 — Admin panel</p>
 </main>
 
 <!-- Create/Edit Modal -->
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
 <div class="modal" id="addressModal">
     <div class="modal__header">
-        <h2 class="modal__title" id="modalTitle">New address</h2>
+        <h2 class="modal__title" id="modalTitle" data-i18n="addresses.createTitle">New address</h2>
         <div class="modal__close" onclick="closeModal()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </div>
@@ -89,53 +89,53 @@
 
         <div class="modal__form-row">
             <div class="modal__form-group" style="flex:3;">
-                <label class="label" for="addressStreet">Street</label>
+                <label class="label" for="addressStreet" data-i18n="addresses.formStreet">Street</label>
                 <input class="input" type="text" id="addressStreet" placeholder="e.g. Rua das Palmeiras" maxlength="200">
             </div>
             <div class="modal__form-group" style="flex:1;">
-                <label class="label" for="addressNumber">Number</label>
+                <label class="label" for="addressNumber" data-i18n="addresses.formNumber">Number</label>
                 <input class="input" type="text" id="addressNumber" placeholder="e.g. 450" maxlength="20">
             </div>
         </div>
 
         <div class="modal__form-group">
-            <label class="label" for="addressComplement">Complement <span style="color:var(--text-tertiary);font-weight:400;">(optional)</span></label>
+            <label class="label" for="addressComplement" data-i18n="addresses.formComplement">Complement <span style="color:var(--text-tertiary);font-weight:400;">(optional)</span></label>
             <input class="input" type="text" id="addressComplement" placeholder="e.g. Apt 302, Block B" maxlength="100">
         </div>
 
         <div class="modal__form-row">
             <div class="modal__form-group">
-                <label class="label" for="addressCity">City</label>
+                <label class="label" for="addressCity" data-i18n="addresses.formCity">City</label>
                 <input class="input" type="text" id="addressCity" placeholder="e.g. Aracaju" maxlength="100">
             </div>
             <div class="modal__form-group">
-                <label class="label" for="addressState">State</label>
+                <label class="label" for="addressState" data-i18n="addresses.formState">State</label>
                 <input class="input" type="text" id="addressState" placeholder="e.g. SE" maxlength="50">
             </div>
         </div>
 
         <div class="modal__form-row">
             <div class="modal__form-group">
-                <label class="label" for="addressZipCode">Zip code</label>
+                <label class="label" for="addressZipCode" data-i18n="addresses.formZipCode">Zip code</label>
                 <input class="input" type="text" id="addressZipCode" placeholder="e.g. 49000-000" maxlength="20">
             </div>
             <div class="modal__form-group">
-                <label class="label" for="addressCountry">Country</label>
+                <label class="label" for="addressCountry" data-i18n="addresses.formCountry">Country</label>
                 <input class="input" type="text" id="addressCountry" placeholder="e.g. Brazil" maxlength="50">
             </div>
         </div>
 
         <div class="modal__form-group">
-            <label class="label" for="addressUser">User</label>
+            <label class="label" for="addressUser" data-i18n="addresses.formUser">User</label>
             <select class="input" id="addressUser">
-                <option value="">Select a user...</option>
+                <option value="" data-i18n="addresses.selectUser">Select a user...</option>
             </select>
         </div>
 
     </div>
     <div class="modal__footer">
-        <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
-        <button class="btn btn-primary" id="modalSubmitBtn" onclick="saveAddress()">Create</button>
+        <button class="btn btn-outline" onclick="closeModal()" data-i18n="common.cancel">Cancel</button>
+        <button class="btn btn-primary" id="modalSubmitBtn" onclick="saveAddress()" data-i18n="common.create">Create</button>
     </div>
 </div>
 
@@ -145,13 +145,13 @@
         <div class="modal__confirm-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
         </div>
-        <p class="modal__confirm-title">Delete address</p>
-        <p class="modal__confirm-text" id="deleteText">Are you sure you want to delete this address? This action cannot be undone.</p>
+        <p class="modal__confirm-title" data-i18n="addresses.deleteAddresses">Delete address</p>
+        <p class="modal__confirm-text" id="deleteText" data-i18n="addresses.deleteAddressText">Are you sure you want to delete this address? This action cannot be undone.</p>
         <div class="modal__error" id="deleteError"></div>
     </div>
     <div class="modal__footer">
-        <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
-        <button class="btn btn-danger" id="deleteConfirmBtn" onclick="confirmDelete()">Delete</button>
+        <button class="btn btn-outline" onclick="closeDeleteModal()" data-i18n="common.cancel">Cancel</button>
+        <button class="btn btn-danger" id="deleteConfirmBtn" onclick="confirmDelete()" data-i18n="common.delete">Delete</button>
     </div>
 </div>
 

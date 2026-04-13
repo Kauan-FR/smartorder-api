@@ -55,17 +55,18 @@
                 <th>ID</th>
                 <th data-i18n="products.thImage">Image</th>
                 <th data-i18n="products.thName">Name</th>
-                <th data-i18n="products.thDescription">Description</th>
                 <th data-i18n="products.thPrice">Price</th>
                 <th data-i18n="products.thStock">Stock</th>
                 <th data-i18n="products.thActive">Active</th>
                 <th data-i18n="products.thCategory">Category</th>
-                <th style="text-align:right;" data-i18n="products.formDescription">Actions</th>
+                <th data-i18n="products.thDiscount">Discount</th>
+                <th data-i18n="products.thFeatured">Featured</th>
+                <th style="text-align:right;" data-i18n="products.thActions">Actions</th>
             </tr>
             </thead>
             <tbody id="productsTableBody">
             <tr>
-                <td colspan="9" style="text-align:center;padding:24px;color:var(--text-tertiary);" data-i18n="products.loadingProducts">Loading products...</td>
+                <td colspan="10" style="text-align:center;padding:24px;color:var(--text-tertiary);" data-i18n="products.loadingProducts">Loading products...</td>
             </tr>
             </tbody>
         </table>
@@ -120,12 +121,41 @@
             </select>
         </div>
 
+        <!-- ========== Deal / Promotion Section ========== -->
+
+        <div class="modal__form-row">
+            <div class="modal__form-group">
+                <label class="label" for="productDiscount" data-i18n="products.formDiscount">Discount %</label>
+                <input class="input" type="number" id="productDiscount" placeholder="0" min="0" max="100" step="1">
+            </div>
+            <div class="modal__form-group">
+                <label class="label" for="productInitialStock" data-i18n="products.formInitialStock">Initial stock</label>
+                <input class="input" type="number" id="productInitialStock" placeholder="0" min="0" step="1">
+            </div>
+        </div>
+
+        <div class="modal__form-group">
+            <label class="label" for="productDealExpires" data-i18n="products.formDealExpires">Deal expires at</label>
+            <input class="input" type="datetime-local" id="productDealExpires">
+        </div>
+
+        <!-- ========== END NEW FIELDS ========== -->
+
         <div class="modal__form-group">
             <label class="label">Status</label>
             <div class="toggle-switch">
                 <input type="checkbox" id="productActive" checked>
                 <label class="toggle-switch__slider" for="productActive"></label>
                 <span class="toggle-switch__label" id="toggleLabel" data-i18n="products.formActive">Active</span>
+            </div>
+        </div>
+
+        <div class="modal__form-group">
+            <label class="label" data-i18n="products.formFeatured">Featured</label>
+            <div class="toggle-switch">
+                <input type="checkbox" id="productFeatured">
+                <label class="toggle-switch__slider" for="productFeatured"></label>
+                <span class="toggle-switch__label" id="featuredToggleLabel" data-i18n="products.featuredNo">No</span>
             </div>
         </div>
 
@@ -142,8 +172,8 @@
         <div class="modal__confirm-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
         </div>
-        <p class="modal__confirm-title" data-i18n="products.deleteProducts">Delete product</p>
-        <p class="modal__confirm-text" id="deleteText" data-i18n="products.deleteProductsText">Are you sure you want to delete this product? This action cannot be undone.</p>
+        <p class="modal__confirm-title" data-i18n="products.deleteProduct">Delete product</p>
+        <p class="modal__confirm-text" id="deleteText" data-i18n="products.deleteProductText">Are you sure you want to delete this product? This action cannot be undone.</p>
         <div class="modal__error" id="deleteError"></div>
     </div>
     <div class="modal__footer">

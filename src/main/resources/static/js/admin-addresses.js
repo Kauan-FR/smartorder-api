@@ -77,7 +77,7 @@ function loadAddresses() {
         })
         .catch(function() {
             document.getElementById('addressesTableBody').innerHTML =
-                '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text-tertiary);">Failed to load addresses</td></tr>';
+                '<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('addressesJs.failedLoad') +'</td></tr>';
         });
 }
 
@@ -96,7 +96,7 @@ function loadUsers() {
 
 function populateUserDropdown(selectedId) {
     var select = document.getElementById('addressUser');
-    select.innerHTML = '<option value="">Select a user...</option>';
+    select.innerHTML = '<option value="">'+ I18n.get('addresses.selectUser') +'</option>';
     allUsers.forEach(function(u) {
         var option = document.createElement('option');
         option.value = u.id;
@@ -117,9 +117,9 @@ function renderTable(addresses) {
         tbody.innerHTML = '<tr><td colspan="9">'
             + '<div class="empty-state">'
             + '<svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>'
-            + '<p class="empty-state__title">No addresses yet</p>'
-            + '<p class="empty-state__text">Create your first address to get started</p>'
-            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">Create address</button>'
+            + '<p class="empty-state__title">'+ I18n.get('addressesJs.noAddresses') +'</p>'
+            + '<p class="empty-state__text">'+ I18n.get('addressesJs.createFirst') +'</p>'
+            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">'+ I18n.get('addressesJs.createAddressBtn') +'</button>'
             + '</div></td></tr>';
         return;
     }
@@ -172,8 +172,8 @@ function searchAddresses(term) {
 
 function openCreateModal() {
     editingId = null;
-    document.getElementById('modalTitle').textContent = 'New address';
-    document.getElementById('modalSubmitBtn').textContent = 'Create';
+    document.getElementById('modalTitle').textContent = I18n.get('addressesJs.createTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.create');
     document.getElementById('addressId').value = '';
     document.getElementById('addressStreet').value = '';
     document.getElementById('addressNumber').value = '';
@@ -194,8 +194,8 @@ function openEditModal(id) {
     if (!addr) return;
 
     editingId = id;
-    document.getElementById('modalTitle').textContent = 'Edit address';
-    document.getElementById('modalSubmitBtn').textContent = 'Save changes';
+    document.getElementById('modalTitle').textContent = I18n.get('addressesJs.editTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.saveChanges');
     document.getElementById('addressId').value = id;
     document.getElementById('addressStreet').value = addr.street;
     document.getElementById('addressNumber').value = addr.number;
@@ -222,13 +222,13 @@ function saveAddress() {
     var userId = document.getElementById('addressUser').value;
 
     // Validation
-    if (!street) { showModalError('Street is required.'); return; }
-    if (!number) { showModalError('Number is required.'); return; }
-    if (!city) { showModalError('City is required.'); return; }
-    if (!state) { showModalError('State is required.'); return; }
-    if (!zipCode) { showModalError('Zip code is required.'); return; }
-    if (!country) { showModalError('Country is required.'); return; }
-    if (!userId) { showModalError('Please select a user.'); return; }
+    if (!street) { showModalError(I18n.get('addressesJs.streetRequired')); return; }
+    if (!number) { showModalError(I18n.get('addressesJs.numberRequired')); return; }
+    if (!city) { showModalError(I18n.get('addressesJs.cityRequired')); return; }
+    if (!state) { showModalError(I18n.get('addressesJs.stateRequired')); return; }
+    if (!zipCode) { showModalError(I18n.get('addressesJs.zipRequired')); return; }
+    if (!country) { showModalError(I18n.get('addressesJs.countryRequired')); return; }
+    if (!userId) { showModalError(I18n.get('addressesJs.userRequired')); return; }
 
     var body = JSON.stringify({
         street: street,
@@ -254,12 +254,12 @@ function saveAddress() {
             if (r.ok) {
                 closeModal();
                 loadAddresses();
-                showToast('Address updated successfully', 'success');
+                showToast(I18n.get('addressesJs.updateSuccess'), I18n.get('common.success') );
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to update address'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('addressesJs.failedUpdate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     } else {
         fetch('/api/addresses', {
@@ -271,12 +271,12 @@ function saveAddress() {
             if (r.ok || r.status === 201) {
                 closeModal();
                 loadAddresses();
-                showToast('Address created successfully', 'success');
+                showToast(I18n.get('addressesJs.createSuccess'), I18n.get('common.success') );
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to create address'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('addressesJs.failedCreate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     }
 }
@@ -285,7 +285,7 @@ function saveAddress() {
 
 function openDeleteModal(id, label) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = 'Are you sure you want to delete "' + label + '"? This action cannot be undone.';
+    document.getElementById('deleteText').textContent =  I18n.get('common.sure') + ' "' + label + '"? ' + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');
@@ -311,12 +311,12 @@ function confirmDelete() {
         if (r.ok || r.status === 204) {
             closeDeleteModal();
             loadAddresses();
-            showToast('Address deleted successfully', 'success');
+            showToast(I18n.get('addressesJs.deleteSuccess'), I18n.get('common.success') );
         } else {
-            return r.json().then(function(err) { showDeleteError(err.message || 'Failed to delete address'); });
+            return r.json().then(function(err) { showDeleteError(err.message || I18n.get('addressesJs.failedDelete')); });
         }
     })
-    .catch(function() { showDeleteError('Connection error'); })
+    .catch(function() { showDeleteError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 
