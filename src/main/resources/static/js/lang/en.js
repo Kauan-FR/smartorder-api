@@ -401,7 +401,6 @@ I18n.register('en', {
         selectUser: 'Select a user',
         selectAddress: 'Select an address',
         createTitle: 'New order',
-        editTitle: 'Edit order',
         searchPlaceholder: 'Search orders...',
         loadingOrders: 'Loading orders...',
         totalAmount: 'Total amount (R$)',
@@ -416,6 +415,7 @@ I18n.register('en', {
         deleteConfirmText: 'Are you sure you want to delete this order? This will also delete all its items. This action cannot be undone.'
     },
 
+    // ==================== Orders JS ====================
     ordersJs: {
         failedLoad: 'Failed to load orders',
         noOrders: 'No orders yet',
@@ -424,7 +424,9 @@ I18n.register('en', {
         clickStatus: 'Click to change status',
         selectUserPlaceholder: 'Select a user...',
         selectUserFirst: 'Select a user first...',
+        selectAddressPlaceholder: 'Select an address...',
         loading: 'Loading...',
+        editTitle: 'Edit order',
         noAddresses: 'No addresses for this user',
         failedAddresses: 'Failed to load addresses',
         requiredUser: 'Please select a user.',
@@ -451,37 +453,48 @@ I18n.register('en', {
         newItem: 'New item',
         thOrder: 'Order',
         thProduct: 'Product',
-        thQuantity: 'Qty',
+        thQuantity: 'Quantity',
         thPrice: 'Price',
         thSubtotal: 'Subtotal',
+        loadingItems: 'Loading items...',
         thActions: 'Actions',
         formOrder: 'Order',
         formProduct: 'Product',
         formQuantity: 'Quantity',
         formPrice: 'Unit price',
         formSubtotal: 'Subtotal',
+        unitPrice: 'Unit price (R$)',
         selectOrder: 'Select an order',
         selectProduct: 'Select a product',
         createTitle: 'New order item',
-        editTitle: 'Edit order item'
+        deleteItem: 'Delete item',
+        deleteItemText: 'Are you sure you want to delete this item? This action cannot be undone.'
     },
 
-    // ==================== Order Statuses (shared) ====================
-    status: {
-        pending: 'Pending',
-        confirmed: 'Confirmed',
-        shipped: 'Shipped',
-        delivered: 'Delivered',
-        cancelled: 'Cancelled'
-    },
-
-    // ==================== Search Results ====================
-    search: {
-        products: 'Products',
-        categories: 'Categories',
-        users: 'Users',
-        orders: 'Orders',
-        noResults: 'No results found for'
+    // ==================== Order Items JS ====================
+    orderItemsJs: {
+        failedLoad: 'Failed to load items',
+        noItems: 'No items yet',
+        firstItemText: 'Add items to orders to get started',
+        addItem: 'Add item',
+        orderLabel: 'Order #',
+        selectOrder: 'Select an order...',
+        selectProduct: 'Select a product...',
+        searchPlaceholder: 'Search items...',
+        requiredOrder: 'Please select an order.',
+        requiredProduct: 'Please select a product.',
+        requiredQuantity: 'Quantity must be at least 1.',
+        invalidPrice: 'Price must be zero or positive.',
+        updateSuccess: 'Item updated successfully',
+        createSuccess: 'Item created successfully',
+        deleteSuccess: 'Item deleted successfully',
+        failedUpdate: 'Failed to update item',
+        failedCreate: 'Failed to create item',
+        failedDelete: 'Failed to delete item',
+        connectionError: 'Connection error',
+        createTitle: 'New item',
+        editTitle: 'Edit item',
+        deleteConfirmText: 'Are you sure you want to delete "{label}"? This action cannot be undone.'
     },
 
     // ==================== Language Names ====================

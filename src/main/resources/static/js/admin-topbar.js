@@ -288,7 +288,7 @@ function performGlobalSearch(query) {
             orders.forEach(function(o) {
                 html += '<div class="topbar__search-result" onclick="window.location.href=\'/admin/orders\'">'
                     + '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
-                    + '<span>#' + o.id + ' — ' + (o.user ? escapeSearchHtml(o.user.name) : 'Unknown') + '</span></div>';
+                    + '<span>#' + o.id + ' — ' + (o.user ? escapeSearchHtml(o.user.name) : I18n.get('common.unknown')) + '</span></div>';
             });
             html += '</div>';
         }

@@ -71,11 +71,11 @@ function getStatusClass(status) {
 
 function formatStatus(status) {
     var map = {
-        'PENDING': 'Pending',
-        'CONFIRMED': 'Confirmed',
-        'SHIPPED': 'Shipped',
-        'DELIVERED': 'Delivered',
-        'CANCELLED': 'Cancelled'
+        'PENDING': I18n.get('orders.statusPending'),
+        'CONFIRMED': I18n.get('orders.statusConfirmed'),
+        'SHIPPED': I18n.get('orders.statusShipped'),
+        'DELIVERED': I18n.get('orders.statusDelivered'),
+        'CANCELLED': I18n.get('orders.statusCancelled')
     };
     return map[status] || status;
 }
@@ -181,7 +181,7 @@ function renderOrdersTable(orders) {
         var statusClass = getStatusClass(order.status);
         html += '<tr>'
             + '<td class="table__cell--primary">#' + order.id + '</td>'
-            + '<td>' + (order.user ? order.user.name : 'Unknown') + '</td>'
+            + '<td>' + (order.user ? order.user.name : I18n.get('common.unknown')) + '</td>'
             + '<td>R$ ' + (order.totalAmount ? order.totalAmount.toFixed(2) : '0.00') + '</td>'
             + '<td><span class="badge ' + statusClass + '">' + formatStatus(order.status) + '</span></td>'
             + '</tr>';

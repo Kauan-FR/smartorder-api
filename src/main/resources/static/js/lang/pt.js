@@ -380,7 +380,6 @@ I18n.register('pt', {
         selectUser: 'Selecione um usuário',
         selectAddress: 'Selecione um endereço',
         createTitle: 'Novo pedido',
-        editTitle: 'Editar pedido',
         searchPlaceholder: 'Pesquisar pedidos...',
         loadingOrders: 'Carregando pedidos...',
         totalAmount: 'Valor total (R$)',
@@ -394,6 +393,7 @@ I18n.register('pt', {
         deleteConfirmText: 'Tem certeza de que deseja excluir este pedido? Isso também excluirá todos os seus itens. Esta ação não pode ser desfeita.'
     },
 
+    // ==================== Orders JS ====================
     ordersJs: {
         failedLoad: 'Falha ao carregar pedidos',
         noOrders: 'Nenhum pedido ainda',
@@ -402,7 +402,9 @@ I18n.register('pt', {
         clickStatus: 'Clique para alterar o status',
         selectUserPlaceholder: 'Selecione um usuário...',
         selectUserFirst: 'Selecione um usuário primeiro...',
+        selectAddressPlaceholder: 'Selecione um endereço...',
         loading: 'Carregando...',
+        editTitle: 'Editar pedido',
         noAddresses: 'Nenhum endereço para este usuário',
         failedAddresses: 'Falha ao carregar endereços',
         requiredUser: 'Por favor, selecione um usuário.',
@@ -427,37 +429,48 @@ I18n.register('pt', {
         newItem: 'Novo item',
         thOrder: 'Pedido',
         thProduct: 'Produto',
-        thQuantity: 'Qtd',
+        thQuantity: 'Quantidade',
         thPrice: 'Preço',
         thSubtotal: 'Subtotal',
+        loadingItems: 'Carregando items...',
         thActions: 'Ações',
         formOrder: 'Pedido',
         formProduct: 'Produto',
         formQuantity: 'Quantidade',
         formPrice: 'Preço unitário',
         formSubtotal: 'Subtotal',
+        unitPrice: 'Preço unitário (R$)',
         selectOrder: 'Selecione um pedido',
         selectProduct: 'Selecione um produto',
         createTitle: 'Novo item do pedido',
-        editTitle: 'Editar item do pedido'
+        deleteItem: 'Excluir item',
+        deleteItemText: 'Tem certeza de que deseja excluir este item? Esta ação não pode ser desfeita.'
     },
 
-    // ==================== Order Statuses (shared) ====================
-    status: {
-        pending: 'Pendente',
-        confirmed: 'Confirmado',
-        shipped: 'Enviado',
-        delivered: 'Entregue',
-        cancelled: 'Cancelado'
-    },
-
-    // ==================== Search Results ====================
-    search: {
-        products: 'Produtos',
-        categories: 'Categorias',
-        users: 'Usuários',
-        orders: 'Pedidos',
-        noResults: 'Nenhum resultado encontrado para'
+    // ==================== Order Items JS ====================
+    orderItemsJs: {
+        failedLoad: 'Falha ao carregar itens',
+        noItems: 'Nenhum item ainda',
+        firstItemText: 'Adicione itens aos pedidos para começar',
+        addItem: 'Adicionar item',
+        orderLabel: 'Pedido #',
+        selectOrder: 'Selecione um pedido...',
+        selectProduct: 'Selecione um produto...',
+        searchPlaceholder: 'Pesquisar itens...',
+        requiredOrder: 'Por favor, selecione um pedido.',
+        requiredProduct: 'Por favor, selecione um produto.',
+        requiredQuantity: 'A quantidade deve ser pelo menos 1.',
+        invalidPrice: 'O preço deve ser zero ou positivo.',
+        updateSuccess: 'Item atualizado com sucesso',
+        createSuccess: 'Item criado com sucesso',
+        deleteSuccess: 'Item excluído com sucesso',
+        failedUpdate: 'Falha ao atualizar item',
+        failedCreate: 'Falha ao criar item',
+        failedDelete: 'Falha ao excluir item',
+        connectionError: 'Erro de conexão',
+        createTitle: 'Novo item',
+        editTitle: 'Editar item',
+        deleteConfirmText: 'Tem certeza de que deseja excluir "{label}"? Esta ação não pode ser desfeita.'
     },
 
     // ==================== Language Names ====================

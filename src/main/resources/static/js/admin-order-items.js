@@ -78,7 +78,7 @@ function loadItems() {
         })
         .catch(function() {
             document.getElementById('itemsTableBody').innerHTML =
-                '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-tertiary);">Failed to load items</td></tr>';
+                '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('orderItemsJs.failedLoad') +'</td></tr>';
         });
 }
 
@@ -104,12 +104,12 @@ function loadProducts() {
 
 function populateOrderDropdown(selectedId) {
     var select = document.getElementById('itemOrder');
-    select.innerHTML = '<option value="">Select an order...</option>';
+    select.innerHTML = '<option value="">'+ I18n.get('orderItemsJs.selectOrder') +'</option>';
     allOrders.forEach(function(ord) {
-        var userName = (ord.user && ord.user.name) ? ord.user.name : 'Unknown';
+        var userName = (ord.user && ord.user.name) ? ord.user.name : I18n.get('common.unknown');
         var option = document.createElement('option');
         option.value = ord.id;
-        option.textContent = 'Order #' + ord.id + ' — ' + userName + ' (' + ord.status + ')';
+        option.textContent = I18n.get('orderItemsJs.orderLabel') + ord.id + ' — ' + userName + ' (' + ord.status + ')';
         if (selectedId && ord.id === selectedId) {
             option.selected = true;
         }
@@ -119,7 +119,7 @@ function populateOrderDropdown(selectedId) {
 
 function populateProductDropdown(selectedId) {
     var select = document.getElementById('itemProduct');
-    select.innerHTML = '<option value="">Select a product...</option>';
+    select.innerHTML = '<option value="">'+ I18n.get('orderItemsJs.selectProduct') +'</option>';
     allProducts.forEach(function(prod) {
         var option = document.createElement('option');
         option.value = prod.id;
@@ -159,9 +159,9 @@ function renderTable(items) {
         tbody.innerHTML = '<tr><td colspan="7">'
             + '<div class="empty-state">'
             + '<svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>'
-            + '<p class="empty-state__title">No items yet</p>'
-            + '<p class="empty-state__text">Add items to orders to get started</p>'
-            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">Add item</button>'
+            + '<p class="empty-state__title">'+ I18n.get('orderItemsJs.noItems') +'</p>'
+            + '<p class="empty-state__text">'+ I18n.get('orderItemsJs.firstItemText') +'</p>'
+            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">'+ I18n.get('orderItemsJs.addItem') +'</button>'
             + '</div></td></tr>';
         return;
     }
@@ -213,8 +213,8 @@ function searchItems(term) {
 
 function openCreateModal() {
     editingId = null;
-    document.getElementById('modalTitle').textContent = 'New item';
-    document.getElementById('modalSubmitBtn').textContent = 'Create';
+    document.getElementById('modalTitle').textContent = I18n.get('orderItemsJs.createTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.create');
     document.getElementById('itemId').value = '';
     document.getElementById('itemQuantity').value = '1';
     document.getElementById('itemPrice').value = '';
@@ -232,8 +232,8 @@ function openEditModal(id) {
     if (!item) return;
 
     editingId = id;
-    document.getElementById('modalTitle').textContent = 'Edit item';
-    document.getElementById('modalSubmitBtn').textContent = 'Save changes';
+    document.getElementById('modalTitle').textContent = I18n.get('orderItemsJs.editTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.saveChanges');
     document.getElementById('itemId').value = id;
     document.getElementById('itemQuantity').value = item.quantity || 1;
     document.getElementById('itemPrice').value = item.price != null ? Number(item.price).toFixed(2) : '';
@@ -257,8 +257,8 @@ function saveItem() {
 
     if (!orderId) { showModalError('Please select an order.'); return; }
     if (!productId) { showModalError('Please select a product.'); return; }
-    if (!quantity || parseInt(quantity) < 1) { showModalError('Quantity must be at least 1.'); return; }
-    if (price === '' || Number(price) < 0) { showModalError('Price must be zero or positive.'); return; }
+    if (!quantity || parseInt(quantity) < 1) { showModalError(I18n.get('orderItemsJs.requiredQuantity')); return; }
+    if (price === '' || Number(price) < 0) { showModalError(I18n.get('orderItemsJs.invalidPrice')); return; }
 
     var body = JSON.stringify({
         quantity: parseInt(quantity),
@@ -281,12 +281,12 @@ function saveItem() {
             if (r.ok) {
                 closeModal();
                 loadItems();
-                showToast('Item updated successfully', 'success');
+                showToast(I18n.get('orderItemsJs.updateSuccess'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to update item'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('orderItemsJs.failedUpdate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     } else {
         fetch('/api/order-items', {
@@ -298,12 +298,12 @@ function saveItem() {
             if (r.ok || r.status === 201) {
                 closeModal();
                 loadItems();
-                showToast('Item created successfully', 'success');
+                showToast(I18n.get('orderItemsJs.createSuccess'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to create item'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('orderItemsJs.failedCreate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     }
 }
@@ -312,7 +312,7 @@ function saveItem() {
 
 function openDeleteModal(id, label) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = 'Are you sure you want to delete "' + label + '"? This action cannot be undone.';
+    document.getElementById('deleteText').textContent = I18n.get('common.sure') + ' "' + label + '"? ' + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');
@@ -338,12 +338,12 @@ function confirmDelete() {
         if (r.ok || r.status === 204) {
             closeDeleteModal();
             loadItems();
-            showToast('Item deleted successfully', 'success');
+            showToast(I18n.get('orderItemsJs.deleteSuccess'), I18n.get('common.success'));
         } else {
-            return r.json().then(function(err) { showDeleteError(err.message || 'Failed to delete item'); });
+            return r.json().then(function(err) { showDeleteError(err.message || I18n.get('orderItemsJs.failedDelete')); });
         }
     })
-    .catch(function() { showDeleteError('Connection error'); })
+    .catch(function() { showDeleteError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 

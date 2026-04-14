@@ -78,7 +78,7 @@ function loadOrders() {
         })
         .catch(function() {
             document.getElementById('ordersTableBody').innerHTML =
-                '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-tertiary);">Failed to load orders</td></tr>';
+                '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('ordersJs.failedLoad') +'</td></tr>';
         });
 }
 
@@ -97,7 +97,7 @@ function loadUsers() {
 
 function populateUserDropdown(selectedId) {
     var select = document.getElementById('orderUser');
-    select.innerHTML = '<option value="">Select a user...</option>';
+    select.innerHTML = '<option value="">'+ I18n.get('ordersJs.selectUserPlaceholder') +'</option>';
     allUsers.forEach(function(u) {
         var option = document.createElement('option');
         option.value = u.id;
@@ -116,22 +116,22 @@ function loadUserAddresses(selectedAddressId) {
     var select = document.getElementById('orderAddress');
 
     if (!userId) {
-        select.innerHTML = '<option value="">Select a user first...</option>';
+        select.innerHTML = '<option value="">'+ I18n.get('ordersJs.selectUserFirst') +'</option>';
         select.disabled = true;
         return;
     }
 
-    select.innerHTML = '<option value="">Loading...</option>';
+    select.innerHTML = '<option value="">'+ I18n.get('ordersJs.loading') +'</option>';
     select.disabled = true;
 
     fetch('/api/addresses/user/' + userId, { headers: getHeaders() })
         .then(function(r) { return r.json(); })
         .then(function(data) {
             var addresses = Array.isArray(data) ? data : (data.content || []);
-            select.innerHTML = '<option value="">Select an address...</option>';
+            select.innerHTML = '<option value="">'+ I18n.get('ordersJs.selectAddressPlaceholder') +'</option>';
 
             if (addresses.length === 0) {
-                select.innerHTML = '<option value="">No addresses for this user</option>';
+                select.innerHTML = '<option value="">'+ I18n.get('ordersJs.noAddresses') +'</option>';
                 select.disabled = true;
                 return;
             }
@@ -148,7 +148,7 @@ function loadUserAddresses(selectedAddressId) {
             select.disabled = false;
         })
         .catch(function() {
-            select.innerHTML = '<option value="">Failed to load addresses</option>';
+            select.innerHTML = '<option value="">'+ I18n.get('ordersJs.failedAddresses') +'</option>';
             select.disabled = true;
         });
 }
@@ -176,9 +176,9 @@ function renderTable(orders) {
         tbody.innerHTML = '<tr><td colspan="8">'
             + '<div class="empty-state">'
             + '<svg class="empty-state__icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
-            + '<p class="empty-state__title">No orders yet</p>'
-            + '<p class="empty-state__text">Create your first order to get started</p>'
-            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">Create order</button>'
+            + '<p class="empty-state__title">'+ I18n.get('ordersJs.noOrders') +'</p>'
+            + '<p class="empty-state__text">'+ I18n.get('ordersJs.firstOrderText') +'</p>'
+            + '<button class="btn btn-primary btn-sm" onclick="openCreateModal()">'+ I18n.get('ordersJs.createOrder') +'</button>'
             + '</div></td></tr>';
         return;
     }
@@ -242,12 +242,12 @@ function searchOrders(term) {
 
 function openCreateModal() {
     editingId = null;
-    document.getElementById('modalTitle').textContent = 'New order';
-    document.getElementById('modalSubmitBtn').textContent = 'Create';
+    document.getElementById('modalTitle').textContent = I18n.get('orders.newOrder');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.create');
     document.getElementById('orderId').value = '';
-    document.getElementById('orderStatus').value = 'PENDING';
+    document.getElementById('orderStatus').value = I18n.get('orders.statusPending');
     document.getElementById('orderTotal').value = '';
-    document.getElementById('orderAddress').innerHTML = '<option value="">Select a user first...</option>';
+    document.getElementById('orderAddress').innerHTML = '<option value="">'+ I18n.get('ordersJs.selectUserFirst') +'</option>';
     document.getElementById('orderAddress').disabled = true;
     populateUserDropdown(null);
     hideModalError();
@@ -261,8 +261,8 @@ function openEditModal(id) {
     if (!ord) return;
 
     editingId = id;
-    document.getElementById('modalTitle').textContent = 'Edit order';
-    document.getElementById('modalSubmitBtn').textContent = 'Save changes';
+    document.getElementById('modalTitle').textContent = I18n.get('ordersJs.editTitle');
+    document.getElementById('modalSubmitBtn').textContent = I18n.get('common.saveChanges');
     document.getElementById('orderId').value = id;
     document.getElementById('orderStatus').value = ord.status;
     document.getElementById('orderTotal').value = ord.totalAmount != null ? ord.totalAmount : '';
@@ -288,10 +288,10 @@ function saveOrder() {
     var status = document.getElementById('orderStatus').value;
     var totalAmount = document.getElementById('orderTotal').value;
 
-    if (!userId) { showModalError('Please select a user.'); return; }
-    if (!addressId) { showModalError('Please select an address.'); return; }
-    if (!status) { showModalError('Please select a status.'); return; }
-    if (totalAmount === '' || Number(totalAmount) < 0) { showModalError('Total amount must be zero or positive.'); return; }
+    if (!userId) { showModalError(I18n.get('ordersJs.requiredUser')); return; }
+    if (!addressId) { showModalError(I18n.get('ordersJs.requiredAddress')); return; }
+    if (!status) { showModalError(I18n.get('ordersJs.requiredStatus')); return; }
+    if (totalAmount === '' || Number(totalAmount) < 0) { showModalError(I18n.get('ordersJs.invalidTotal')); return; }
 
     var body = JSON.stringify({
         status: status,
@@ -313,12 +313,12 @@ function saveOrder() {
             if (r.ok) {
                 closeModal();
                 loadOrders();
-                showToast('Order updated successfully', 'success');
+                showToast(I18n.get('ordersJs.updateSuccess'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to update order'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('ordersJs.failedUpdate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     } else {
         fetch('/api/orders', {
@@ -330,12 +330,12 @@ function saveOrder() {
             if (r.ok || r.status === 201) {
                 closeModal();
                 loadOrders();
-                showToast('Order created successfully', 'success');
+                showToast(I18n.get('ordersJs.createSuccess'), I18n.get('common.success'));
             } else {
-                return r.json().then(function(err) { showModalError(err.message || 'Failed to create order'); });
+                return r.json().then(function(err) { showModalError(err.message || I18n.get('ordersJs.failedCreate')); });
             }
         })
-        .catch(function() { showModalError('Connection error'); })
+        .catch(function() { showModalError(I18n.get('common.errorConnect')); })
         .finally(function() { btn.disabled = false; });
     }
 }
@@ -377,12 +377,12 @@ function saveStatus() {
         if (r.ok) {
             closeStatusModal();
             loadOrders();
-            showToast('Status updated to ' + newStatus, 'success');
+            showToast( I18n.get('orderJs.statusUpdateSuccess') + newStatus, I18n.get('common.success'));
         } else {
-            return r.json().then(function(err) { showStatusError(err.message || 'Failed to update status'); });
+            return r.json().then(function(err) { showStatusError(err.message || I18n.get('orderJs.failedStatus')); });
         }
     })
-    .catch(function() { showStatusError('Connection error'); })
+    .catch(function() { showStatusError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 
@@ -400,7 +400,7 @@ function hideStatusError() {
 
 function openDeleteModal(id, label) {
     deletingId = id;
-    document.getElementById('deleteText').textContent = 'Are you sure you want to delete order ' + label + '? This will also delete all its items. This action cannot be undone.';
+    document.getElementById('deleteText').textContent = I18n.get('common.sure') + ' "' + label + '"? ' + I18n.get('common.undone');
     hideDeleteError();
     document.getElementById('deleteModal').classList.add('is-open');
     document.getElementById('modalBackdrop').classList.add('is-open');
@@ -426,12 +426,12 @@ function confirmDelete() {
         if (r.ok || r.status === 204) {
             closeDeleteModal();
             loadOrders();
-            showToast('Order deleted successfully', 'success');
+            showToast(I18n.get('ordersJs.deleteSuccess'), I18n.get('common.success'));
         } else {
-            return r.json().then(function(err) { showDeleteError(err.message || 'Failed to delete order'); });
+            return r.json().then(function(err) { showDeleteError(err.message || I18n.get('ordersJs.failedDelete')); });
         }
     })
-    .catch(function() { showDeleteError('Connection error'); })
+    .catch(function() { showDeleteError(I18n.get('common.errorConnect')); })
     .finally(function() { btn.disabled = false; });
 }
 
