@@ -120,6 +120,7 @@ function saveStoreSettings() {
     }
 
     localStorage.setItem('smartorder-store-settings', JSON.stringify(data));
+    loadSidebarLogo();
     showToast(I18n.get('settings.storeSaved'), 'success');
 }
 

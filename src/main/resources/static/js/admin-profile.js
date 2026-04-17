@@ -119,22 +119,36 @@ function loadProfileAvatar(url) {
 
 function previewAccountPhoto() {
     var url = document.getElementById('accountImageUrl').value.trim();
-    var img = document.getElementById('formAvatarImg');
-    var initials = document.getElementById('formAvatarInitials');
+
+    // Update form avatar
+    var formImg = document.getElementById('formAvatarImg');
+    var formInitials = document.getElementById('formAvatarInitials');
+
+    // Update header avatar
+    var headerImg = document.getElementById('profileAvatarImg');
+    var headerInitials = document.getElementById('profileAvatarInitials');
 
     if (url) {
-        img.src = url;
-        img.onload = function() {
-            img.style.display = 'block';
-            initials.style.display = 'none';
+        formImg.src = url;
+        formImg.onload = function() {
+            formImg.style.display = 'block';
+            formInitials.style.display = 'none';
+            // Also update header
+            headerImg.src = url;
+            headerImg.style.display = 'block';
+            headerInitials.style.display = 'none';
         };
-        img.onerror = function() {
-            img.style.display = 'none';
-            initials.style.display = 'flex';
+        formImg.onerror = function() {
+            formImg.style.display = 'none';
+            formInitials.style.display = 'flex';
+            headerImg.style.display = 'none';
+            headerInitials.style.display = 'flex';
         };
     } else {
-        img.style.display = 'none';
-        initials.style.display = 'flex';
+        formImg.style.display = 'none';
+        formInitials.style.display = 'flex';
+        headerImg.style.display = 'none';
+        headerInitials.style.display = 'flex';
     }
 }
 

@@ -339,12 +339,9 @@ function loadSidebarLogo() {
                 var img = document.createElement('img');
                 img.src = data.logoUrl;
                 img.alt = 'Logo';
-                img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:inherit;';
-                img.onerror = function() { this.remove(); };
+                img.style.cssText = 'width:18px;height:18px;object-fit:contain;border-radius:4px;';
+                img.onerror = function() { this.style.display = 'none'; };
                 logo.innerHTML = '';
-                logo.style.backgroundColor = 'transparent';
-                logo.style.padding = '0';
-                logo.style.overflow = 'hidden';
                 logo.appendChild(img);
             }
         }
