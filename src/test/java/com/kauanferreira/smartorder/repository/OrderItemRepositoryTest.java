@@ -78,12 +78,12 @@ public class OrderItemRepositoryTest {
         addressRepository.deleteAll();
         userRepository.deleteAll();
 
-        User user = userRepository.save(new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null));
+        User user = userRepository.save(new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null, null));
         Address address = addressRepository.save(new Address(null, "Rua A", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user));
         Category category = categoryRepository.save(new Category(null, "Eletrônicos", "Produtos eletrônicos"));
 
-        product1 = productRepository.save(new Product(null, "Smartphone", null, new BigDecimal("2999.99"), 50, null, true, category));
-        product2 = productRepository.save(new Product(null, "Notebook", null, new BigDecimal("4500.00"), 20, null, true, category));
+        product1 = productRepository.save(new Product(null, "Smartphone", null, new BigDecimal("2999.99"), 50, null, true, null, null, null, null, category));
+        product2 = productRepository.save(new Product(null, "Notebook", null, new BigDecimal("4500.00"), 20, null, true, null, null, null, null, category));
 
         order1 = orderRepository.save(new Order(null, null, OrderStatus.PENDING, new BigDecimal("0.00"), user, address, new ArrayList<>()));
         order2 = orderRepository.save(new Order(null, null, OrderStatus.CONFIRMED, new BigDecimal("0.00"), user, address, new ArrayList<>()));

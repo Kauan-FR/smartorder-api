@@ -2,6 +2,7 @@ package com.kauanferreira.smartorder.service.impl;
 
 import com.kauanferreira.smartorder.entity.Category;
 import com.kauanferreira.smartorder.entity.Product;
+import com.kauanferreira.smartorder.exception.DuplicateResourceException;
 import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.ProductRepository;
 import com.kauanferreira.smartorder.services.impl.ProductServiceImpl;
@@ -57,19 +58,18 @@ public class ProductServiceImplTest {
     private ProductServiceImpl productService;
 
     private Category electronics;
-    private Category clothing;
     private Product smartphone;
     private Product notebook;
 
     @BeforeEach
     void setUp() {
         electronics = new Category(1L, "Eletrônicos", "Produtos eletrônicos");
-        clothing = new Category(2L, "Roupas", "Vestuário em geral");
+        Category category = new Category(2L, "Roupas", "Vestuário em geral");
 
         smartphone = new Product(1L, "Smartphone", "Celular top",
-                new BigDecimal("2999.99"), 50, null, true, electronics);
+                        new BigDecimal("2999.99"), 50, null, true, null, null, null, null, electronics);
         notebook = new Product(2L, "Notebook", "Laptop profissional",
-                new BigDecimal("4500.00"), 20, null, true, electronics);
+                new BigDecimal("4500.00"), 20, null, true, null, null, null, null, electronics);
     }
 
     // ========================
@@ -82,7 +82,7 @@ public class ProductServiceImplTest {
     void shouldCreateProduct() {
         // Arrange
         Product newProduct = new Product(null, "Smartphone", "Celular top",
-                new BigDecimal("2999.99"), 50, null, true, electronics);
+                new BigDecimal("2999.99"), 50, null, true, null, null, null, null, electronics);
         when(productRepository.findByNameIgnoreCase("Smartphone")).thenReturn(Optional.empty());
         when(categoryService.findById(1L)).thenReturn(electronics);
         when(productRepository.save(any(Product.class))).thenReturn(smartphone);
@@ -103,12 +103,12 @@ public class ProductServiceImplTest {
     void shouldThrowExceptionWhenCreatingDuplicateName() {
         // Arrange
         Product newProduct = new Product(null, "Smartphone", "Outro celular",
-                new BigDecimal("1999.99"), 10, null, true, electronics);
+                new BigDecimal("1999.99"), 10, null, true, null, null, null, null, electronics);
         when(productRepository.findByNameIgnoreCase("Smartphone")).thenReturn(Optional.of(smartphone));
 
         // Act & Assert
         assertThatThrownBy(() -> productService.create(newProduct))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicateResourceException.class)
                 .hasMessageContaining("already exists");
 
         verify(productRepository, never()).save(any());
@@ -121,7 +121,7 @@ public class ProductServiceImplTest {
         // Arrange
         Category fakeCategory = new Category(99L, "Fake", null);
         Product newProduct = new Product(null, "Produto", "Desc",
-                new BigDecimal("100.00"), 10, null, true, fakeCategory);
+                new BigDecimal("100.00"), 10, null, true, null, null, null, null, fakeCategory);
         when(productRepository.findByNameIgnoreCase("Produto")).thenReturn(Optional.empty());
         when(categoryService.findById(99L)).thenThrow(
                 new ResourceNotFoundException("Category not found. Id: 99"));
@@ -235,7 +235,7 @@ public class ProductServiceImplTest {
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results.get(0).getName()).isEqualTo("Notebook");
+        assertThat(results.getFirst().getName()).isEqualTo("Notebook");
     }
 
     @Test
@@ -250,7 +250,7 @@ public class ProductServiceImplTest {
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results.get(0).getPrice()).isEqualByComparingTo(new BigDecimal("2999.99"));
+        assertThat(results.getFirst().getPrice()).isEqualByComparingTo(new BigDecimal("2999.99"));
     }
 
     // ========================
@@ -269,7 +269,7 @@ public class ProductServiceImplTest {
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getName()).isEqualTo("Smartphone");
+        assertThat(results.getFirst().getName()).isEqualTo("Smartphone");
     }
 
     @Test
@@ -377,7 +377,7 @@ public class ProductServiceImplTest {
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getName()).isEqualTo("Smartphone");
+        assertThat(results.getFirst().getName()).isEqualTo("Smartphone");
     }
 
     // ========================
@@ -390,7 +390,7 @@ public class ProductServiceImplTest {
     void shouldUpdateProduct() {
         // Arrange
         Product updateData = new Product(null, "Smartphone Pro", "Versão atualizada",
-                new BigDecimal("3499.99"), 30, "http://img.com/phone.jpg", true, electronics);
+                new BigDecimal("3499.99"), 30, "http://img.com/phone.jpg", true, null, null, null, null, electronics);
         when(productRepository.findById(1L)).thenReturn(Optional.of(smartphone));
         when(categoryService.findById(1L)).thenReturn(electronics);
         when(productRepository.findByNameIgnoreCase("Smartphone Pro")).thenReturn(Optional.empty());
@@ -411,7 +411,7 @@ public class ProductServiceImplTest {
     void shouldUpdateProductKeepingSameName() {
         // Arrange
         Product updateData = new Product(null, "Smartphone", "Nova descrição",
-                new BigDecimal("2799.99"), 40, null, true, electronics);
+                new BigDecimal("2799.99"), 40, null, true, null, null, null, null, electronics);
         when(productRepository.findById(1L)).thenReturn(Optional.of(smartphone));
         when(categoryService.findById(1L)).thenReturn(electronics);
         when(productRepository.findByNameIgnoreCase("Smartphone")).thenReturn(Optional.of(smartphone));
@@ -431,14 +431,14 @@ public class ProductServiceImplTest {
     void shouldThrowExceptionWhenUpdatingToDuplicateName() {
         // Arrange
         Product updateData = new Product(null, "Notebook", "Tentando nome existente",
-                new BigDecimal("2999.99"), 50, null, true, electronics);
+                new BigDecimal("2999.99"), 50, null, true, null, null, null, null, electronics);
         when(productRepository.findById(1L)).thenReturn(Optional.of(smartphone));
         when(categoryService.findById(1L)).thenReturn(electronics);
         when(productRepository.findByNameIgnoreCase("Notebook")).thenReturn(Optional.of(notebook));
 
         // Act & Assert
         assertThatThrownBy(() -> productService.update(1L, updateData))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicateResourceException.class)
                 .hasMessageContaining("already exists");
 
         verify(productRepository, never()).save(any());
@@ -450,7 +450,7 @@ public class ProductServiceImplTest {
     void shouldThrowExceptionWhenUpdatingNonExistent() {
         // Arrange
         Product updateData = new Product(null, "Novo", "Desc",
-                new BigDecimal("100.00"), 10, null, true, electronics);
+                new BigDecimal("100.00"), 10, null, true,null, null, null, null, electronics);
         when(productRepository.findById(99L)).thenReturn(Optional.empty());
 
         // Act & Assert
@@ -471,7 +471,7 @@ public class ProductServiceImplTest {
     void shouldActivateProduct() {
         // Arrange
         Product inactiveProduct = new Product(1L, "Smartphone", null,
-                new BigDecimal("2999.99"), 50, null, false, electronics);
+                new BigDecimal("2999.99"), 50, null, false, null, null, null, null, electronics);
         when(productRepository.findById(1L)).thenReturn(Optional.of(inactiveProduct));
         when(productRepository.save(any(Product.class))).thenReturn(inactiveProduct);
 

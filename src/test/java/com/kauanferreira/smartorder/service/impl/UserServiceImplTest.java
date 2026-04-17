@@ -2,6 +2,7 @@ package com.kauanferreira.smartorder.service.impl;
 
 import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.Role;
+import com.kauanferreira.smartorder.exception.DuplicateResourceException;
 import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.UserRepository;
 import com.kauanferreira.smartorder.services.impl.UserServiceImpl;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,13 +52,16 @@ public class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userService;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     private User kauan;
     private User ana;
 
     @BeforeEach
     void setUp() {
-        kauan = new User(1L, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, "(79) 99999-0000", null);
-        ana = new User(2L, "Ana", "ana@email.com", "senha123", Role.CUSTOMER, null, null);
+        kauan = new User(1L, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, "(79) 99999-0000", null, null);
+        ana = new User(2L, "Ana", "ana@email.com", "senha123", Role.CUSTOMER, null, null, null);
     }
 
     // ========================
@@ -68,7 +73,7 @@ public class UserServiceImplTest {
     @DisplayName("Should create a user successfully")
     void shouldCreateUser() {
         // Arrange
-        User newUser = new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null);
+        User newUser = new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null, null);
         when(userRepository.existsByEmailIgnoreCase("kauan@email.com")).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(kauan);
 
@@ -88,12 +93,12 @@ public class UserServiceImplTest {
     @DisplayName("Should throw exception when creating user with duplicate email")
     void shouldThrowExceptionWhenCreatingDuplicateEmail() {
         // Arrange
-        User newUser = new User(null, "Outro", "kauan@email.com", "senha123", Role.CUSTOMER, null, null);
+        User newUser = new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null, null);
         when(userRepository.existsByEmailIgnoreCase("kauan@email.com")).thenReturn(true);
 
         // Act & Assert
         assertThatThrownBy(() -> userService.create(newUser))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicateResourceException.class)
                 .hasMessageContaining("already registered");
 
         verify(userRepository, never()).save(any());
@@ -232,7 +237,7 @@ public class UserServiceImplTest {
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results.get(0).getName()).isEqualTo("Ana");
+        assertThat(results.getFirst().getName()).isEqualTo("Ana");
     }
 
     // ========================
@@ -251,7 +256,7 @@ public class UserServiceImplTest {
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getName()).isEqualTo("Kauan");
+        assertThat(results.getFirst().getName()).isEqualTo("Kauan");
     }
 
     @Test
@@ -309,7 +314,7 @@ public class UserServiceImplTest {
     @DisplayName("Should update a user successfully")
     void shouldUpdateUser() {
         // Arrange
-        User updateData = new User(null, "Kauan Ferreira", "kauan@email.com", null, Role.CUSTOMER, "(79) 88888-0000", null);
+        User updateData = new User(null, "Kauan Ferreira", "kauan@email.com", null, Role.CUSTOMER, "(79) 88888-0000", null, null);
         when(userRepository.findById(1L)).thenReturn(Optional.of(kauan));
         when(userRepository.save(any(User.class))).thenReturn(kauan);
 
@@ -326,7 +331,7 @@ public class UserServiceImplTest {
     @DisplayName("Should update user with new email successfully")
     void shouldUpdateUserWithNewEmail() {
         // Arrange
-        User updateData = new User(null, "Kauan", "novoemail@email.com", null, Role.CUSTOMER, null, null);
+        User updateData = new User(null, "Kauan", "novoemail@email.com", null, Role.CUSTOMER, null, null, null);
         when(userRepository.findById(1L)).thenReturn(Optional.of(kauan));
         when(userRepository.existsByEmailIgnoreCase("novoemail@email.com")).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(kauan);
@@ -345,13 +350,13 @@ public class UserServiceImplTest {
     @DisplayName("Should throw exception when updating to duplicate email")
     void shouldThrowExceptionWhenUpdatingToDuplicateEmail() {
         // Arrange
-        User updateData = new User(null, "Kauan", "ana@email.com", null, Role.CUSTOMER, null, null);
+        User updateData = new User(null, "Kauan", "ana@email.com", null, Role.CUSTOMER, null, null, null);
         when(userRepository.findById(1L)).thenReturn(Optional.of(kauan));
         when(userRepository.existsByEmailIgnoreCase("ana@email.com")).thenReturn(true);
 
         // Act & Assert
         assertThatThrownBy(() -> userService.update(1L, updateData))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicateResourceException.class)
                 .hasMessageContaining("already registered");
 
         verify(userRepository, never()).save(any());
@@ -362,7 +367,7 @@ public class UserServiceImplTest {
     @DisplayName("Should throw exception when updating non-existent user")
     void shouldThrowExceptionWhenUpdatingNonExistent() {
         // Arrange
-        User updateData = new User(null, "Novo", "novo@email.com", null, Role.CUSTOMER, null, null);
+        User updateData = new User(null, "Novo", "novo@email.com", null, Role.CUSTOMER, null, null, null);
         when(userRepository.findById(99L)).thenReturn(Optional.empty());
 
         // Act & Assert
@@ -383,13 +388,17 @@ public class UserServiceImplTest {
     void shouldUpdatePassword() {
         // Arrange
         when(userRepository.findById(1L)).thenReturn(Optional.of(kauan));
+        when(passwordEncoder.matches("senhaAtual", "senha123")).thenReturn(true);
+        when(passwordEncoder.encode("novaSenha123")).thenReturn("encodedNovaSenha123");
         when(userRepository.save(any(User.class))).thenReturn(kauan);
 
         // Act
-        User result = userService.updatePassword(1L, "novaSenha123");
+        User result = userService.updatePassword(1L, "senhaAtual", "novaSenha123");
 
         // Assert
         assertThat(result).isNotNull();
+        verify(passwordEncoder).matches("senhaAtual", "senha123");
+        verify(passwordEncoder).encode("novaSenha123");
         verify(userRepository).save(any(User.class));
     }
 
@@ -401,7 +410,7 @@ public class UserServiceImplTest {
         when(userRepository.findById(99L)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThatThrownBy(() -> userService.updatePassword(99L, "senha"))
+        assertThatThrownBy(() -> userService.updatePassword(99L, "senhaAtual", "novaSenha"))
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("99");
 
@@ -440,5 +449,21 @@ public class UserServiceImplTest {
                 .hasMessageContaining("99");
 
         verify(userRepository, never()).delete(any());
+    }
+
+    @Test
+    @Order(23)
+    @DisplayName("Should throw exception when current password is incorrect")
+    void shouldThrowExceptionWhenCurrentPasswordIsIncorrect() {
+        // Arrange
+        when(userRepository.findById(1L)).thenReturn(Optional.of(kauan));
+        when(passwordEncoder.matches("senhaErrada", kauan.getPassword())).thenReturn(false);
+
+        // Act & Assert
+        assertThatThrownBy(() -> userService.updatePassword(1L, "senhaErrada", "novaSenha123"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Current password is incorrect");
+
+        verify(userRepository, never()).save(any());
     }
 }

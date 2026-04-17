@@ -54,7 +54,7 @@ public class ProductRepositoryTest {
 
     private Product createProduct(String name, String description, BigDecimal price,
                                   Integer stock, Boolean active, Category category) {
-        return new Product(null, name, description, price, stock, null,active, category);
+        return new Product(null, name, description, price, stock, null,active, null, null, null, null, category);
     }
 
     @Test
@@ -146,7 +146,7 @@ public class ProductRepositoryTest {
 
         // Assert
         assertThat(activeProducts).hasSize(1);
-        assertThat(activeProducts.get(0).getName()).isEqualTo("Smartphone");
+        assertThat(activeProducts.getFirst().getName()).isEqualTo("Smartphone");
     }
 
     @Test
@@ -166,7 +166,7 @@ public class ProductRepositoryTest {
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getName()).isEqualTo("Smartphone");
+        assertThat(results.getFirst().getName()).isEqualTo("Smartphone");
     }
 
     @Test
@@ -186,7 +186,7 @@ public class ProductRepositoryTest {
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getName()).isEqualTo("Budget Smartphone");
+        assertThat(results.getFirst().getName()).isEqualTo("Budget Smartphone");
     }
 
     @Test

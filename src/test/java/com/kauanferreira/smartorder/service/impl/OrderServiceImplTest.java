@@ -19,8 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -311,7 +309,7 @@ public class OrderServiceImplTest {
                 orderService.findByStatus(OrderStatus.PENDING);
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getStatus()).isEqualTo(OrderStatus.PENDING);
+        assertThat(result.getFirst().getStatus()).isEqualTo(OrderStatus.PENDING);
         verify(orderRepository).findByStatus(OrderStatus.PENDING);
     }
 

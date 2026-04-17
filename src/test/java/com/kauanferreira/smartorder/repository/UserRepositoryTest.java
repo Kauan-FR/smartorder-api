@@ -40,9 +40,9 @@ public class UserRepositoryTest {
         userRepository.deleteAll();
     }
 
-    private User createUser(String name, String email, String password, Role role, String phone) {
+    private User createUser(String name, String email, Role role, String phone) {
 
-        return new User(null, name, email, password, role, phone, null);
+        return new User(null, name, email, "senha123", role, phone, null, null);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class UserRepositoryTest {
     @DisplayName("Should save a user and generate an ID")
     void shouldSaveUser() {
         // Arrange
-        User user = createUser("Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, "(79) 99999-0000");
+        User user = createUser("Kauan", "kauan@email.com", Role.CUSTOMER, "(79) 99999-0000");
 
         // Act
         User saved = userRepository.save(user);
@@ -68,7 +68,7 @@ public class UserRepositoryTest {
     @DisplayName("Should find a user by email ignoring case")
     void shouldFindByEmailIgnoreCase() {
         // Arrange
-        userRepository.save(createUser("Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null));
+        userRepository.save(createUser("Kauan", "kauan@email.com", Role.CUSTOMER, null));
 
         // Act
         Optional<User> result = userRepository.findByEmailIgnoreCase("KAUAN@EMAIL.COM");
@@ -94,7 +94,7 @@ public class UserRepositoryTest {
     @DisplayName("Should return true when email already exists")
     void shouldReturnTrueWhenEmailExists() {
         // Arrange
-        userRepository.save(createUser("Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null));
+        userRepository.save(createUser("Kauan", "kauan@email.com", Role.CUSTOMER, null));
 
         // Act
         boolean exists = userRepository.existsByEmailIgnoreCase("kauan@email.com");
@@ -119,9 +119,9 @@ public class UserRepositoryTest {
     @DisplayName("Should find users by role")
     void shouldFindByRole() {
         // Arrange
-        userRepository.save(createUser("Admin", "admin@email.com", "senha123", Role.ADMIN, null));
-        userRepository.save(createUser("Cliente 1", "cliente1@email.com", "senha123", Role.CUSTOMER, null));
-        userRepository.save(createUser("Cliente 2", "cliente2@email.com", "senha123", Role.CUSTOMER, null));
+        userRepository.save(createUser("Admin", "admin@email.com", Role.ADMIN, null));
+        userRepository.save(createUser("Cliente 1", "cliente1@email.com", Role.CUSTOMER, null));
+        userRepository.save(createUser("Cliente 2", "cliente2@email.com", Role.CUSTOMER, null));
 
         // Act
         List<User> admins = userRepository.findByRole(Role.ADMIN);
@@ -129,7 +129,7 @@ public class UserRepositoryTest {
 
         // Assert
         assertThat(admins).hasSize(1);
-        assertThat(admins.get(0).getName()).isEqualTo("Admin");
+        assertThat(admins.getFirst().getName()).isEqualTo("Admin");
         assertThat(customers).hasSize(2);
     }
 
@@ -138,9 +138,9 @@ public class UserRepositoryTest {
     @DisplayName("Should find users by partial name ignoring case")
     void shouldFindByNameContainingIgnoreCase() {
         // Arrange
-        userRepository.save(createUser("Kauan Ferreira", "kauan@email.com", "senha123", Role.CUSTOMER, null));
-        userRepository.save(createUser("Ana Ferreira", "ana@email.com", "senha123", Role.CUSTOMER, null));
-        userRepository.save(createUser("João Silva", "joao@email.com", "senha123", Role.CUSTOMER, null));
+        userRepository.save(createUser("Kauan Ferreira", "kauan@email.com", Role.CUSTOMER, null));
+        userRepository.save(createUser("Ana Ferreira", "ana@email.com", Role.CUSTOMER, null));
+        userRepository.save(createUser("João Silva", "joao@email.com", Role.CUSTOMER, null));
 
         // Act
         List<User> results = userRepository.findByNameContainingIgnoreCase("ferreira");
@@ -156,9 +156,9 @@ public class UserRepositoryTest {
     @DisplayName("Should find all users ordered by name ascending")
     void shouldFindAllByOrderByNameAsc() {
         // Arrange
-        userRepository.save(createUser("Zara", "zara@email.com", "senha123", Role.CUSTOMER, null));
-        userRepository.save(createUser("Ana", "ana@email.com", "senha123", Role.CUSTOMER, null));
-        userRepository.save(createUser("Maria", "maria@email.com", "senha123", Role.CUSTOMER, null));
+        userRepository.save(createUser("Zara", "zara@email.com", Role.CUSTOMER, null));
+        userRepository.save(createUser("Ana", "ana@email.com", Role.CUSTOMER, null));
+        userRepository.save(createUser("Maria", "maria@email.com", Role.CUSTOMER, null));
 
         // Act
         List<User> results = userRepository.findAllByOrderByNameAsc();
@@ -174,7 +174,7 @@ public class UserRepositoryTest {
     @DisplayName("Should update a user")
     void shouldUpdateUser() {
         // Arrange
-        User saved = userRepository.save(createUser("Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null));
+        User saved = userRepository.save(createUser("Kauan", "kauan@email.com", Role.CUSTOMER, null));
 
         // Act
         saved.setName("Kauan Ferreira");
@@ -192,7 +192,7 @@ public class UserRepositoryTest {
     @DisplayName("Should delete a user by ID")
     void shouldDeleteUser() {
         // Arrange
-        User saved = userRepository.save(createUser("Temporário", "temp@email.com", "senha123", Role.CUSTOMER, null));
+        User saved = userRepository.save(createUser("Temporário", "temp@email.com", Role.CUSTOMER, null));
 
         // Act
         userRepository.deleteById(saved.getId());

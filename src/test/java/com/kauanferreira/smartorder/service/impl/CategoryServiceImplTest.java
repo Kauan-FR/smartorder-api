@@ -1,6 +1,7 @@
 package com.kauanferreira.smartorder.service.impl;
 
 import com.kauanferreira.smartorder.entity.Category;
+import com.kauanferreira.smartorder.exception.DuplicateResourceException;
 import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.CategoryRepository;
 import com.kauanferreira.smartorder.services.impl.CategoryServiceImpl;
@@ -90,7 +91,7 @@ public class CategoryServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> categoryService.create(newCategory))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicateResourceException.class)
                 .hasMessageContaining("already exists");
 
         verify(categoryRepository, never()).save(any());
@@ -222,7 +223,7 @@ public class CategoryServiceImplTest {
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getName()).isEqualTo("Eletrônicos");
+        assertThat(results.getFirst().getName()).isEqualTo("Eletrônicos");
         verify(categoryRepository).findByNameContainingIgnoreCase("elet");
     }
 
@@ -293,7 +294,7 @@ public class CategoryServiceImplTest {
 
         // Act & Assert
         assertThatThrownBy(() -> categoryService.update(1L, updateData))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(DuplicateResourceException.class)
                 .hasMessageContaining("already exists");
 
         verify(categoryRepository, never()).save(any());

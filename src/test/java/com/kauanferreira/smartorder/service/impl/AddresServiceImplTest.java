@@ -265,7 +265,7 @@ public class AddresServiceImplTest {
         List<Address> result = addressService.findByCity("Aracaju");
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getCity()).isEqualTo("Aracaju");
+        assertThat(result.getFirst().getCity()).isEqualTo("Aracaju");
         verify(addressRepository).findByCityIgnoreCase("Aracaju");
     }
 
@@ -294,7 +294,7 @@ public class AddresServiceImplTest {
         List<Address> result = addressService.findByState("Sergipe");
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getState()).isEqualTo("Sergipe");
+        assertThat(result.getFirst().getState()).isEqualTo("Sergipe");
         verify(addressRepository).findByStateIgnoreCase("Sergipe");
     }
 
@@ -323,7 +323,7 @@ public class AddresServiceImplTest {
         List<Address> result = addressService.findByZipCode("49000-000");
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getZipCode()).isEqualTo("49000-000");
+        assertThat(result.getFirst().getZipCode()).isEqualTo("49000-000");
         verify(addressRepository).findByZipCode("49000-000");
     }
 

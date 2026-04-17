@@ -61,8 +61,8 @@ public class OrderRepositoryTest {
         addressRepository.deleteAll();
         userRepository.deleteAll();
 
-        user1 = userRepository.save(new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null));
-        user2 = userRepository.save(new User(null, "Ana", "ana@email.com", "senha123", Role.CUSTOMER, null, null));
+        user1 = userRepository.save(new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null, null));
+        user2 = userRepository.save(new User(null, "Ana", "ana@email.com", "senha123", Role.CUSTOMER, null, null, null));
 
         address1 = addressRepository.save(new Address(null, "Rua A", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
         address2 = addressRepository.save(new Address(null, "Rua B", "200", null, "Salvador", "BA", "40000-000", "Brasil", user2));
@@ -137,7 +137,7 @@ public class OrderRepositoryTest {
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getTotalAmount()).isEqualByComparingTo(new BigDecimal("100.00"));
+        assertThat(results.getFirst().getTotalAmount()).isEqualByComparingTo(new BigDecimal("100.00"));
     }
 
     @Test

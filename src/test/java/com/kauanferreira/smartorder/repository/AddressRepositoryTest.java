@@ -49,13 +49,13 @@ public class AddressRepositoryTest {
         addressRepository.deleteAll();
         userRepository.deleteAll();
 
-        user1 = userRepository.save(new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null));
-        user2 = userRepository.save(new User(null, "Ana", "ana@email.com", "senha123", Role.CUSTOMER, null, null));
+        user1 = userRepository.save(new User(null, "Kauan", "kauan@email.com", "senha123", Role.CUSTOMER, null, null, null));
+        user2 = userRepository.save(new User(null, "Ana", "ana@email.com", "senha123", Role.CUSTOMER, null, null, null));
     }
 
     private Address createAddress(String street, String number, String complement,
-                                  String city, String state, String zipCode, String country, User user) {
-        return new Address(null, street, number, complement, city, state, zipCode, country, user);
+                                  String city, String state, String zipCode, User user) {
+        return new Address(null, street, number, complement, city, state, zipCode, "Brasil", user);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class AddressRepositoryTest {
     @DisplayName("Should save an address and generate an ID")
     void shouldSaveAddress() {
         // Arrange
-        Address address = createAddress("Rua das Flores", "123", "Apto 4", "Aracaju", "SE", "49000-000", "Brasil", user1);
+        Address address = createAddress("Rua das Flores", "123", "Apto 4", "Aracaju", "SE", "49000-000", user1);
 
         // Act
         Address saved = addressRepository.save(address);
@@ -85,7 +85,7 @@ public class AddressRepositoryTest {
     @DisplayName("Should save an address without complement")
     void shouldSaveAddressWithoutComplement() {
         // Arrange
-        Address address = createAddress("Rua Principal", "S/N", null, "Aracaju", "SE", "49000-001", "Brasil", user1);
+        Address address = createAddress("Rua Principal", "S/N", null, "Aracaju", "SE", "49000-001", user1);
 
         // Act
         Address saved = addressRepository.save(address);
@@ -100,9 +100,9 @@ public class AddressRepositoryTest {
     @DisplayName("Should find all addresses by user ID")
     void shouldFindByUserId() {
         // Arrange
-        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
-        addressRepository.save(createAddress("Rua B", "200", null, "Salvador", "BA", "40000-000", "Brasil", user1));
-        addressRepository.save(createAddress("Rua C", "300", null, "São Paulo", "SP", "01000-000", "Brasil", user2));
+        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", user1));
+        addressRepository.save(createAddress("Rua B", "200", null, "Salvador", "BA", "40000-000", user1));
+        addressRepository.save(createAddress("Rua C", "300", null, "São Paulo", "SP", "01000-000", user2));
 
         // Act
         List<Address> results = addressRepository.findByUserId(user1.getId());
@@ -129,9 +129,9 @@ public class AddressRepositoryTest {
     @DisplayName("Should find addresses by city ignoring case")
     void shouldFindByCityIgnoreCase() {
         // Arrange
-        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
-        addressRepository.save(createAddress("Rua B", "200", null, "Aracaju", "SE", "49000-001", "Brasil", user2));
-        addressRepository.save(createAddress("Rua C", "300", null, "Salvador", "BA", "40000-000", "Brasil", user1));
+        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", user1));
+        addressRepository.save(createAddress("Rua B", "200", null, "Aracaju", "SE", "49000-001", user2));
+        addressRepository.save(createAddress("Rua C", "300", null, "Salvador", "BA", "40000-000", user1));
 
         // Act
         List<Address> results = addressRepository.findByCityIgnoreCase("aracaju");
@@ -145,15 +145,15 @@ public class AddressRepositoryTest {
     @DisplayName("Should find addresses by state ignoring case")
     void shouldFindByStateIgnoreCase() {
         // Arrange
-        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
-        addressRepository.save(createAddress("Rua B", "200", null, "Salvador", "BA", "40000-000", "Brasil", user2));
+        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", user1));
+        addressRepository.save(createAddress("Rua B", "200", null, "Salvador", "BA", "40000-000", user2));
 
         // Act
         List<Address> results = addressRepository.findByStateIgnoreCase("se");
 
         // Assert
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getCity()).isEqualTo("Aracaju");
+        assertThat(results.getFirst().getCity()).isEqualTo("Aracaju");
     }
 
     @Test
@@ -161,8 +161,8 @@ public class AddressRepositoryTest {
     @DisplayName("Should find addresses by zip code")
     void shouldFindByZipCode() {
         // Arrange
-        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
-        addressRepository.save(createAddress("Rua B", "200", null, "Aracaju", "SE", "49000-000", "Brasil", user2));
+        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", user1));
+        addressRepository.save(createAddress("Rua B", "200", null, "Aracaju", "SE", "49000-000", user2));
 
         // Act
         List<Address> results = addressRepository.findByZipCode("49000-000");
@@ -176,8 +176,8 @@ public class AddressRepositoryTest {
     @DisplayName("Should count addresses by user ID")
     void shouldCountByUserId() {
         // Arrange
-        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
-        addressRepository.save(createAddress("Rua B", "200", null, "Salvador", "BA", "40000-000", "Brasil", user1));
+        addressRepository.save(createAddress("Rua A", "100", null, "Aracaju", "SE", "49000-000", user1));
+        addressRepository.save(createAddress("Rua B", "200", null, "Salvador", "BA", "40000-000", user1));
 
         // Act
         long count = addressRepository.countByUserId(user1.getId());
@@ -191,7 +191,7 @@ public class AddressRepositoryTest {
     @DisplayName("Should update an address")
     void shouldUpdateAddress() {
         // Arrange
-        Address saved = addressRepository.save(createAddress("Rua Antiga", "100", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
+        Address saved = addressRepository.save(createAddress("Rua Antiga", "100", null, "Aracaju", "SE", "49000-000", user1));
 
         // Act
         saved.setStreet("Rua Nova");
@@ -211,7 +211,7 @@ public class AddressRepositoryTest {
     @DisplayName("Should delete an address by ID")
     void shouldDeleteAddress() {
         // Arrange
-        Address saved = addressRepository.save(createAddress("Rua Temp", "999", null, "Aracaju", "SE", "49000-000", "Brasil", user1));
+        Address saved = addressRepository.save(createAddress("Rua Temp", "999", null, "Aracaju", "SE", "49000-000", user1));
 
         // Act
         addressRepository.deleteById(saved.getId());

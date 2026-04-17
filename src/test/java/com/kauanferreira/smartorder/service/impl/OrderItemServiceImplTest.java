@@ -61,9 +61,6 @@ public class OrderItemServiceImplTest {
     @InjectMocks
     private OrderItemServiceImpl orderItemService;
 
-    private User user;
-    private Address address;
-    private Category category;
     private Product product1;
     private Product product2;
     private Order order;
@@ -72,14 +69,14 @@ public class OrderItemServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        user = new User();
+        User user = new User();
         user.setId(1L);
         user.setName("John Doe");
         user.setEmail("john@email.com");
         user.setPassword("password123");
         user.setRole(Role.CUSTOMER);
 
-        address = new Address();
+        Address address = new Address();
         address.setId(1L);
         address.setStreet("Rua A");
         address.setNumber("100");
@@ -89,7 +86,7 @@ public class OrderItemServiceImplTest {
         address.setCountry("Brasil");
         address.setUser(user);
 
-        category = new Category();
+        Category category = new Category();
         category.setId(1L);
         category.setName("Electronics");
 
