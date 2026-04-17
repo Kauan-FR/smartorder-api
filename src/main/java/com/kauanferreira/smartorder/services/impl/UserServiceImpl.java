@@ -152,8 +152,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public User updatePassword(Long id, String newPassword) {
+    public User updatePassword(Long id, String currentPassword, String newPassword) {
         User existing = findById(id);
+
+        // Verify current password before allowing change
+        if (!passwordEncoder.matches(currentPassword, existing.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
         existing.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(existing);
     }

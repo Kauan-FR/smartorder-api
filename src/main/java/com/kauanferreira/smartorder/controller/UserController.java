@@ -1,6 +1,7 @@
 package com.kauanferreira.smartorder.controller;
 
 import com.kauanferreira.smartorder.dto.mapper.UserMapper;
+import com.kauanferreira.smartorder.dto.request.PasswordUpdateRequest;
 import com.kauanferreira.smartorder.dto.request.UserRequest;
 import com.kauanferreira.smartorder.dto.request.UserUpdateRequest;
 import com.kauanferreira.smartorder.dto.response.UserResponse;
@@ -188,18 +189,18 @@ public class UserController {
      * Updates the password of an existing user.
      *
      * @param id          the id of the user to update
-     * @param newPassword the new password
      * @return HTTP 200 with the updated user
      */
-    @Operation(summary = "Update user password", description = "Updates only the password of an existing user.")
+    @Operation(summary = "Update user password", description = "Updates the password after verifying the current password.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Password updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Current password is incorrect or new password is invalid"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     @PatchMapping("/{id}/password")
     public ResponseEntity<UserResponse> updatePassword(@PathVariable Long id,
-                                                       @RequestParam String newPassword) {
-        User updated = userService.updatePassword(id, newPassword);
+                                                       @Valid @RequestBody PasswordUpdateRequest request) {
+        User updated = userService.updatePassword(id, request.currentPassword(), request.newPassword());
         return ResponseEntity.ok(UserMapper.toResponse(updated));
     }
 

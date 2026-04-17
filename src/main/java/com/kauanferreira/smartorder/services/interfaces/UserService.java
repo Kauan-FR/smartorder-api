@@ -97,7 +97,7 @@ public interface UserService {
      * @param newPassword the new password
      * @return the updated user
      */
-    User updatePassword(Long id, String newPassword);
+    User updatePassword(Long id, String currentPassword, String newPassword);
 
     /**
      * Deletes a user by their ID.
