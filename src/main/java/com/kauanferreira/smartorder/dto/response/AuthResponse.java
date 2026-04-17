@@ -11,6 +11,7 @@ package com.kauanferreira.smartorder.dto.response;
  * @since 2026
  */
 public record AuthResponse(
+        Long id,
         String token,
         String name,
         String email,

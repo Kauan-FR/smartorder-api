@@ -105,6 +105,7 @@ public class AuthController {
         String token = jwtService.generateToken(user);
 
         AuthResponse response = new AuthResponse(
+                user.getId(),
                 token,
                 user.getName(),
                 user.getEmail(),
