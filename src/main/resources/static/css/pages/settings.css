@@ -167,3 +167,265 @@
     color: var(--color-info-text);
     font-weight: var(--font-medium);
 }
+
+/* ==================== Tabs Navigation ==================== */
+
+.settings-tabs {
+    display: flex;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--border-default);
+    margin-bottom: var(--space-6);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.settings-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.settings-tab {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.settings-tab:hover {
+    color: var(--text-primary);
+}
+
+.settings-tab--active {
+    color: var(--brand-primary);
+    border-bottom-color: var(--brand-primary);
+}
+
+/* ==================== Panels ==================== */
+
+.settings-panel {
+    display: none;
+}
+
+.settings-panel--active {
+    display: block;
+}
+
+/* ==================== Settings Card ==================== */
+
+.settings-card {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+}
+
+.settings-card__header {
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--border-default);
+}
+
+.settings-card__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-1);
+}
+
+.settings-card__desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.settings-card__body {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.settings-card__footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--border-default);
+    background-color: var(--bg-secondary);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ==================== Danger Card ==================== */
+
+.settings-card--danger {
+    border-color: var(--color-danger-light);
+}
+
+.settings-card--danger .settings-card__header {
+    background-color: var(--color-danger-light);
+    border-bottom-color: var(--color-danger-light);
+}
+
+.settings-card--danger .settings-card__title {
+    color: var(--color-danger-text);
+}
+
+/* ==================== Logo Preview ==================== */
+
+.settings-logo-preview {
+    margin-top: var(--space-3);
+    padding: var(--space-4);
+    background-color: var(--bg-secondary);
+    border: 1px dashed var(--border-default);
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+}
+
+.settings-logo-preview img {
+    max-height: 60px;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+/* ==================== Profile Photo Section ==================== */
+
+.settings-photo-section {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+}
+
+.settings-photo-preview {
+    flex-shrink: 0;
+}
+
+.settings-photo-preview .avatar-xl {
+    width: 96px;
+    height: 96px;
+    font-size: 28px;
+}
+
+.settings-photo-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.settings-photo-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.settings-photo-desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-2);
+}
+
+/* ==================== Notification Toggle Row ==================== */
+
+.settings-toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+}
+
+.settings-toggle-row--master {
+    background-color: var(--bg-secondary);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+}
+
+.settings-toggle-row__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-toggle-row__title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-1);
+}
+
+.settings-toggle-row__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ==================== Danger Row ==================== */
+
+.settings-danger-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+}
+
+.settings-danger-row__info {
+    flex: 1;
+}
+
+.settings-danger-row__title {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-1);
+}
+
+.settings-danger-row__desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ==================== Divider ==================== */
+
+.settings-divider {
+    height: 1px;
+    background-color: var(--border-default);
+    margin: var(--space-3) 0;
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+    .settings-photo-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .settings-toggle-row,
+    .settings-danger-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .settings-tab span {
+        display: none;
+    }
+}
+
+.settings-panel--active {
+    display: flex;
+    justify-content: center;
+}

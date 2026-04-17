@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Settings')}">
+</head>
+<body>
+
+<!-- Page-specific CSS -->
+<link th:href="@{/css/components/buttons.css}" rel="stylesheet">
+<link th:href="@{/css/components/cards.css}" rel="stylesheet">
+<link th:href="@{/css/components/badges.css}" rel="stylesheet">
+<link th:href="@{/css/components/avatar.css}" rel="stylesheet">
+<link th:href="@{/css/components/popup-menu.css}" rel="stylesheet">
+<link th:href="@{/css/components/forms.css}" rel="stylesheet">
+<link th:href="@{/css/components/modal.css}" rel="stylesheet">
+<link th:href="@{/css/layouts/sidebar.css}" rel="stylesheet">
+<link th:href="@{/css/layouts/topbar.css}" rel="stylesheet">
+<link th:href="@{/css/pages/settings.css}" rel="stylesheet">
+<link th:href="@{/css/components/help-modals.css}" rel="stylesheet">
+
+<!-- Sidebar -->
+<aside th:replace="~{fragments/sidebar :: sidebar('settings')}"></aside>
+<header th:replace="~{fragments/topbar :: topbar}"></header>
+
+<!-- Main Content -->
+<main class="admin-content" id="adminContent">
+
+    <!-- Page Header -->
+    <div class="crud-header">
+        <div class="crud-header__left">
+            <h1 data-i18n="settings.title">Settings</h1>
+            <p class="crud-header__subtitle" data-i18n="settings.subtitle">Manage your store, account, and system preferences</p>
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="settings-tabs">
+        <button class="settings-tab settings-tab--active" data-tab="store" onclick="switchTab('store', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span data-i18n="settings.tabStore">Store</span>
+        </button>
+        <button class="settings-tab" data-tab="notifications" onclick="switchTab('notifications', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            <span data-i18n="settings.tabNotifications">Notifications</span>
+        </button>
+        <button class="settings-tab" data-tab="danger" onclick="switchTab('danger', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span data-i18n="settings.tabDanger">Danger zone</span>
+        </button>
+    </div>
+
+    <!-- ==================== Tab: Store ==================== -->
+    <div class="settings-panel settings-panel--active" id="tab-store">
+        <div class="settings-card">
+            <div class="settings-card__header">
+                <h2 class="settings-card__title" data-i18n="settings.storeTitle">Store information</h2>
+                <p class="settings-card__desc" data-i18n="settings.storeDesc">Configure your store's public information and regional preferences.</p>
+            </div>
+            <div class="settings-card__body">
+                <div class="modal__form-group">
+                    <label class="label" for="storeName" data-i18n="settings.storeName">Store name</label>
+                    <input class="input" type="text" id="storeName" maxlength="100" placeholder="SmartOrder Store">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="storeDescription" data-i18n="settings.storeDescription">Store description</label>
+                    <textarea class="input" id="storeDescription" rows="3" maxlength="500" style="resize:vertical;" placeholder="A modern e-commerce platform..."></textarea>
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="storeLogoUrl" data-i18n="settings.storeLogo">Logo URL</label>
+                    <input class="input" type="text" id="storeLogoUrl" maxlength="500" placeholder="https://example.com/logo.png" oninput="previewLogo()">
+                    <div class="settings-logo-preview" id="logoPreview" style="display:none;">
+                        <img id="logoPreviewImg" src="" alt="Logo preview">
+                    </div>
+                </div>
+
+                <div class="modal__form-row">
+                    <div class="modal__form-group">
+                        <label class="label" for="storeCurrency" data-i18n="settings.currency">Currency</label>
+                        <select class="input" id="storeCurrency">
+                            <option value="BRL">BRL — Brazilian Real (R$)</option>
+                            <option value="USD">USD — US Dollar ($)</option>
+                            <option value="EUR">EUR — Euro (€)</option>
+                            <option value="GBP">GBP — British Pound (£)</option>
+                            <option value="JPY">JPY — Japanese Yen (¥)</option>
+                        </select>
+                    </div>
+                    <div class="modal__form-group">
+                        <label class="label" for="storeTimezone" data-i18n="settings.timezone">Timezone</label>
+                        <select class="input" id="storeTimezone">
+                            <option value="America/Sao_Paulo">America/Sao_Paulo (GMT-3)</option>
+                            <option value="America/New_York">America/New_York (GMT-5)</option>
+                            <option value="America/Los_Angeles">America/Los_Angeles (GMT-8)</option>
+                            <option value="Europe/London">Europe/London (GMT+0)</option>
+                            <option value="Europe/Paris">Europe/Paris (GMT+1)</option>
+                            <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-card__footer">
+                <button class="btn btn-primary" onclick="saveStoreSettings()" data-i18n="common.saveChanges">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Tab: Notifications ==================== -->
+    <div class="settings-panel" id="tab-notifications">
+        <div class="settings-card">
+            <div class="settings-card__header">
+                <h2 class="settings-card__title" data-i18n="settings.notifTitle">Notification preferences</h2>
+                <p class="settings-card__desc" data-i18n="settings.notifDesc">Choose which notifications you want to receive in the admin panel.</p>
+            </div>
+            <div class="settings-card__body">
+
+                <!-- Master toggle: Disable all -->
+                <div class="settings-toggle-row settings-toggle-row--master">
+                    <div class="settings-toggle-row__info">
+                        <p class="settings-toggle-row__title" data-i18n="settings.notifDisableAll">Disable all notifications</p>
+                        <p class="settings-toggle-row__desc" data-i18n="settings.notifDisableAllDesc">Turn off every notification type at once.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifDisableAll" onchange="toggleAllNotifications()">
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="settings-toggle-row">
+                    <div class="settings-toggle-row__info">
+                        <p class="settings-toggle-row__title" data-i18n="settings.notifNewOrders">New orders</p>
+                        <p class="settings-toggle-row__desc" data-i18n="settings.notifNewOrdersDesc">Get notified when a customer places a new order.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifNewOrders" class="settings-notif-toggle" checked>
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-toggle-row">
+                    <div class="settings-toggle-row__info">
+                        <p class="settings-toggle-row__title" data-i18n="settings.notifNewUsers">New users</p>
+                        <p class="settings-toggle-row__desc" data-i18n="settings.notifNewUsersDesc">Get notified when a new user registers.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifNewUsers" class="settings-notif-toggle" checked>
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-toggle-row">
+                    <div class="settings-toggle-row__info">
+                        <p class="settings-toggle-row__title" data-i18n="settings.notifLowStock">Low stock alerts</p>
+                        <p class="settings-toggle-row__desc" data-i18n="settings.notifLowStockDesc">Alert when a product's stock falls below a threshold.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifLowStock" class="settings-notif-toggle" checked>
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-toggle-row">
+                    <div class="settings-toggle-row__info">
+                        <p class="settings-toggle-row__title" data-i18n="settings.notifOrderStatus">Order status changes</p>
+                        <p class="settings-toggle-row__desc" data-i18n="settings.notifOrderStatusDesc">Get updates when an order's status is changed.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifOrderStatus" class="settings-notif-toggle" checked>
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-toggle-row">
+                    <div class="settings-toggle-row__info">
+                        <p class="settings-toggle-row__title" data-i18n="settings.notifNewReviews">New product reviews</p>
+                        <p class="settings-toggle-row__desc" data-i18n="settings.notifNewReviewsDesc">Get notified when customers review products.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifNewReviews" class="settings-notif-toggle" checked>
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
+                <div class="settings-toggle-row">
+                    <div class="settings-toggle-row__info">
+                        <p class="settings-toggle-row__title" data-i18n="settings.notifNewMessages">New chat messages</p>
+                        <p class="settings-toggle-row__desc" data-i18n="settings.notifNewMessagesDesc">Get notified when a customer sends you a message.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifNewMessages" class="settings-notif-toggle" checked>
+                        <span class="toggle-switch__slider"></span>
+                    </label>
+                </div>
+
+            </div>
+            <div class="settings-card__footer">
+                <button class="btn btn-primary" onclick="saveNotificationPreferences()" data-i18n="common.saveChanges">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Tab: Account ==================== -->
+    <div class="settings-panel" id="tab-account">
+        <div class="settings-card">
+            <div class="settings-card__header">
+                <h2 class="settings-card__title" data-i18n="settings.accountTitle">Account information</h2>
+                <p class="settings-card__desc" data-i18n="settings.accountDesc">Update your personal information and profile photo.</p>
+            </div>
+            <div class="settings-card__body">
+
+                <!-- Profile photo -->
+                <div class="settings-photo-section">
+                    <div class="settings-photo-preview">
+                        <div class="avatar avatar-xl avatar-initials" id="accountAvatarInitials">KF</div>
+                        <img class="avatar avatar-xl" id="accountAvatarImg" src="" alt="Profile photo" style="display:none;">
+                    </div>
+                    <div class="settings-photo-info">
+                        <p class="settings-photo-label" data-i18n="settings.profilePhoto">Profile photo</p>
+                        <p class="settings-photo-desc" data-i18n="settings.profilePhotoDesc">Add a URL to display your profile image across the panel.</p>
+                        <input class="input" type="text" id="accountImageUrl" maxlength="500" placeholder="https://example.com/photo.jpg" oninput="previewAccountPhoto()">
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="accountName" data-i18n="settings.accountName">Full name</label>
+                    <input class="input" type="text" id="accountName" maxlength="100" placeholder="Your full name">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="accountEmail" data-i18n="settings.accountEmail">Email</label>
+                    <input class="input" type="email" id="accountEmail" maxlength="150" placeholder="you@example.com">
+                </div>
+
+            </div>
+            <div class="settings-card__footer">
+                <button class="btn btn-primary" onclick="saveAccountInfo()" data-i18n="common.saveChanges">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Tab: Security ==================== -->
+    <div class="settings-panel" id="tab-security">
+        <div class="settings-card">
+            <div class="settings-card__header">
+                <h2 class="settings-card__title" data-i18n="settings.securityTitle">Change password</h2>
+                <p class="settings-card__desc" data-i18n="settings.securityDesc">Update your password. Use at least 8 characters with a mix of letters and numbers.</p>
+            </div>
+            <div class="settings-card__body">
+                <div class="modal__error" id="passwordError"></div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="currentPassword" data-i18n="settings.currentPassword">Current password</label>
+                    <input class="input" type="password" id="currentPassword" placeholder="••••••••">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="newPassword" data-i18n="settings.newPassword">New password</label>
+                    <input class="input" type="password" id="newPassword" placeholder="At least 8 characters">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="confirmPassword" data-i18n="settings.confirmPassword">Confirm new password</label>
+                    <input class="input" type="password" id="confirmPassword" placeholder="Repeat new password">
+                </div>
+            </div>
+            <div class="settings-card__footer">
+                <button class="btn btn-primary" onclick="updatePassword()" data-i18n="settings.updatePassword">Update password</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Tab: Danger Zone ==================== -->
+    <div class="settings-panel" id="tab-danger">
+        <div class="settings-card settings-card--danger">
+            <div class="settings-card__header">
+                <h2 class="settings-card__title" data-i18n="settings.dangerTitle">Danger zone</h2>
+                <p class="settings-card__desc" data-i18n="settings.dangerDesc">These actions are irreversible. Proceed with caution.</p>
+            </div>
+            <div class="settings-card__body">
+
+                <div class="settings-danger-row">
+                    <div class="settings-danger-row__info">
+                        <p class="settings-danger-row__title" data-i18n="settings.clearOrders">Clear all orders</p>
+                        <p class="settings-danger-row__desc" data-i18n="settings.clearOrdersDesc">Permanently delete every order and order item in the system.</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="openDangerModal('clearOrders')" data-i18n="settings.clearData">Clear data</button>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="settings-danger-row">
+                    <div class="settings-danger-row__info">
+                        <p class="settings-danger-row__title" data-i18n="settings.resetData">Reset test data</p>
+                        <p class="settings-danger-row__desc" data-i18n="settings.resetDataDesc">Delete all products, categories, and orders. The default users will remain.</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="openDangerModal('resetData')" data-i18n="settings.resetButton">Reset</button>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="settings-danger-row">
+                    <div class="settings-danger-row__info">
+                        <p class="settings-danger-row__title" data-i18n="settings.deleteAccount">Delete my account</p>
+                        <p class="settings-danger-row__desc" data-i18n="settings.deleteAccountDesc">Remove your admin account permanently. You will be signed out.</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="openDangerModal('deleteAccount')" data-i18n="common.delete">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align:center;font-size:var(--text-xs);color:var(--text-tertiary);margin-top:var(--space-6);" data-i18n="common.footer">SmartOrder API v1.0 — Admin panel</p>
+</main>
+
+<!-- Danger Confirmation Modal -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeDangerModal()"></div>
+<div class="modal" id="dangerModal">
+    <div class="modal__body" style="padding-top:var(--space-8);">
+        <div class="modal__confirm-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <p class="modal__confirm-title" id="dangerModalTitle">Are you sure?</p>
+        <p class="modal__confirm-text" id="dangerModalText">This action cannot be undone.</p>
+        <p style="text-align:center;font-size:var(--text-sm);color:var(--text-secondary);margin-top:var(--space-4);" data-i18n="settings.typeConfirm">Type CONFIRM to proceed:</p>
+        <input class="input" type="text" id="dangerConfirmInput" placeholder="CONFIRM" style="margin-top:var(--space-3);text-align:center;text-transform:uppercase;">
+        <div class="modal__error" id="dangerError"></div>
+    </div>
+    <div class="modal__footer">
+        <button class="btn btn-outline" onclick="closeDangerModal()" data-i18n="common.cancel">Cancel</button>
+        <button class="btn btn-danger" id="dangerConfirmBtn" onclick="confirmDangerAction()" data-i18n="common.confirm">Confirm</button>
+    </div>
+</div>
+
+<div th:replace="~{fragments/help-modals :: helpModals}"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Scripts -->
+<script th:src="@{/js/i18n.js}"></script>
+<script th:src="@{/js/lang/en.js}"></script>
+<script th:src="@{/js/lang/pt.js}"></script>
+<script th:src="@{/js/lang/es.js}"></script>
+<script th:src="@{/js/lang/fr.js}"></script>
+<script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/admin-topbar.js}"></script>
+<script th:src="@{/js/admin-help.js}"></script>
+<script th:src="@{/js/admin-settings.js}"></script>
+
+</body>
+</html>
