@@ -54,6 +54,23 @@ function toggleLangDropdown() {
     if (notifDropdown) notifDropdown.classList.remove('is-open');
 }
 
+// ==================== Topbar Toast (Global) ====================
+
+function showTopbarToast(message, type) {
+    var toast = document.getElementById('topbarToast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'topbarToast';
+        toast.className = 'topbar-toast';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.className = 'topbar-toast topbar-toast--' + type + ' is-visible';
+    setTimeout(function() {
+        toast.classList.remove('is-visible');
+    }, 3000);
+}
+
 /**
  * Sets the selected language, updates the UI, and stores the preference.
  * In a real application, this would trigger i18n translation of the entire interface.
@@ -73,9 +90,7 @@ function setLanguage(lang, element) {
 
     document.getElementById('langMenu').classList.remove('is-open');
 
-    if (typeof showToast === 'function') {
-        showToast(I18n.get('lang.changed') + ' ' + I18n.get('lang.' + lang), 'success');
-    }
+    showTopbarToast(I18n.get('lang.changed') + ' ' + I18n.get('lang.' + lang), 'success');
 }
 
 /**
@@ -309,6 +324,39 @@ function escapeSearchHtml(str) {
 }
 
 initGlobalSearch();
+
+// ==================== Store Logo ====================
+
+function loadSidebarLogo() {
+    var saved = localStorage.getItem('smartorder-store-settings');
+    if (!saved) return;
+
+    try {
+        var data = JSON.parse(saved);
+        if (data.logoUrl) {
+            var logo = document.querySelector('.sidebar__logo');
+            if (logo) {
+                var img = document.createElement('img');
+                img.src = data.logoUrl;
+                img.alt = 'Logo';
+                img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:inherit;';
+                img.onerror = function() { this.remove(); };
+                logo.innerHTML = '';
+                logo.style.backgroundColor = 'transparent';
+                logo.style.padding = '0';
+                logo.style.overflow = 'hidden';
+                logo.appendChild(img);
+            }
+        }
+
+        if (data.storeName) {
+            var brand = document.querySelector('.sidebar__brand-name');
+            if (brand) brand.textContent = data.storeName;
+        }
+    } catch (e) {}
+}
+
+loadSidebarLogo();
 
 // ==================== Close Dropdowns on Outside Click ====================
 
