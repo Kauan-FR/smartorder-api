@@ -482,6 +482,126 @@ I18n.register('es', {
         changed: 'Idioma cambiado a'
     },
 
+    // ==================== Settings Page ====================
+    settings: {
+        title: 'Configuración',
+        subtitle: 'Administre su tienda, cuenta y preferencias del sistema',
+
+        tabStore: 'Tienda',
+        tabNotifications: 'Notificaciones',
+        tabAccount: 'Cuenta',
+        tabSecurity: 'Seguridad',
+        tabDanger: 'Zona de peligro',
+
+        // Store
+        storeTitle: 'Información de la tienda',
+        storeDesc: 'Configure la información pública de su tienda y las preferencias regionales.',
+        storeName: 'Nombre de la tienda',
+        storeDescription: 'Descripción de la tienda',
+        storeLogo: 'URL del Logotipo',
+        currency: 'Moneda',
+        timezone: 'Zona horaria',
+        storeSaved: 'Configuración de la tienda guardada con éxito',
+        errStoreName: 'El nombre de la tienda es obligatorio',
+
+        // Notifications
+        notifTitle: 'Preferencias de notificación',
+        notifDesc: 'Elija qué notificaciones desea recibir en el panel de administración.',
+        notifDisableAll: 'Desactivar todas las notificaciones',
+        notifDisableAllDesc: 'Apaga todos los tipos de notificación a la vez.',
+        notifNewOrders: 'Nuevos pedidos',
+        notifNewOrdersDesc: 'Recibir notificaciones cuando un cliente realiza un nuevo pedido.',
+        notifNewUsers: 'Nuevos usuarios',
+        notifNewUsersDesc: 'Recibir notificaciones cuando se registra un nuevo usuario.',
+        notifLowStock: 'Alertas de stock bajo',
+        notifLowStockDesc: 'Alerta cuando el stock de un producto cae por debajo de un umbral.',
+        notifOrderStatus: 'Cambios en el estado del pedido',
+        notifOrderStatusDesc: 'Recibir actualizaciones cuando cambia el estado de un pedido.',
+        notifNewReviews: 'Nuevas reseñas de productos',
+        notifNewReviewsDesc: 'Recibir notificaciones cuando los clientes reseñan productos.',
+        notifNewMessages: 'Nuevos mensajes de chat',
+        notifNewMessagesDesc: 'Recibir notificaciones cuando un cliente le envía un mensaje.',
+        notifSaved: 'Preferencias de notificación guardadas',
+
+        // Account
+        accountTitle: 'Información de la cuenta',
+        accountDesc: 'Actualice su información personal y foto de perfil.',
+        profilePhoto: 'Foto de perfil',
+        profilePhotoDesc: 'Añada una URL para mostrar su imagen de perfil en el panel.',
+        accountName: 'Nombre completo',
+        accountEmail: 'Correo electrónico',
+        accountSaved: 'Información de la cuenta actualizada',
+        errName: 'El nombre es obligatorio',
+        errEmail: 'El correo electrónico es obligatorio',
+        errUpdate: 'Fallo al actualizar',
+
+        // Security
+        securityTitle: 'Cambiar contraseña',
+        securityDesc: 'Actualice su contraseña. Use al menos 8 caracteres con una mezcla de letras y números.',
+        currentPassword: 'Contraseña actual',
+        newPassword: 'Nueva contraseña',
+        confirmPassword: 'Confirmar nueva contraseña',
+        updatePassword: 'Actualizar contraseña',
+        passUpdated: 'Contraseña actualizada con éxito',
+        errCurrentPass: 'La contraseña actual es obligatoria',
+        errNewPassLen: 'La nueva contraseña debe tener al menos 8 caracteres',
+        errPassMatch: 'La nueva contraseña y la confirmación no coinciden',
+
+        // Danger
+        dangerTitle: 'Zona de peligro',
+        dangerDesc: 'Estas acciones son irreversibles. Proceda con precaución.',
+        clearOrders: 'Borrar todos los pedidos',
+        clearOrdersDesc: 'Eliminar permanentemente todos los pedidos y artículos del sistema.',
+        clearData: 'Borrar datos',
+        resetData: 'Restablecer datos de prueba',
+        resetDataDesc: 'Eliminar todos los productos, categorías y pedidos. Los usuarios por defecto permanecerán.',
+        resetButton: 'Restablecer',
+        deleteAccount: 'Eliminar mi cuenta',
+        deleteAccountDesc: 'Eliminar su cuenta de administrador permanentemente. Se cerrará su sesión.',
+        typeConfirm: 'Escriba CONFIRMAR para continuar:',
+        errTypeConfirm: 'Debe escribir CONFIRMAR exactamente',
+        confirmClearOrders: '¿Borrar todos los pedidos?',
+        confirmClearOrdersText: 'Esto eliminará permanentemente todos los pedidos. Esta acción no se puede deshacer.',
+        confirmResetData: '¿Restablecer datos de prueba?',
+        confirmResetDataText: 'Esto eliminará todos los pedidos, productos y categorías. Los usuarios permanecerán.',
+        confirmDeleteAccount: '¿Eliminar su cuenta?',
+        confirmDeleteAccountText: 'Su cuenta de administrador será eliminada permanentemente. Esta acción no se puede deshacer.',
+        ordersCleared: 'Se han borrado todos los pedidos',
+        dataReset: 'Se han restablecido los datos de prueba',
+        accountDeleted: 'Cuenta eliminada. Cerrando sesión...'
+    },
+
+    // ==================== Profile Page ====================
+    profile: {
+        tabAccount: 'Cuenta',
+        tabSecurity: 'Seguridad',
+
+        accountTitle: 'Información de la cuenta',
+        accountDesc: 'Actualice su información personal y foto de perfil.',
+        profilePhoto: 'Foto de perfil',
+        profilePhotoDesc: 'Añada una URL para mostrar su imagen de perfil en el panel.',
+        accountName: 'Nombre completo',
+        accountEmail: 'Correo electrónico',
+        accountPhone: 'Teléfono',
+        accountSaved: 'Información de la cuenta actualizada',
+        errName: 'El nombre es obligatorio',
+        errEmail: 'El correo electrónico es obligatorio',
+        errUpdate: 'Fallo al actualizar',
+        repeat: 'Repetir nueva contraseña',
+        least: 'Al menos 8 caracteres',
+
+        securityTitle: 'Cambiar contraseña',
+        securityDesc: 'Actualice su contraseña. Use al menos 8 caracteres con una mezcla de letras y números.',
+        currentPassword: 'Contraseña actual',
+        newPassword: 'Nueva contraseña',
+        confirmPassword: 'Confirmar nueva contraseña',
+        updatePassword: 'Actualizar contraseña',
+        passUpdated: 'Contraseña actualizada con éxito',
+        errCurrentPass: 'La contraseña actual es obligatoria',
+        errNewPassLen: 'La nueva contraseña debe tener al menos 8 caracteres',
+        errPassMatch: 'La nueva contraseña y la confirmación no coinciden'
+    },
+
     common: {
         save: 'Guardar',
         cancel: 'Cancelar',
@@ -516,6 +636,7 @@ I18n.register('es', {
         admin: 'Admin',
         customer: 'Cliente',
         saveChanges: 'Guardar cambios',
+        connectionError: 'Error de conexión. Por favor, inténtelo de nuevo.'
     }
 
 });

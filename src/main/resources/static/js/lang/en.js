@@ -506,6 +506,126 @@ I18n.register('en', {
         changed: 'Language changed to'
     },
 
+    // ==================== Settings Page ====================
+    settings: {
+        title: 'Settings',
+        subtitle: 'Manage your store, account, and system preferences',
+
+        tabStore: 'Store',
+        tabNotifications: 'Notifications',
+        tabAccount: 'Account',
+        tabSecurity: 'Security',
+        tabDanger: 'Danger zone',
+
+        // Store
+        storeTitle: 'Store information',
+        storeDesc: "Configure your store's public information and regional preferences.",
+        storeName: 'Store name',
+        storeDescription: 'Store description',
+        storeLogo: 'Logo URL',
+        currency: 'Currency',
+        timezone: 'Timezone',
+        storeSaved: 'Store settings saved successfully',
+        errStoreName: 'Store name is required',
+
+        // Notifications
+        notifTitle: 'Notification preferences',
+        notifDesc: 'Choose which notifications you want to receive in the admin panel.',
+        notifDisableAll: 'Disable all notifications',
+        notifDisableAllDesc: 'Turn off every notification type at once.',
+        notifNewOrders: 'New orders',
+        notifNewOrdersDesc: 'Get notified when a customer places a new order.',
+        notifNewUsers: 'New users',
+        notifNewUsersDesc: 'Get notified when a new user registers.',
+        notifLowStock: 'Low stock alerts',
+        notifLowStockDesc: "Alert when a product's stock falls below a threshold.",
+        notifOrderStatus: 'Order status changes',
+        notifOrderStatusDesc: "Get updates when an order's status is changed.",
+        notifNewReviews: 'New product reviews',
+        notifNewReviewsDesc: 'Get notified when customers review products.',
+        notifNewMessages: 'New chat messages',
+        notifNewMessagesDesc: 'Get notified when a customer sends you a message.',
+        notifSaved: 'Notification preferences saved',
+
+        // Account
+        accountTitle: 'Account information',
+        accountDesc: 'Update your personal information and profile photo.',
+        profilePhoto: 'Profile photo',
+        profilePhotoDesc: 'Add a URL to display your profile image across the panel.',
+        accountName: 'Full name',
+        accountEmail: 'Email',
+        accountSaved: 'Account information updated',
+        errName: 'Name is required',
+        errEmail: 'Email is required',
+        errUpdate: 'Failed to update',
+
+        // Security
+        securityTitle: 'Change password',
+        securityDesc: 'Update your password. Use at least 8 characters with a mix of letters and numbers.',
+        currentPassword: 'Current password',
+        newPassword: 'New password',
+        confirmPassword: 'Confirm new password',
+        updatePassword: 'Update password',
+        passUpdated: 'Password updated successfully',
+        errCurrentPass: 'Current password is required',
+        errNewPassLen: 'New password must have at least 8 characters',
+        errPassMatch: 'New password and confirmation do not match',
+
+        // Danger
+        dangerTitle: 'Danger zone',
+        dangerDesc: 'These actions are irreversible. Proceed with caution.',
+        clearOrders: 'Clear all orders',
+        clearOrdersDesc: 'Permanently delete every order and order item in the system.',
+        clearData: 'Clear data',
+        resetData: 'Reset test data',
+        resetDataDesc: 'Delete all products, categories, and orders. The default users will remain.',
+        resetButton: 'Reset',
+        deleteAccount: 'Delete my account',
+        deleteAccountDesc: 'Remove your admin account permanently. You will be signed out.',
+        typeConfirm: 'Type CONFIRM to proceed:',
+        errTypeConfirm: 'You must type CONFIRM exactly',
+        confirmClearOrders: 'Clear all orders?',
+        confirmClearOrdersText: 'This will permanently delete all orders and order items. This action cannot be undone.',
+        confirmResetData: 'Reset all test data?',
+        confirmResetDataText: 'This will delete all orders, products, and categories. Users will remain. This action cannot be undone.',
+        confirmDeleteAccount: 'Delete your account?',
+        confirmDeleteAccountText: 'Your admin account will be permanently removed and you will be signed out. This action cannot be undone.',
+        ordersCleared: 'All orders have been cleared',
+        dataReset: 'Test data has been reset',
+        accountDeleted: 'Account deleted. Signing out...'
+    },
+
+    // ==================== Profile Page ====================
+    profile: {
+        tabAccount: 'Account',
+        tabSecurity: 'Security',
+
+        accountTitle: 'Account information',
+        accountDesc: 'Update your personal information and profile photo.',
+        profilePhoto: 'Profile photo',
+        profilePhotoDesc: 'Add a URL to display your profile image across the panel.',
+        accountName: 'Full name',
+        accountEmail: 'Email',
+        accountPhone: 'Phone',
+        accountSaved: 'Account information updated',
+        errName: 'Name is required',
+        errEmail: 'Email is required',
+        errUpdate: 'Failed to update',
+        repeat: 'Repeat new password',
+        least: 'At least 8 characters',
+
+        securityTitle: 'Change password',
+        securityDesc: 'Update your password. Use at least 8 characters with a mix of letters and numbers.',
+        currentPassword: 'Current password',
+        newPassword: 'New password',
+        confirmPassword: 'Confirm new password',
+        updatePassword: 'Update password',
+        passUpdated: 'Password updated successfully',
+        errCurrentPass: 'Current password is required',
+        errNewPassLen: 'New password must have at least 8 characters',
+        errPassMatch: 'New password and confirmation do not match'
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Save',
@@ -541,6 +661,7 @@ I18n.register('en', {
         admin: 'Admin',
         customer: 'Customer',
         saveChanges: 'Save changes',
+        connectionError: 'Connection error. Please try again.',
     }
 
 });

@@ -482,6 +482,126 @@ I18n.register('pt', {
         changed: 'Idioma alterado para'
     },
 
+    // ==================== Settings Page ====================
+    settings: {
+        title: 'Configurações',
+        subtitle: 'Gerencie sua loja, conta e preferências do sistema',
+
+        tabStore: 'Loja',
+        tabNotifications: 'Notificações',
+        tabAccount: 'Conta',
+        tabSecurity: 'Segurança',
+        tabDanger: 'Zona de perigo',
+
+        // Store
+        storeTitle: 'Informações da loja',
+        storeDesc: 'Configure as informações públicas da sua loja e preferências regionais.',
+        storeName: 'Nome da loja',
+        storeDescription: 'Descrição da loja',
+        storeLogo: 'URL do Logotipo',
+        currency: 'Moeda',
+        timezone: 'Fuso horário',
+        storeSaved: 'Configurações da loja salvas com sucesso',
+        errStoreName: 'O nome da loja é obrigatório',
+
+        // Notifications
+        notifTitle: 'Preferências de notificação',
+        notifDesc: 'Escolha quais notificações você deseja receber no painel administrativo.',
+        notifDisableAll: 'Desativar todas as notificações',
+        notifDisableAllDesc: 'Desliga todos os tipos de notificação de uma vez.',
+        notifNewOrders: 'Novos pedidos',
+        notifNewOrdersDesc: 'Ser notificado quando um cliente faz um novo pedido.',
+        notifNewUsers: 'Novos usuários',
+        notifNewUsersDesc: 'Ser notificado quando um novo usuário se cadastrar.',
+        notifLowStock: 'Alertas de estoque baixo',
+        notifLowStockDesc: 'Alerta quando o estoque de um produto cai abaixo de um limite.',
+        notifOrderStatus: 'Alterações no status do pedido',
+        notifOrderStatusDesc: 'Receber atualizações quando o status de um pedido for alterado.',
+        notifNewReviews: 'Novas avaliações de produtos',
+        notifNewReviewsDesc: 'Ser notificado quando os clientes avaliam produtos.',
+        notifNewMessages: 'Novas mensagens de chat',
+        notifNewMessagesDesc: 'Ser notificado quando um cliente lhe envia uma mensagem.',
+        notifSaved: 'Preferências de notificação salvas',
+
+        // Account
+        accountTitle: 'Informações da conta',
+        accountDesc: 'Atualize suas informações pessoais e foto de perfil.',
+        profilePhoto: 'Foto de perfil',
+        profilePhotoDesc: 'Adicione uma URL para exibir sua imagem de perfil no painel.',
+        accountName: 'Nome completo',
+        accountEmail: 'E-mail',
+        accountSaved: 'Informações da conta atualizadas',
+        errName: 'Nome é obrigatório',
+        errEmail: 'E-mail é obrigatório',
+        errUpdate: 'Falha ao atualizar',
+
+        // Security
+        securityTitle: 'Alterar senha',
+        securityDesc: 'Atualize sua senha. Use pelo menos 8 caracteres com uma mistura de letras e números.',
+        currentPassword: 'Senha atual',
+        newPassword: 'Nova senha',
+        confirmPassword: 'Confirmar nova senha',
+        updatePassword: 'Atualizar senha',
+        passUpdated: 'Senha atualizada com sucesso',
+        errCurrentPass: 'Senha atual é obrigatória',
+        errNewPassLen: 'A nova senha deve ter pelo menos 8 caracteres',
+        errPassMatch: 'A nova senha e a confirmação não coincidem',
+
+        // Danger
+        dangerTitle: 'Zona de perigo',
+        dangerDesc: 'Estas ações são irreversíveis. Prossiga com cautela.',
+        clearOrders: 'Limpar todos os pedidos',
+        clearOrdersDesc: 'Excluir permanentemente todos os pedidos e itens de pedido no sistema.',
+        clearData: 'Limpar dados',
+        resetData: 'Redefinir dados de teste',
+        resetDataDesc: 'Excluir todos os produtos, categorias e pedidos. Os usuários padrão permanecerão.',
+        resetButton: 'Redefinir',
+        deleteAccount: 'Excluir minha conta',
+        deleteAccountDesc: 'Remover sua conta de administrador permanentemente. Você será desconectado.',
+        typeConfirm: 'Digite CONFIRMAR para prosseguir:',
+        errTypeConfirm: 'Você deve digitar CONFIRMAR exatamente',
+        confirmClearOrders: 'Limpar todos os pedidos?',
+        confirmClearOrdersText: 'Isso excluirá permanentemente todos os pedidos e itens. Esta ação não pode ser desfeita.',
+        confirmResetData: 'Redefinir todos os dados de teste?',
+        confirmResetDataText: 'Isso excluirá todos os pedidos, produtos e categorias. Usuários permanecerão. Esta ação não pode ser desfeita.',
+        confirmDeleteAccount: 'Excluir sua conta?',
+        confirmDeleteAccountText: 'Sua conta de administrador será removida permanentemente e você será desconectado. Esta ação não pode ser desfeita.',
+        ordersCleared: 'Todos os pedidos foram limpos',
+        dataReset: 'Dados de teste foram redefinidos',
+        accountDeleted: 'Conta excluída. Desconectando...'
+    },
+
+    // ==================== Profile Page ====================
+    profile: {
+        tabAccount: 'Conta',
+        tabSecurity: 'Segurança',
+
+        accountTitle: 'Informações da conta',
+        accountDesc: 'Atualize suas informações pessoais e foto de perfil.',
+        profilePhoto: 'Foto de perfil',
+        profilePhotoDesc: 'Adicione uma URL para exibir sua imagem de perfil no painel.',
+        accountName: 'Nome completo',
+        accountEmail: 'E-mail',
+        accountPhone: 'Telefone',
+        accountSaved: 'Informações da conta atualizadas',
+        errName: 'Nome é obrigatório',
+        errEmail: 'E-mail é obrigatório',
+        errUpdate: 'Falha ao atualizar',
+        repeat: 'Repetir nova senha',
+        least: 'Pelo menos 8 caracteres',
+
+        securityTitle: 'Alterar senha',
+        securityDesc: 'Atualize sua senha. Use pelo menos 8 caracteres com uma mistura de letras e números.',
+        currentPassword: 'Senha atual',
+        newPassword: 'Nova senha',
+        confirmPassword: 'Confirmar nova senha',
+        updatePassword: 'Atualizar senha',
+        passUpdated: 'Senha atualizada com sucesso',
+        errCurrentPass: 'Senha atual é obrigatória',
+        errNewPassLen: 'A nova senha deve ter pelo menos 8 caracteres',
+        errPassMatch: 'A nova senha e a confirmação não coincidem'
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Salvar',
@@ -516,7 +636,8 @@ I18n.register('pt', {
         undone: 'Esta ação não pode ser desfeita',
         admin: 'Administrador',
         customer: 'Cliente',
-        saveChanges: 'Salvar alterações'
+        saveChanges: 'Salvar alterações',
+        connectionError: 'Erro de conexão. Por favor, tente novamente.',
     }
 
 });
