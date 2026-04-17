@@ -94,6 +94,12 @@ var I18n = (function() {
     /**
      * Sets the current language and applies translations.
      */
+    var changeCallbacks = [];
+
+    function onLanguageChange(callback) {
+        changeCallbacks.push(callback);
+    }
+
     function setLanguage(lang) {
         if (!languages[lang]) {
             console.warn('[i18n] Language not registered: ' + lang);
@@ -102,6 +108,11 @@ var I18n = (function() {
         currentLang = lang;
         localStorage.setItem('smartorder-lang', lang);
         apply();
+
+        // Notify all registered callbacks
+        changeCallbacks.forEach(function(cb) {
+            cb(lang);
+        });
     }
 
     /**
@@ -128,7 +139,8 @@ var I18n = (function() {
         apply: apply,
         setLanguage: setLanguage,
         getCurrentLang: getCurrentLang,
-        init: init
+        init: init,
+        onLanguageChange: onLanguageChange
     };
 
 })();

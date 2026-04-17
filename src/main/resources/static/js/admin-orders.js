@@ -491,6 +491,12 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+// ==================== Language Change Callback ====================
+
+I18n.onLanguageChange(function() {
+    renderTable(allOrders);
+});
+
 // ==================== Initialize ====================
 
 loadUsers();

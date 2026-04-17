@@ -52,6 +52,7 @@ function signOut() {
 
 // ==================== State ====================
 
+var allOrderItems = [];
 var allItems = [];
 var allOrders = [];
 var allProducts = [];
@@ -400,6 +401,12 @@ document.addEventListener('keydown', function(e) {
         closeModal();
         closeDeleteModal();
     }
+});
+
+// ==================== Language Change Callback ====================
+
+I18n.onLanguageChange(function () {
+   renderTable(allOrderItems);
 });
 
 // ==================== Initialize ====================

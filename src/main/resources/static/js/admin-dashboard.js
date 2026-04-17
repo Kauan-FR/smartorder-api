@@ -137,9 +137,9 @@ function loadDashboard() {
     fetch('/api/orders?size=5&sort=id,desc', { headers: headers })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            var orders = Array.isArray(data) ? data : (data.content || []);
-            renderOrdersTable(orders);
-            renderStatusBars(orders);
+            lastOrders = Array.isArray(data) ? data : (data.content || []);
+            renderOrdersTable(lastOrders);
+            renderStatusBars(lastOrders);
         })
         .catch(function() {
             document.getElementById('ordersTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:24px;color:var(--text-tertiary);">'+ I18n.get('dashboardJs.failedOrders') +'</td></tr>';
@@ -235,6 +235,40 @@ function renderStatusBars(orders) {
             statusBarsEl.innerHTML = '<p style="color:var(--text-tertiary);font-size:var(--text-sm);">'+ I18n.get('dashboardJs.failedStatus')+'</p>';
         });
 }
+
+// ==================== Topbar Toast (Global) ====================
+
+function showTopbarToast(message, type) {
+    var toast = document.getElementById('topbarToast');
+    if (!toast) {
+        // Create toast element if it doesn't exist
+        toast = document.createElement('div');
+        toast.id = 'topbarToast';
+        toast.className = 'topbar-toast';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.className = 'topbar-toast topbar-toast--' + type + ' is-visible';
+    setTimeout(function() {
+        toast.classList.remove('is-visible');
+    }, 3000);
+}
+
+// ==================== State (add at the top, in the State section) ====================
+
+var lastOrders = [];
+
+// ==================== Language Change Callback ====================
+
+I18n.onLanguageChange(function() {
+    // Re-render welcome text
+    if (user) {
+        document.getElementById('welcomeText').textContent = I18n.get('dashboardJs.welcome') + ', ' + user.name.split(' ')[0];
+    }
+    // Re-render orders table and status bars with cached data
+    renderOrdersTable(lastOrders);
+    renderStatusBars(lastOrders);
+});
 
 // ==================== Initialize ====================
 
