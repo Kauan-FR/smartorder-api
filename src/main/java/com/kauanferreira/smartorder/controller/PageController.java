@@ -151,9 +151,9 @@ public class PageController {
      *
      * @return the settings template path
      */
-    @GetMapping("/settings")
+    @GetMapping("/admin/settings")
     public String settings() {
-        return "settings/settings";
+        return "admin/settings";
     }
 
     // ==================== Root Redirect ====================
