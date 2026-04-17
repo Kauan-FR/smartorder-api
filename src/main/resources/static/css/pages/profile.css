@@ -215,3 +215,214 @@
     color: var(--text-tertiary);
     margin-top: var(--space-5);
 }
+
+/* ==================== Profile Header (avatar + info) ==================== */
+
+.profile-header {
+    margin-bottom: var(--space-6);
+}
+
+.profile-header__avatar-section {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+}
+
+.profile-header__avatar {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.profile-header__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.profile-header__name {
+    font-size: var(--text-xl);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.profile-header__email {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ==================== Avatar XXL ==================== */
+
+.avatar-xxl {
+    width: 96px;
+    height: 96px;
+    font-size: 32px;
+    border-radius: var(--radius-lg);
+}
+
+.avatar-xxl.avatar-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==================== Center panels ==================== */
+
+.settings-panel {
+    display: none;
+}
+
+.settings-panel--active {
+    display: flex;
+    justify-content: center;
+}
+
+/* ==================== Responsive ==================== */
+
+@media (max-width: 768px) {
+    .profile-header__avatar-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* ==================== Tabs (shared pattern) ==================== */
+
+.settings-tabs {
+    display: flex;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--border-default);
+    margin-bottom: var(--space-6);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.settings-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.settings-tab {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.settings-tab:hover {
+    color: var(--text-primary);
+}
+
+.settings-tab--active {
+    color: var(--brand-primary);
+    border-bottom-color: var(--brand-primary);
+}
+
+.settings-panel {
+    display: none;
+}
+
+.settings-panel--active {
+    display: flex;
+    justify-content: center;
+}
+
+/* ==================== Settings Card (shared pattern) ==================== */
+
+.settings-card {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+}
+
+.settings-card__header {
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--border-default);
+}
+
+.settings-card__title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-1);
+}
+
+.settings-card__desc {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.settings-card__body {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.settings-card__footer {
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid var(--border-default);
+    background-color: var(--bg-secondary);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ==================== Photo Section ==================== */
+
+.settings-photo-section {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+}
+
+.settings-photo-preview {
+    flex-shrink: 0;
+}
+
+.settings-photo-preview .avatar-xl {
+    width: 96px;
+    height: 96px;
+    font-size: 28px;
+}
+
+.settings-photo-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.settings-photo-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.settings-photo-desc {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-2);
+}
+
+/* ==================== Divider ==================== */
+
+.settings-divider {
+    height: 1px;
+    background-color: var(--border-default);
+    margin: var(--space-3) 0;
+}
