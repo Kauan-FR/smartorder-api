@@ -116,6 +116,14 @@ const AuthManager = {
     },
 
     /**
+     * Updates the stored user data.
+     * @param {object} user - updated user data
+     */
+    setUser(user) {
+        localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    },
+
+    /**
      * Clears auth data and redirects to login page.
      */
     logout() {
