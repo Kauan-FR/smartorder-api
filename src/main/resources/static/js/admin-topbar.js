@@ -57,18 +57,7 @@ function toggleLangDropdown() {
 // ==================== Topbar Toast (Global) ====================
 
 function showTopbarToast(message, type) {
-    var toast = document.getElementById('topbarToast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'topbarToast';
-        toast.className = 'topbar-toast';
-        document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    toast.className = 'topbar-toast topbar-toast--' + type + ' is-visible';
-    setTimeout(function() {
-        toast.classList.remove('is-visible');
-    }, 3000);
+    showToast(message, type);
 }
 
 /**

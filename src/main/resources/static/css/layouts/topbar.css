@@ -414,6 +414,43 @@
     background-color: var(--brand-primary);
 }
 
+/* ==================== Global Toast (shared admin + store) ==================== */
+
+.global-toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: #fff;
+    z-index: var(--z-toast);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.global-toast.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+.global-toast--success {
+    background-color: var(--color-success);
+}
+
+.global-toast--error {
+    background-color: var(--color-danger);
+}
+
+.global-toast--info {
+    background-color: var(--brand-primary);
+}
+
 /* ==========================================================================
    LAYOUT ADJUSTMENT — push admin-content down to make room for topbar
    ========================================================================== */
