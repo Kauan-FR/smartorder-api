@@ -602,6 +602,35 @@ I18n.register('pt', {
         errPassMatch: 'A nova senha e a confirmação não coincidem'
     },
 
+    // ==================== Register ====================
+    register: {
+        title: 'Crie sua conta',
+        subtitle: 'Junte-se ao SmartOrder e comece a comprar',
+        name: 'Nome Completo',
+        namePlaceholder: 'Digite seu nome completo',
+        email: 'E-mail',
+        emailPlaceholder: 'Digite seu e-mail',
+        password: 'Senha',
+        passwordPlaceholder: 'Crie uma senha',
+        confirmPassword: 'Confirmar Senha',
+        confirmPasswordPlaceholder: 'Confirme sua senha',
+        submit: 'Criar Conta',
+        hasAccount: 'Já tem uma conta?',
+        login: 'Entrar',
+    },
+
+    // ==================== Register JS ====================
+    registerJs: {
+        nameRequired: 'O nome completo é obrigatório.',
+        emailInvalid: 'Digite um e-mail válido.',
+        emailTaken: 'Este e-mail já está em uso.',
+        passwordShort: 'A senha deve ter pelo menos 6 caracteres.',
+        passwordMismatch: 'As senhas não coincidem.',
+        invalidData: 'Dados inválidos. Verifique os campos.',
+        server: 'Erro interno. Por favor, tente novamente.',
+        connection: 'Erro de conexão. Por favor, tente novamente.'
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Salvar',

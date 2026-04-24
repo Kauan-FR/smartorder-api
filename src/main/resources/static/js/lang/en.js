@@ -626,6 +626,35 @@ I18n.register('en', {
         errPassMatch: 'New password and confirmation do not match'
     },
 
+    // ==================== Register ====================
+    register: {
+        title: 'Create your account',
+        subtitle: 'Join SmartOrder and start shopping',
+        name: 'Full Name',
+        namePlaceholder: 'Enter your full name',
+        email: 'Email',
+        emailPlaceholder: 'Enter your email',
+        password: 'Password',
+        passwordPlaceholder: 'Create a password',
+        confirmPassword: 'Confirm Password',
+        confirmPasswordPlaceholder: 'Confirm your password',
+        submit: 'Create Account',
+        hasAccount: 'Already have an account?',
+        login: 'Sign in',
+    },
+
+    // ==================== Register JS ====================
+    registerJs: {
+        nameRequired: 'Full name is required.',
+        emailInvalid: 'Enter a valid email.',
+        emailTaken: 'Email already in use.',
+        passwordShort: 'Password must be at least 6 characters.',
+        passwordMismatch: 'Passwords do not match.',
+        invalidData: 'Invalid data. Check the fields.',
+        server: 'Internal error. Please try again.',
+        connection: 'Connection error. Please try again.'
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Save',
