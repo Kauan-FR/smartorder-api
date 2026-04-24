@@ -631,6 +631,28 @@ I18n.register('pt', {
         connection: 'Erro de conexão. Por favor, tente novamente.'
     },
 
+    // ==================== Store Nav Bar ====================
+    storeNavbar: {
+        categories: 'Categorias',
+        allProducts: 'Todos os Produtos',
+        searchPlaceholder: 'Pesquisar produtos...',
+        language: 'Idioma',
+        theme: 'Tema',
+        cart: 'Carrinho',
+        myAccount: 'Minha Conta',
+        myOrders: 'Meus Pedidos',
+        favorites: 'Favoritos',
+        logout: 'Sair'
+    },
+
+// ==================== Store Nav Bar Js ====================
+    storeNavbarJs: {
+        failedCategories: 'Erro ao carregar categorias',
+        confirmLogout: 'Tem certeza que deseja sair?',
+        languageChanged: 'Idioma alterado para {0}',
+        failedCart: 'Erro ao carregar o carrinho'
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Salvar',

@@ -631,6 +631,28 @@ I18n.register('fr', {
         connection: 'Erreur de connexion. Veuillez réessayer.'
     },
 
+    // ==================== Store Nav Bar ====================
+    storeNavbar: {
+        categories: 'Catégories',
+        allProducts: 'Tous les Produits',
+        searchPlaceholder: 'Rechercher des produits...',
+        language: 'Langue',
+        theme: 'Thème',
+        cart: 'Panier',
+        myAccount: 'Mon Compte',
+        myOrders: 'Mes Commandes',
+        favorites: 'Favoris',
+        logout: 'Déconnexion'
+    },
+
+// ==================== Store Nav Bar Js ====================
+    storeNavbarJs: {
+        failedCategories: 'Échec du chargement des catégories',
+        confirmLogout: 'Êtes-vous sûr de vouloir vous déconnecter ?',
+        languageChanged: 'Langue changée en {0}',
+        failedCart: 'Échec du chargement du panier'
+    },
+
     common: {
         save: 'Enregistrer',
         cancel: 'Annuler',
