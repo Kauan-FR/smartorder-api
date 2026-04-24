@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Register')}">
+
+</head>
+<body class="auth-page">
+
+<link th:href="@{/css/pages/login.css}" rel="stylesheet">
+<link th:href="@{/css/components/buttons.css}" rel="stylesheet">
+<link th:href="@{/css/components/forms.css}" rel="stylesheet">
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <div class="auth-card__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+            </svg>
+        </div>
+
+        <h1 class="auth-card__title" data-i18n="register.title">Create your account</h1>
+        <p class="auth-card__subtitle" data-i18n="register.subtitle">Join SmartOrder and start shopping</p>
+
+        <div id="registerError" class="auth-error hidden"></div>
+
+        <div class="auth-form">
+
+            <div class="auth-form__group">
+                <label class="label" for="name" data-i18n="register.name">Full Name</label>
+                <input
+                        type="text"
+                        id="name"
+                        class="input"
+                        data-i18n-placeholder="register.namePlaceholder"
+                        autocomplete="name"
+                />
+                <span class="field-error hidden" id="nameError"></span>
+            </div>
+
+            <div class="auth-form__group">
+                <label class="label" for="email" data-i18n="register.email">Email</label>
+                <input
+                        type="email"
+                        id="email"
+                        class="input"
+                        data-i18n-placeholder="register.emailPlaceholder"
+                        autocomplete="email"
+                />
+                <span class="field-error hidden" id="emailError"></span>
+            </div>
+
+            <div class="auth-form__group">
+                <label class="label" for="password" data-i18n="register.password">Password</label>
+                <div class="input-password">
+                    <input
+                            type="password"
+                            id="password"
+                            class="input"
+                            data-i18n-placeholder="register.passwordPlaceholder"
+                            autocomplete="new-password"
+                    />
+                    <button type="button" class="input-password__toggle" id="togglePassword" aria-label="Toggle password">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+                <span class="field-error hidden" id="passwordError"></span>
+            </div>
+
+            <div class="auth-form__group">
+                <label class="label" for="confirmPassword" data-i18n="register.confirmPassword">Confirm Password</label>
+                <div class="input-password">
+                    <input
+                            type="password"
+                            id="confirmPassword"
+                            class="input"
+                            data-i18n-placeholder="register.confirmPasswordPlaceholder"
+                            autocomplete="new-password"
+                    />
+                    <button type="button" class="input-password__toggle" id="toggleConfirm" aria-label="Toggle confirm">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+                <span class="field-error hidden" id="confirmError"></span>
+            </div>
+
+            <button type="button" class="btn-primary btn-full" id="registerBtn">
+                <span id="registerBtnText" data-i18n="register.submit">Create Account</span>
+                <span id="registerBtnSpinner" class="btn-spinner hidden"></span>
+            </button>
+
+        </div>
+
+        <p class="auth-footer">
+            <span data-i18n="register.hasAccount">Already have an account?</span>
+            <a th:href="@{/login}" data-i18n="register.login">Sign in</a>
+        </p>
+
+    </div>
+
+</div>
+
+<script th:src="@{/js/i18n.js}"></script>
+<script th:src="@{/js/lang/en.js}"></script>
+<script th:src="@{/js/lang/pt.js}"></script>
+<script th:src="@{/js/lang/es.js}"></script>
+<script th:src="@{/js/lang/fr.js}"></script>
+<script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/register.js}"></script>
+
+</body>
+</html>
