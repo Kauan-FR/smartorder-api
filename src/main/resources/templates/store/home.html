@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Store')}"></head>
+<head>
+    <link th:href="@{/css/layouts/customer-navbar.css}" rel="stylesheet">
+    <link th:href="@{/css/pages/store-home.css}" rel="stylesheet">
+    <link th:href="@{/css/layouts/topbar.css}" rel="stylesheet">
+</head>
+<body>
+
+<nav th:replace="~{fragments/customer-navbar :: customerNavbar('home')}"></nav>
+
+<main class="store-main">
+    <!-- Hero Carousel placeholder (Etapa 3) -->
+    <section class="store-hero" id="storeHero">
+        <!-- Will be populated by store-carousel.js -->
+    </section>
+
+    <!-- Today's Deals placeholder (Etapa 4) -->
+    <section class="store-deals" id="storeDeals">
+        <!-- Will be populated by store-deals.js -->
+    </section>
+
+    <!-- Filters + Grid placeholder (Etapa 5) -->
+    <section class="store-products" id="storeProducts">
+        <!-- Will be populated by store.js -->
+    </section>
+</main>
+
+<!-- Scripts -->
+<script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/i18n.js}"></script>
+<script th:src="@{/js/lang/en.js}"></script>
+<script th:src="@{/js/lang/pt.js}"></script>
+<script th:src="@{/js/lang/es.js}"></script>
+<script th:src="@{/js/lang/fr.js}"></script>
+<script th:src="@{/js/utils/toast.js}"></script>
+<script th:src="@{/js/customer-navbar.js}"></script>
+
+</body>
+</html>
