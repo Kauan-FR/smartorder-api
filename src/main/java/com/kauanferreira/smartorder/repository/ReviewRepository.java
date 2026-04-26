@@ -1,5 +1,6 @@
 package com.kauanferreira.smartorder.repository;
 
+import com.kauanferreira.smartorder.dto.projection.RatingProjection;
 import com.kauanferreira.smartorder.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -61,4 +62,21 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
      */
     @Query("SELECT r FROM Review r JOIN FETCH r.user JOIN FETCH r.product p JOIN FETCH p.category WHERE r.id = :id")
     Optional<Review> findByIdWithRelations(@Param("id") Long id);
+
+    /**
+     * Returns aggregated rating data (average and count) for a list of products
+     * in a single query. Designed to avoid N+1 queries when enriching ProductResponse
+     * objects with rating information.
+     *
+     * @param productIds list of product IDs to aggregate ratings for
+     * @return list of RatingProjection — one entry per product that has at least one review.
+     *         Products without reviews are NOT returned, so the caller must default missing
+     *         entries to averageRating = 0.0 and reviewCount = 0.
+     */
+    @Query("SELECT new com.kauanferreira.smartorder.dto.projection.RatingProjection(" +
+            "r.product.id, AVG(r.rating), COUNT(r)) " +
+            "FROM Review r " +
+            "WHERE r.product.id IN :productIds " +
+            "GROUP BY r.product.id")
+    List<RatingProjection> findRatingsByProductIds(@Param("productIds") List<Long> productIds);
 }

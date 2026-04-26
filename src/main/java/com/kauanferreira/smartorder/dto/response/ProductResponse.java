@@ -36,6 +36,8 @@ public record ProductResponse(
         LocalDateTime dealExpiresAt,
         Boolean featured,
         BigDecimal finalPrice,
-        CategoryResponse category
+        CategoryResponse category,
+        Double averageRating,
+        Long reviewCount
 ) {
 }

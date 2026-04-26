@@ -83,7 +83,8 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> findById(@PathVariable Long id) {
         Product entity = productService.findById(id);
-        return ResponseEntity.ok(ProductMapper.toResponse(entity));
+//        return ResponseEntity.ok(ProductMapper.toResponse(entity));
+        return ResponseEntity.ok(productService.findByIdWithRating(id));
     }
 
     /**
@@ -95,11 +96,13 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "List of products retrieved successfully")
     @GetMapping
     public ResponseEntity<List<ProductResponse>> findAll() {
-        List<ProductResponse> response = productService.findAll()
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(response);
+//        List<ProductResponse> response = productService.findAll()
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(productService.findAllWithRating());
+
     }
 
     /**
@@ -112,9 +115,10 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Page of products retrieved successfully")
     @GetMapping("/paged")
     public ResponseEntity<Page<ProductResponse>> findAllPaged(Pageable pageable){
-        Page<ProductResponse> responses = productService.findAll(pageable)
-                .map(ProductMapper::toResponse);
-        return ResponseEntity.ok(responses);
+//        Page<ProductResponse> responses = productService.findAll(pageable)
+//                .map(ProductMapper::toResponse);
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findAllPagedWithRating(pageable));
     }
 
     /**
@@ -126,11 +130,12 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Ordered list retrieved successfully")
     @GetMapping("/ordered/name")
     public ResponseEntity<List<ProductResponse>> findAllOrderByNameAsc() {
-        List<ProductResponse> responses = productService.findAllOrderByNameAsc()
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+//        List<ProductResponse> responses = productService.findAllOrderByNameAsc()
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findOrderedByNameWithRating());
     }
 
     /**
@@ -142,11 +147,12 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Ordered list retrieved successfully")
     @GetMapping("/ordered/price")
     public ResponseEntity<List<ProductResponse>> findAllOrderByPriceAsc() {
-        List<ProductResponse> responses = productService.findAllOrderByPriceAsc()
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+//        List<ProductResponse> responses = productService.findAllOrderByPriceAsc()
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findOrderedByPriceWithRating());
     }
 
     /**
@@ -159,11 +165,12 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Search results retrieved successfully")
     @GetMapping("/search")
     public ResponseEntity<List<ProductResponse>> searchByName(@RequestParam String name) {
-        List<ProductResponse> responses = productService.searchByName(name)
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+//        List<ProductResponse> responses = productService.searchByName(name)
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findByNameWithRating(name));
     }
 
     /**
@@ -176,11 +183,12 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Products retrieved successfully")
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<ProductResponse>> findAllByCategoryId(@PathVariable Long categoryId) {
-        List<ProductResponse> responses = productService.findByCategoryId(categoryId)
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+//        List<ProductResponse> responses = productService.findByCategoryId(categoryId)
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findByCategoryWithRating(categoryId));
     }
 
     /**
@@ -229,43 +237,78 @@ public class ProductController {
     @GetMapping("/price")
     public ResponseEntity<List<ProductResponse>> findByPriceRange(@RequestParam BigDecimal min,
                                                                    BigDecimal max){
-        List<ProductResponse> responses = productService.findByPriceRange(min, max)
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+//        List<ProductResponse> responses = productService.findByPriceRange(min, max)
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findByPriceRangeWithRating(min, max));
     }
 
     /**
-     * Retrieves all products with active deals (discount applied and not expired).
+     * Returns up to 5 random products with active discount for the storefront carousel.
+     * A deal is active when discountPercent > 0 and dealExpiresAt is in the future.
      *
-     * @return HTTP 200 with the list of products on sale
+     * @return list of up to 5 random products with active deals as ProductResponse
      */
-    @Operation(summary = "Find products with active deals", description = "Retrieves products that have a discount percentage greater than zero and a deal expiration date in the future.")
-    @ApiResponse(responseCode = "200", description = "Active deals retrieved successfully")
     @GetMapping("/deals")
-    public ResponseEntity<List<ProductResponse>> findActiveDeals() {
-        List<ProductResponse> responses = productService.findActiveDeals()
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+    @Operation(summary = "List deal products for carousel",
+            description = "Returns up to 5 random products with active discounts (discountPercent > 0 AND dealExpiresAt > now).")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Deal products returned successfully")
+    })
+    public ResponseEntity<List<ProductResponse>> findDeals() {
+//        List<ProductResponse> responses = productService.findDealsRandom()
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findDealsRandomWithRating());
     }
 
     /**
-     * Retrieves all featured products for highlighted store sections.
+     * Returns up to 5 random featured products for the storefront carousel.
+     * Featured products are curated by the admin via the featured flag.
+     * Only active and in-stock products are returned.
      *
-     * @return HTTP 200 with the list of featured products
+     * @return list of up to 5 random featured products as ProductResponse
      */
-    @Operation(summary = "Find featured products", description = "Retrieves products marked as featured for hero carousel and highlighted sections.")
-    @ApiResponse(responseCode = "200", description = "Featured products retrieved successfully")
     @GetMapping("/featured")
+    @Operation(summary = "List featured products for carousel",
+            description = "Returns up to 5 random featured products that are active and in stock.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Featured products returned successfully")
+    })
     public ResponseEntity<List<ProductResponse>> findFeatured() {
-        List<ProductResponse> responses = productService.findFeatured()
-                .stream()
-                .map(ProductMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+//        List<ProductResponse> responses = productService.findFeaturedRandom()
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findFeaturedRandomWithRating());
+    }
+
+    /**
+     * Returns active products with low stock.
+     * A product is considered low stock when stockQuantity is at or below 5
+     * units OR at or below 10% of its initial stock. Sold-out products are
+     * excluded so the customer never sees an unavailable item being highlighted.
+     *
+     * @return list of low-stock products mapped to ProductResponse
+     */
+    @Operation(summary = "List low-stock products",
+            description = "Returns active products running low on stock (≤ 5 units OR ≤ 10% of initial stock). Excludes sold-out items.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Low-stock products returned successfully")
+    })
+    @GetMapping("/low-stock")
+    public ResponseEntity<List<ProductResponse>> findLowStock() {
+//        List<ProductResponse> responses = productService.findLowStock()
+//                .stream()
+//                .map(ProductMapper::toResponse)
+//                .toList();
+//        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(productService.findLowStockRandomWithRating());
     }
 
     /**

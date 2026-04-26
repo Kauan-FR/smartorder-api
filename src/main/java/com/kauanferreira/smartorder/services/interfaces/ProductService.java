@@ -1,5 +1,6 @@
 package com.kauanferreira.smartorder.services.interfaces;
 
+import com.kauanferreira.smartorder.dto.response.ProductResponse;
 import com.kauanferreira.smartorder.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -151,4 +152,128 @@ public interface ProductService {
      * @return a list of featured products
      */
     List<Product> findFeatured();
+
+    /**
+     * Returns all active products that are running low on stock.
+     * Used by the storefront carousel to highlight products about to sell out.
+     *
+     * @return list of low-stock products
+     */
+    List<Product> findLowStock();
+
+    /**
+     * Returns up to 5 random featured products for the storefront carousel.
+     *
+     * @return list of up to 5 random featured products
+     */
+    List<Product> findFeaturedRandom();
+
+    /**
+     * Returns up to 5 random products with active discount for the storefront carousel.
+     *
+     * @return list of up to 5 random products with active deals
+     */
+    List<Product> findDealsRandom();
+
+    /**
+     * Returns up to 5 random low-stock products for the storefront carousel.
+     *
+     * @return list of up to 5 random low-stock products
+     */
+    List<Product> findLowStockRandom();
+
+    /**
+     * Returns all active products ordered by name (A-Z) enriched with rating data.
+     *
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findOrderedByNameWithRating();
+
+    /**
+     * Returns all active products ordered by price (ascending) enriched with rating data.
+     *
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findOrderedByPriceWithRating();
+
+    /**
+     * Returns products filtered by active status enriched with rating data.
+     *
+     * @param active the active status to filter by
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findActiveWithRating(Boolean active);
+
+    /**
+     * Returns products of a given category filtered by active status, enriched with rating data.
+     *
+     * @param categoryId the category to filter by
+     * @param active     the active status to filter by
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findActiveByCategoryWithRating(Long categoryId, Boolean active);
+
+    /**
+     * Searches products by name (case-insensitive ILIKE) enriched with rating data.
+     *
+     * @param name the search term
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findByNameWithRating(String name);
+
+    /**
+     * Returns products of a given category enriched with rating data.
+     *
+     * @param categoryId the category to filter by
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findByCategoryWithRating(Long categoryId);
+
+    /**
+     * Returns products within a price range enriched with rating data.
+     *
+     * @param min minimum price (inclusive)
+     * @param max maximum price (inclusive)
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findByPriceRangeWithRating(BigDecimal min, BigDecimal max);
+
+    /**
+     * Returns up to 5 random featured products enriched with rating data.
+     *
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findFeaturedRandomWithRating();
+
+    /**
+     * Returns up to 5 random products with active discount enriched with rating data.
+     *
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findDealsRandomWithRating();
+
+    /**
+     * Returns up to 5 random low-stock products enriched with rating data.
+     *
+     * @return list of ProductResponse with rating attached
+     */
+    List<ProductResponse> findLowStockRandomWithRating();
+
+    List<ProductResponse> findAllWithRating();
+
+    /**
+     * Returns a product by ID enriched with its aggregated rating data.
+     *
+     * @param id the product ID
+     * @return the product as ProductResponse with rating attached
+     */
+    ProductResponse findByIdWithRating(Long id);
+
+    /**
+     * Returns a paginated list of products enriched with rating data.
+     *
+     * @param pageable pagination information
+     * @return Page of ProductResponse with rating attached
+     */
+    Page<ProductResponse> findAllPagedWithRating(Pageable pageable);
 }

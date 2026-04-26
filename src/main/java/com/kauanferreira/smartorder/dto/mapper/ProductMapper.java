@@ -1,5 +1,6 @@
 package com.kauanferreira.smartorder.dto.mapper;
 
+import com.kauanferreira.smartorder.dto.projection.RatingProjection;
 import com.kauanferreira.smartorder.dto.request.ProductRequest;
 import com.kauanferreira.smartorder.dto.response.ProductResponse;
 import com.kauanferreira.smartorder.entity.Category;
@@ -72,13 +73,8 @@ public final class ProductMapper {
     public static ProductResponse toResponse(Product product) {
 
         // Calculate final price with discount applied
-        BigDecimal finalPrice = product.getPrice();
-        if (product.getDiscountPercent() != null && product.getDiscountPercent() > 0) {
-            BigDecimal discount = product.getPrice()
-                    .multiply(BigDecimal.valueOf(product.getDiscountPercent()))
-                    .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
-            finalPrice = product.getPrice().subtract(discount);
-        }
+        BigDecimal finalPrice = calculateFinalPrice(product);
+
         return  new ProductResponse(
                 product.getId(),
                 product.getName(),
@@ -92,8 +88,64 @@ public final class ProductMapper {
                 product.getDealExpiresAt(),
                 product.getFeatured(),
                 finalPrice,
-                CategoryMapper.toResponse(product.getCategory())
+                CategoryMapper.toResponse(product.getCategory()),
+                0.0,
+                0L
         );
+    }
+
+    /**
+     * Maps a Product entity to ProductResponse including aggregated rating data.
+     * If the projection is null (product has no reviews), defaults averageRating
+     * to 0.0 and reviewCount to 0.
+     *
+     * @param product the product entity to map
+     * @param rating  optional rating projection — null if product has no reviews
+     * @return ProductResponse enriched with rating data
+     */
+    public static ProductResponse toResponseWithRating(Product product, RatingProjection rating) {
+        ProductResponse base = toResponse(product);
+
+        Double avg = rating != null ? rating.averageRating() : 0.0;
+        Long count = rating != null ? rating.reviewCount() : 0L;
+
+        BigDecimal finalPrice = calculateFinalPrice(product);
+
+        return  new ProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getStockQuantity(),
+                product.getImageUrl(),
+                product.getActive(),
+                product.getDiscountPercent(),
+                product.getInitialStock(),
+                product.getDealExpiresAt(),
+                product.getFeatured(),
+                finalPrice,
+                CategoryMapper.toResponse(product.getCategory()),
+                avg,
+                count
+        );
+    }
+
+    /**
+     * Calculates the final price of a product applying its discount percentage.
+     * If no discount is set or discount is zero, returns the original price.
+     *
+     * @param product the product to calculate price for
+     * @return the final price after discount
+     */
+    private static BigDecimal calculateFinalPrice(Product product) {
+        BigDecimal finalPrice = product.getPrice();
+        if (product.getDiscountPercent() != null && product.getDiscountPercent() > 0) {
+            BigDecimal discount = product.getPrice()
+                    .multiply(BigDecimal.valueOf(product.getDiscountPercent()))
+                    .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+            finalPrice = product.getPrice().subtract(discount);
+        }
+        return finalPrice;
     }
 
     /**

@@ -125,4 +125,54 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      */
     @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.featured = true")
     List<Product> findByFeaturedTrue();
+
+    /**
+     * Finds active products with low stock available for sale.
+     * A product is considered low stock when its remaining quantity is at or below
+     * 5 units, OR at or below 10% of its initial stock — whichever applies first.
+     * Products with stockQuantity = 0 are excluded since they are sold out.
+     *
+     * @return list of low-stock products that are still active and purchasable
+     */
+    @Query("SELECT p FROM Product p WHERE p.active = true AND p.stockQuantity > 0 " +
+            "AND (p.stockQuantity <= 5 OR p.stockQuantity <= p.initialStock * 0.1)")
+    List<Product> findLowStock();
+
+    /**
+     * Returns up to 5 random featured products that are active and in stock.
+     * Eagerly loads category to avoid LazyInitializationException during DTO mapping.
+     *
+     * @return list of up to 5 random featured products
+     */
+    @Query("SELECT p FROM Product p JOIN FETCH p.category " +
+            "WHERE p.featured = true AND p.active = true AND p.stockQuantity > 0 " +
+            "ORDER BY function('random')")
+    List<Product> findFeaturedRandom(Pageable pageable);
+
+    /**
+     * Returns up to 5 random products with active discount.
+     * A deal is active when discountPercent > 0 and dealExpiresAt is in the future.
+     * Eagerly loads category to avoid LazyInitializationException during DTO mapping.
+     *
+     * @return list of up to 5 random products with active deals
+     */
+    @Query("SELECT p FROM Product p JOIN FETCH p.category " +
+            "WHERE p.active = true AND p.stockQuantity > 0 " +
+            "AND p.discountPercent > 0 AND p.dealExpiresAt > CURRENT_TIMESTAMP " +
+            "ORDER BY function('random')")
+    List<Product> findDealsRandom(Pageable pageable);
+
+    /**
+     * Returns up to 5 random low-stock products.
+     * Low stock means stockQuantity is at or below 5 units OR at or below 10%
+     * of initial stock. Sold-out products are excluded. Products without
+     * initialStock defined still match if stockQuantity is at or below 5.
+     *
+     * @return list of up to 5 random low-stock products
+     */
+    @Query("SELECT p FROM Product p JOIN FETCH p.category " +
+            "WHERE p.active = true AND p.stockQuantity > 0 " +
+            "AND (p.stockQuantity <= 5 OR (p.initialStock IS NOT NULL AND p.stockQuantity <= p.initialStock * 0.1)) " +
+            "ORDER BY function('random')")
+    List<Product> findLowStockRandom(Pageable pageable);
 }
