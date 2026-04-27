@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<section th:fragment="storeCarousel" class="store-carousel" id="storeCarousel" hidden>
+
+    <div class="store-carousel__viewport">
+        <div class="store-carousel__track" id="carouselTrack">
+            <!-- Slides injected by JS -->
+        </div>
+    </div>
+
+    <button class="store-carousel__arrow store-carousel__arrow--prev" id="carouselPrev" type="button" data-i18n-title="storeCarousel.previous" title="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"/>
+        </svg>
+    </button>
+
+    <button class="store-carousel__arrow store-carousel__arrow--next" id="carouselNext" type="button" data-i18n-title="storeCarousel.next" title="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"/>
+        </svg>
+    </button>
+
+    <div class="store-carousel__dots" id="carouselDots">
+        <!-- Dots injected by JS -->
+    </div>
+
+</section>
+
+</body>
+</html>

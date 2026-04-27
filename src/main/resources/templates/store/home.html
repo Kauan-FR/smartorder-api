@@ -5,16 +5,15 @@
     <link th:href="@{/css/layouts/customer-navbar.css}" rel="stylesheet">
     <link th:href="@{/css/pages/store-home.css}" rel="stylesheet">
     <link th:href="@{/css/layouts/topbar.css}" rel="stylesheet">
+    <link th:href="@{/css/components/store-carousel.css}" rel="stylesheet">
 </head>
 <body>
 
 <nav th:replace="~{fragments/customer-navbar :: customerNavbar('home')}"></nav>
 
 <main class="store-main">
-    <!-- Hero Carousel placeholder (Etapa 3) -->
-    <section class="store-hero" id="storeHero">
-        <!-- Will be populated by store-carousel.js -->
-    </section>
+
+    <div th:replace="~{fragments/store-carousel :: storeCarousel}"></div>
 
     <!-- Today's Deals placeholder (Etapa 4) -->
     <section class="store-deals" id="storeDeals">
@@ -36,6 +35,7 @@
 <script th:src="@{/js/lang/fr.js}"></script>
 <script th:src="@{/js/utils/toast.js}"></script>
 <script th:src="@{/js/customer-navbar.js}"></script>
+<script th:src="@{/js/store-carousel.js}"></script>
 
 </body>
 </html>

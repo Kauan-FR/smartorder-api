@@ -6,7 +6,7 @@
     position: sticky;
     top: 0;
     z-index: 300;
-    background-color: var(--bg-surface);
+    background-color: var(--bg-primary);
     border-bottom: 1px solid var(--border-default);
     box-shadow: var(--shadow-sm);
 }
@@ -77,7 +77,7 @@
     min-width: 240px;
     max-height: 400px;
     overflow-y: auto;
-    background-color: var(--bg-surface);
+    background-color: var(--bg-primary);
     border: 1px solid var(--border-default);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
@@ -133,7 +133,7 @@
 }
 
 .customer-navbar__search-input::placeholder {
-    color: var(--text-muted);
+    color: var(--text-tertiary);
 }
 
 .customer-navbar__search-btn {
@@ -273,7 +273,7 @@
     top: calc(100% + 0.5rem);
     right: 0;
     min-width: 280px;
-    background-color: var(--bg-surface);
+    background-color: var(--bg-primary);
     border: 1px solid var(--border-default);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
@@ -306,7 +306,7 @@
 .customer-navbar__profile-email {
     margin: 0;
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--text-tertiary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -368,7 +368,7 @@
     top: calc(100% + 0.5rem);
     right: 0;
     min-width: 160px;
-    background-color: var(--bg-surface);
+    background-color: var(--bg-primary);
     border: 1px solid var(--border-default);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);

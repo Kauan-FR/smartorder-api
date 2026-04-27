@@ -653,6 +653,22 @@ I18n.register('pt', {
         failedCart: 'Erro ao carregar o carrinho'
     },
 
+    // ==================== Store Carousel ====================
+    storeCarousel: {
+        previous: 'Anterior',
+        next: 'Próximo',
+        badgeDeal: 'Oferta',
+        badgeLowStock: 'Quase Esgotado',
+        badgeFeatured: 'Destaque',
+        reviews: 'avaliações',
+        noReviews: 'Nenhuma avaliação ainda'
+    },
+
+// ==================== Store Carousel Js ====================
+    storeCarouselJs: {
+        failedLoad: 'Erro ao carregar os produtos do carrossel'
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Salvar',

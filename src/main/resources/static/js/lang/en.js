@@ -677,6 +677,22 @@ I18n.register('en', {
         failedCart: 'Failed to load cart'
     },
 
+    // ==================== Store Carousel ====================
+    storeCarousel: {
+        previous: 'Previous',
+        next: 'Next',
+        badgeDeal: 'Deal',
+        badgeLowStock: 'Almost Gone',
+        badgeFeatured: 'Featured',
+        reviews: 'reviews',
+        noReviews: 'No reviews yet'
+    },
+
+    // ==================== Store Carousel Js ====================
+    storeCarouselJs: {
+        failedLoad: 'Failed to load carousel products'
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Save',
