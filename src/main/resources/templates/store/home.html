@@ -6,6 +6,8 @@
     <link th:href="@{/css/pages/store-home.css}" rel="stylesheet">
     <link th:href="@{/css/layouts/topbar.css}" rel="stylesheet">
     <link th:href="@{/css/components/store-carousel.css}" rel="stylesheet">
+    <link th:href="@{/css/components/product-card.css}" rel="stylesheet">
+
 </head>
 <body>
 
@@ -15,14 +17,19 @@
 
     <div th:replace="~{fragments/store-carousel :: storeCarousel}"></div>
 
-    <!-- Today's Deals placeholder (Etapa 4) -->
-    <section class="store-deals" id="storeDeals">
-        <!-- Will be populated by store-deals.js -->
-    </section>
+    <section class="store-products-section" id="storeProductsSection">
+        <h2 class="store-products-section__title" data-i18n="storeCard.title">All Products</h2>
 
-    <!-- Filters + Grid placeholder (Etapa 5) -->
-    <section class="store-products" id="storeProducts">
-        <!-- Will be populated by store.js -->
+        <div class="product-grid" id="productGrid">
+            <!-- Cards injetados via JS -->
+        </div>
+
+        <div class="product-grid__sentinel" id="productGridSentinel">
+            <div class="product-grid__spinner" id="productGridSpinner" hidden></div>
+        </div>
+
+        <p class="product-grid__end-message" id="productGridEndMessage" hidden
+           data-i18n="storeCard.end">You've seen all products</p>
     </section>
 </main>
 
@@ -36,6 +43,7 @@
 <script th:src="@{/js/utils/toast.js}"></script>
 <script th:src="@{/js/customer-navbar.js}"></script>
 <script th:src="@{/js/store-carousel.js}"></script>
+<script th:src="@{/js/store-products-grid.js}"></script>
 
 </body>
 </html>

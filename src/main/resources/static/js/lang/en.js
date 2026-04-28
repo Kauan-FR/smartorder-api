@@ -693,6 +693,23 @@ I18n.register('en', {
         failedLoad: 'Failed to load carousel products'
     },
 
+    // ==================== Store Cards ====================
+    storeCard: {
+        title: 'All Products',
+        end: "You've seen all products",
+    },
+
+    // ==================== Store Carousel Js ====================
+    storeCardJs: {
+        welcomeDeal: 'Welcome Deal',
+        reviews: 'reviews',
+        empty: 'No products available yet',
+        loadError: 'Failed to load products',
+        loginRequired: 'Please log in to favorite',
+        favoriteError: 'Failed to update favorite',
+        cartSoon: 'Cart integration coming soon',
+    },
+
     // ==================== Common ====================
     common: {
         save: 'Save',

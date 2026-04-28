@@ -645,7 +645,7 @@ I18n.register('fr', {
         logout: 'Déconnexion'
     },
 
-// ==================== Store Nav Bar Js ====================
+    // ==================== Store Nav Bar Js ====================
     storeNavbarJs: {
         failedCategories: 'Échec du chargement des catégories',
         confirmLogout: 'Êtes-vous sûr de vouloir vous déconnecter ?',
@@ -664,9 +664,26 @@ I18n.register('fr', {
         noReviews: 'Pas encore d\'avis'
     },
 
-// ==================== Store Carousel Js ====================
+    // ==================== Store Carousel Js ====================
     storeCarouselJs: {
         failedLoad: 'Échec du chargement des produits du carrousel'
+    },
+
+    // ==================== Store Cards ====================
+    storeCard: {
+        title: 'Tous les Produits',
+        end: 'Vous avez vu tous les produits',
+    },
+
+    // ==================== Store Card Js ====================
+    storeCardJs: {
+        welcomeDeal: 'Offre de Bienvenue',
+        reviews: 'avis',
+        empty: 'Aucun produit disponible pour le moment',
+        loadError: 'Échec du chargement des produits',
+        loginRequired: 'Veuillez vous connecter pour ajouter aux favoris',
+        favoriteError: 'Échec de la mise à jour des favoris',
+        cartSoon: 'Intégration du panier bientôt disponible',
     },
 
     common: {
