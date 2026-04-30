@@ -686,7 +686,67 @@ I18n.register('fr', {
         cartSoon: 'Intégration du panier bientôt disponible',
     },
 
+    // ==================== Store Footer ====================
+    storeFooter: {
+        tagline: 'E-commerce intelligent pour des expériences d’achat modernes.',
+        titleShop: 'Boutique',
+        allProducts: 'Tous les Produits',
+        categories: 'Catégories',
+        deals: 'Offres du Jour',
+        newArrivals: 'Nouveautés',
+        label: 'Nous acceptons :',
+        prefix: '©',
+        text: 'SmartOrder. Tous droits réservés.',
+        titleProject: 'Projet',
+        about: 'À propos de ce Projet',
+        github: 'Dépôt GitHub',
+        api: 'Documentation de l\'API',
+        linkedin: 'LinkedIn du Développeur',
+    },
+
+    // ==================== Product Detail ====================
+    productDetail: {
+        errorTitle: 'Produit non trouvé',
+        errorMessage: 'Le produit que vous recherchez n\'existe pas ou a été supprimé.',
+        errorBack: 'Retour à la Boutique',
+        quantity: 'Quantité',
+        addToCart: 'Ajouter au Panier',
+        shipping: 'Livraison gratuite dès R$ 200',
+        returns: 'Retours sous 30 jours',
+        secure: 'Paiement sécurisé',
+        tabsDescription: 'Description',
+        tabsReviews: 'Avis',
+        reviews: 'avis',
+        sortRecent: 'Plus récents',
+        sortLiked: 'Plus aimés',
+        sortRating: 'Mieux notés',
+        empty: 'Soyez le premier à donner votre avis sur ce produit',
+        loginNotice: 'Veuillez vous connecter pour laisser un avis.',
+        loginLink: 'Se connecter',
+        purchaseNotice: 'Vous ne pouvez évaluer que les produits que vous avez achetés.',
+        formTitle: 'Rédiger un avis',
+        formPlaceholder: 'Partagez votre opinion sur ce produit...',
+        formSubmit: 'Envoyer l\'avis',
+    },
+
+    // ==================== Product Detail JS ====================
+    productDetailJs: {
+        stockOut: 'Rupture de stock',
+        stockLow: 'Plus que {n} en stock',
+        stockAvailable: 'En stock · {n} unités disponibles',
+        empty: 'Aucune description fournie.',
+        favoriteLoginRequired: 'Veuillez vous connecter pour ajouter aux favoris',
+        favoriteError: 'Échec de la mise à jour des favoris',
+        cartSoon: 'Intégration du panier bientôt disponible ({n} unités)',
+        chartSoon: 'Chat en direct bientôt disponible',
+        reviewSuccess: 'Avis envoyé !',
+        reviewError: 'Échec de l\'envoi de l\'avis',
+        likeLoginRequired: 'Veuillez vous connecter pour aimer les avis'
+    },
+
     common: {
+        category: 'Catégorie',
+        home: 'Accueil',
         save: 'Enregistrer',
         cancel: 'Annuler',
         delete: 'Supprimer',

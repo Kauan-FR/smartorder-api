@@ -686,8 +686,68 @@ I18n.register('pt', {
         cartSoon: 'Integração com carrinho em breve',
     },
 
+    // ==================== Store Footer ====================
+    storeFooter: {
+        tagline: 'E-commerce inteligente para experiências de compra modernas.',
+        titleShop: 'Loja',
+        allProducts: 'Todos os Produtos',
+        categories: 'Categorias',
+        deals: 'Ofertas de Hoje',
+        newArrivals: 'Novidades',
+        label: 'Aceitamos:',
+        prefix: '©',
+        text: 'SmartOrder. Todos os direitos reservados.',
+        titleProject: 'Projeto',
+        about: 'Sobre este Projeto',
+        github: 'Repositório GitHub',
+        api: 'Documentação da API',
+        linkedin: 'LinkedIn do Desenvolvedor',
+    },
+
+    // ==================== Product Detail ====================
+    productDetail: {
+        errorTitle: 'Produto não encontrado',
+        errorMessage: 'O produto que você está procurando não existe ou foi removido.',
+        errorBack: 'Voltar para a Loja',
+        quantity: 'Quantidade',
+        addToCart: 'Adicionar ao Carrinho',
+        shipping: 'Frete grátis acima de R$ 200',
+        returns: 'Devolução em 30 dias',
+        secure: 'Pagamento seguro',
+        tabsDescription: 'Descrição',
+        tabsReviews: 'Avaliações',
+        reviews: 'avaliações',
+        sortRecent: 'Mais recentes',
+        sortLiked: 'Mais curtidas',
+        sortRating: 'Melhor avaliados',
+        empty: 'Seja o primeiro a avaliar este produto',
+        loginNotice: 'Por favor, faça login para deixar uma avaliação.',
+        loginLink: 'Entrar',
+        purchaseNotice: 'Você só pode avaliar produtos que comprou.',
+        formTitle: 'Escreva uma avaliação',
+        formPlaceholder: 'Compartilhe sua opinião sobre este produto...',
+        formSubmit: 'Enviar Avaliação',
+    },
+
+    // ==================== Product Detail JS ====================
+    productDetailJs: {
+        stockOut: 'Fora de estoque',
+        stockLow: 'Restam apenas {n} no estoque',
+        stockAvailable: 'Em estoque · {n} unidades disponíveis',
+        empty: 'Nenhuma descrição fornecida.',
+        favoriteLoginRequired: 'Por favor, faça login para favoritar',
+        favoriteError: 'Erro ao atualizar favorito',
+        cartSoon: 'Integração com carrinho em breve ({n} unidades)',
+        chartSoon: 'Chat ao vivo em breve',
+        reviewSuccess: 'Avaliação enviada!',
+        reviewError: 'Erro ao enviar avaliação',
+        likeLoginRequired: 'Por favor, faça login para curtir avaliações'
+    },
+
     // ==================== Common ====================
     common: {
+        category: 'Categoria',
+        home: 'Início',
         save: 'Salvar',
         cancel: 'Cancelar',
         delete: 'Excluir',

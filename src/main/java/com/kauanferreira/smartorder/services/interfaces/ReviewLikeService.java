@@ -1,5 +1,7 @@
 package com.kauanferreira.smartorder.services.interfaces;
 
+import java.util.List;
+
 /**
  * Service interface for managing {@link com.kauanferreira.smartorder.entity.ReviewLike} operations.
  *
@@ -37,6 +39,14 @@ public interface ReviewLikeService {
      * @return true if the review is liked, false otherwise
      */
     boolean isLiked(String email, Long reviewId);
+
+    /**
+     * Returns the IDs of all reviews the given user has liked.
+     *
+     * @param email the authenticated user's email (from JWT)
+     * @return list of review IDs liked by the user
+     */
+    List<Long> getLikedReviewIds(String email);
 
     /**
      * Counts the total number of likes for a review.

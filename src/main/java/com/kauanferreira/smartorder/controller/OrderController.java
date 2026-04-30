@@ -7,6 +7,8 @@ import com.kauanferreira.smartorder.entity.Order;
 import com.kauanferreira.smartorder.enums.OrderStatus;
 import com.kauanferreira.smartorder.services.interfaces.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,6 +18,7 @@ import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -212,6 +215,35 @@ public class OrderController {
     @GetMapping("/status/{status}/count")
     public ResponseEntity<Long> countByStatus(@PathVariable OrderStatus status) {
         return ResponseEntity.ok(orderService.countByStatus(status));
+    }
+
+    /**
+     * Checks whether the authenticated user has already purchased the given product
+     * in any non-cancelled order. Used by the review form to gate submission.
+     */
+    @Operation(
+            summary = "Check if user has purchased product",
+            description = "Returns true if the authenticated user has at least one non-cancelled " +
+                    "order containing the given product. Used to gate review submission."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Check completed successfully",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Boolean.class)
+                    )
+            ),
+            @ApiResponse(responseCode = "401", description = "Authentication required"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @GetMapping("/has-purchased/{productId}")
+    public ResponseEntity<Boolean> hasPurchased(Authentication authentication,
+                                                @PathVariable Long productId) {
+        return ResponseEntity.ok(
+                orderService.hasUserPurchasedProduct(authentication.getName(), productId)
+        );
     }
 
     /**

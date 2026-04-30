@@ -1,9 +1,11 @@
 package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.Order;
+import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.enums.OrderStatus;
 import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.OrderRepository;
+import com.kauanferreira.smartorder.repository.UserRepository;
 import com.kauanferreira.smartorder.services.interfaces.AddressService;
 import com.kauanferreira.smartorder.services.interfaces.OrderService;
 import com.kauanferreira.smartorder.services.interfaces.UserService;
@@ -35,10 +37,9 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
-
     private final AddressService addressService;
-
     private final UserService userService;
+    private final UserRepository userRepository;
 
     /**
      * {@inheritDoc}
@@ -167,6 +168,20 @@ public class OrderServiceImpl implements OrderService {
         existing.setTotalAmount(order.getTotalAmount());
         existing.setAddress(address);
         return orderRepository.save(existing);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws ResourceNotFoundException if the user does not exist
+     */
+    @Override
+    public boolean hasUserPurchasedProduct(String email, Long productId) {
+        User user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return orderRepository.existsByUserIdAndProductIdAndStatusNot(
+                user.getId(), productId, OrderStatus.CANCELLED
+        );
     }
 
     /**

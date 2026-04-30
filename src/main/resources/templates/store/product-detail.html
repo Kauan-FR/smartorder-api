@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="~{fragments/head :: head('Product')}"></head>
+
+    <link th:href="@{/css/layouts/customer-navbar.css}" rel="stylesheet">
+    <link th:href="@{/css/layouts/store-footer.css}" rel="stylesheet">
+    <link th:href="@{/css/components/product-card.css}" rel="stylesheet">
+    <link th:href="@{/css/pages/product-detail.css}" rel="stylesheet">
+
+    <!-- Pass productId to JS via meta -->
+    <meta name="product-id" th:content="${productId}">
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav th:replace="~{fragments/customer-navbar :: customerNavbar('product')}"></nav>
+
+<main class="product-detail-page">
+
+    <!-- ========== BREADCRUMB ========== -->
+    <nav class="product-detail__breadcrumb" aria-label="Breadcrumb">
+        <a href="/store" data-i18n="common.home">Home</a>
+        <span class="product-detail__breadcrumb-separator">›</span>
+        <a href="#" id="breadcrumbCategory" class="product-detail__breadcrumb-category">
+            <span data-i18n="common.category">Category</span>
+        </a>
+        <span class="product-detail__breadcrumb-separator">›</span>
+        <span class="product-detail__breadcrumb-current" id="breadcrumbProduct"></span>
+    </nav>
+
+    <!-- ========== LOADING STATE ========== -->
+    <div class="product-detail__loading" id="productDetailLoading">
+        <div class="product-detail__spinner"></div>
+    </div>
+
+    <!-- ========== ERROR STATE ========== -->
+    <div class="product-detail__error" id="productDetailError" hidden>
+        <h2 data-i18n="productDetail.errorTitle">Product not found</h2>
+        <p data-i18n="productDetail.errorMessage">The product you're looking for doesn't exist or was removed.</p>
+        <a href="/store" class="btn btn-primary" data-i18n="productDetail.errorBack">Back to Store</a>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <article class="product-detail" id="productDetailContent" hidden>
+
+        <!-- TOP: Gallery + Info -->
+        <section class="product-detail__top">
+
+            <!-- Gallery (left) -->
+            <div class="product-detail__gallery">
+
+                <!-- Thumbs (vertical) -->
+                <div class="product-detail__thumbs" id="productThumbs">
+                    <!-- Injected by JS -->
+                </div>
+
+                <!-- Main image with hover-zoom -->
+                <div class="product-detail__main-image-wrapper" id="mainImageWrapper">
+                    <img class="product-detail__main-image" id="mainImage" src="" alt="">
+                    <div class="product-detail__zoom-lens" id="zoomLens"></div>
+                </div>
+
+                <!-- Zoom panel (appears on hover, positioned absolutely) -->
+                <div class="product-detail__zoom-panel" id="zoomPanel"></div>
+            </div>
+
+            <!-- Info block (right) -->
+            <div class="product-detail__info">
+
+                <!-- Title + Rating -->
+                <header class="product-detail__header">
+                    <h1 class="product-detail__name" id="productName"></h1>
+                    <div class="product-detail__rating-row">
+                        <div class="product-detail__stars" id="productStars"></div>
+                        <span class="product-detail__rating-value" id="productRatingValue">0.0</span>
+                        <span class="product-detail__rating-separator">·</span>
+                        <a href="#reviewsTab" class="product-detail__review-link" id="productReviewLink">
+                            <span id="productReviewCount">0</span>
+                            <span data-i18n="productDetail.reviews">reviews</span>
+                        </a>
+                    </div>
+                </header>
+
+                <!-- Price block -->
+                <div class="product-detail__price-block">
+                    <div class="product-detail__price-row">
+                        <span class="product-detail__price-final" id="productPriceFinal"></span>
+                        <span class="product-detail__price-original" id="productPriceOriginal" hidden></span>
+                        <span class="product-detail__price-discount" id="productPriceDiscount" hidden></span>
+                    </div>
+                    <p class="product-detail__stock" id="productStock"></p>
+                </div>
+
+                <!-- Quantity selector -->
+                <div class="product-detail__quantity">
+                    <label class="product-detail__quantity-label" data-i18n="productDetail.quantity">Quantity</label>
+                    <div class="product-detail__quantity-controls">
+                        <button type="button" class="product-detail__qty-btn" id="qtyDecrease" aria-label="Decrease">−</button>
+                        <input type="number" class="product-detail__qty-input" id="qtyInput" value="1" min="1">
+                        <button type="button" class="product-detail__qty-btn" id="qtyIncrease" aria-label="Increase">+</button>
+                    </div>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="product-detail__actions">
+                    <button type="button" class="product-detail__cart-btn" id="addToCartBtn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                        </svg>
+                        <span data-i18n="productDetail.addToCart">Add to Cart</span>
+                    </button>
+
+                    <button type="button" class="product-detail__icon-btn" id="favoriteBtn"
+                            aria-label="Add to favorites" title="Add to favorites">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </button>
+
+                    <button type="button" class="product-detail__icon-btn" id="chatBtn"
+                            aria-label="Talk to seller" title="Talk to seller">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Trust signals -->
+                <ul class="product-detail__trust">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"/>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/>
+                            <circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                        <span data-i18n="productDetail.shipping">Free shipping over R$ 200</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 12 5 10 5 4 19 4 19 10 21 12"/>
+                            <polyline points="9 17 12 20 15 17"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                        </svg>
+                        <span data-i18n="productDetail.returns">30-day returns</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        <span data-i18n="productDetail.secure">Secure payment</span>
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+
+        <!-- TABS: Description + Reviews -->
+        <section class="product-detail__tabs">
+
+            <div class="product-detail__tabs-header" role="tablist">
+                <button type="button" class="product-detail__tab is-active"
+                        role="tab" data-tab="description" id="tabDescription">
+                    <span data-i18n="productDetail.tabsDescription">Description</span>
+                </button>
+                <button type="button" class="product-detail__tab"
+                        role="tab" data-tab="reviews" id="tabReviews">
+                    <span data-i18n="productDetail.tabsReviews">Reviews</span>
+                    <span class="product-detail__tab-count" id="reviewsTabCount">0</span>
+                </button>
+            </div>
+
+            <!-- Description panel -->
+            <div class="product-detail__tab-panel is-active" id="panelDescription" role="tabpanel">
+                <p id="productDescription"></p>
+            </div>
+
+            <!-- Reviews panel -->
+            <div class="product-detail__tab-panel" id="panelReviews" role="tabpanel">
+
+                <!-- Review form area (rendered conditionally by JS) -->
+                <div class="product-detail__review-form-area" id="reviewFormArea">
+                    <!-- Injected by JS based on auth + purchase status -->
+                </div>
+
+                <!-- Sort + count -->
+                <div class="product-detail__reviews-header">
+                    <span class="product-detail__reviews-count">
+                        <strong id="reviewsCountTotal">0</strong>
+                        <span data-i18n="productDetail.reviews">reviews</span>
+                    </span>
+                    <select class="product-detail__reviews-sort" id="reviewsSort">
+                        <option value="recent" data-i18n="productDetail.sortRecent">Most recent</option>
+                        <option value="liked" data-i18n="productDetail.sortLiked">Most liked</option>
+                        <option value="rating" data-i18n="productDetail.sortRating">Highest rated</option>
+                    </select>
+                </div>
+
+                <!-- Reviews list -->
+                <div class="product-detail__reviews-list" id="reviewsList">
+                    <!-- Injected by JS -->
+                </div>
+
+                <!-- Empty state -->
+                <div class="product-detail__reviews-empty" id="reviewsEmpty" hidden>
+                    <p data-i18n="productDetail.empty">Be the first to review this product</p>
+                </div>
+            </div>
+        </section>
+
+    </article>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer th:replace="~{fragments/store-footer :: storeFooter}"></footer>
+
+<!-- ========== SCRIPTS ========== -->
+<script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/i18n.js}"></script>
+<script th:src="@{/js/lang/en.js}"></script>
+<script th:src="@{/js/lang/pt.js}"></script>
+<script th:src="@{/js/lang/es.js}"></script>
+<script th:src="@{/js/lang/fr.js}"></script>
+<script th:src="@{/js/utils/toast.js}"></script>
+<script th:src="@{/js/customer-navbar.js}"></script>
+<script th:src="@{/js/store-footer.js}"></script>
+<script th:src="@{/js/product-detail.js}"></script>
+
+</body>
+</html>

@@ -7,6 +7,7 @@
     <link th:href="@{/css/layouts/topbar.css}" rel="stylesheet">
     <link th:href="@{/css/components/store-carousel.css}" rel="stylesheet">
     <link th:href="@{/css/components/product-card.css}" rel="stylesheet">
+    <link th:href="@{/css/layouts/store-footer.css}" rel="stylesheet">
 
 </head>
 <body>
@@ -33,6 +34,8 @@
     </section>
 </main>
 
+<footer th:replace="~{fragments/store-footer :: storeFooter}"></footer>
+
 <!-- Scripts -->
 <script th:src="@{/js/auth.js}"></script>
 <script th:src="@{/js/i18n.js}"></script>
@@ -44,6 +47,7 @@
 <script th:src="@{/js/customer-navbar.js}"></script>
 <script th:src="@{/js/store-carousel.js}"></script>
 <script th:src="@{/js/store-products-grid.js}"></script>
+<script th:src="@{/js/store-footer.js}"></script>
 
 </body>
 </html>

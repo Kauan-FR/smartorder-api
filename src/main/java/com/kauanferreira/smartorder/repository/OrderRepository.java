@@ -79,6 +79,17 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "o.items oi LEFT JOIN FETCH oi.product p LEFT JOIN FETCH p.category WHERE o.address.id = :addressId")
     List<Order> findByAddressId(@Param("addressId") Long addressId);
 
+    @Query("""
+    SELECT COUNT(oi) > 0 FROM Order o
+    JOIN o.items oi
+    WHERE o.user.id = :userId
+      AND oi.product.id = :productId
+      AND o.status <> :status
+""")
+    boolean existsByUserIdAndProductIdAndStatusNot(@Param("userId") Long userId,
+                                                   @Param("productId") Long productId,
+                                                   @Param("status") OrderStatus status);
+
     /**
      * Counts how many orders a user has placed.
      *

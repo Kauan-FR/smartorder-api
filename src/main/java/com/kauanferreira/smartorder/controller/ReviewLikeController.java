@@ -2,6 +2,8 @@ package com.kauanferreira.smartorder.controller;
 
 import com.kauanferreira.smartorder.services.interfaces.ReviewLikeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * REST controller for managing likes on product reviews.
@@ -61,6 +65,34 @@ public class ReviewLikeController {
     public ResponseEntity<Boolean> isLiked(Authentication authentication,
                                            @PathVariable Long reviewId) {
         return ResponseEntity.ok(reviewLikeService.isLiked(authentication.getName(), reviewId));
+    }
+
+    /**
+     * Returns the IDs of all reviews the authenticated user has liked.
+     * Used by the frontend to mark which like buttons should appear active
+     * on initial page render.
+     */
+    @Operation(
+            summary = "Get IDs of reviews liked by current user",
+            description = "Returns a list of review IDs that the authenticated user has liked. " +
+                    "Used to mark like buttons as active on initial render."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "List of liked review IDs",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Long.class, type = "array")
+                    )
+            ),
+            @ApiResponse(responseCode = "401", description = "Authentication required")
+    })
+    @GetMapping("/my-likes")
+    public ResponseEntity<List<Long>> getMyLikedReviewIds(Authentication authentication) {
+        return ResponseEntity.ok(
+                reviewLikeService.getLikedReviewIds(authentication.getName())
+        );
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.kauanferreira.smartorder.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * Controller responsible for serving Thymeleaf view pages.
@@ -132,6 +134,19 @@ public class PageController {
     @GetMapping("/store/cart")
     public String cart() {
         return "store/cart";
+    }
+
+    /**
+     * Serves the product details page.
+     *
+     * @param id    the product ID
+     * @param model the model to pass data to the view
+     * @return the product details template path
+     */
+    @GetMapping("store/product/{id}")
+    public String productDetails(@PathVariable Long id, Model model) {
+        model.addAttribute("productId", id);
+        return "store/product-detail";
     }
 
     // ==================== Profile & Settings ====================

@@ -710,8 +710,69 @@ I18n.register('en', {
         cartSoon: 'Cart integration coming soon',
     },
 
+    // ==================== Store Footer ====================
+    storeFooter: {
+        tagline: 'Smart e-commerce for modern shopping experiences.',
+        titleShop: 'Shop',
+        allProducts: 'All Products',
+        categories: 'Categories',
+        deals: "Today's Deals",
+        newArrivals: 'New Arrivals',
+        label: 'We accept:',
+        prefix: '©',
+        text: 'SmartOrder. All rights reserved.',
+        titleProject: 'Project',
+        about: 'About this Project',
+        github: 'GitHub Repository',
+        api: 'API Documentation',
+        linkedin: 'Developer LinkedIn'
+    },
+
+    // ==================== Product Detail ====================
+    productDetail: {
+        errorTitle: 'Product not found',
+        errorMessage: 'The product you\'re looking for doesn\'t exist or was removed.',
+        errorBack: 'Back to Store',
+        quantity: 'Quantity',
+        addToCart: 'Add to Cart',
+        shipping: 'Free shipping over R$ 200',
+        returns: '30-day returns',
+        secure: 'Secure payment',
+        tabsDescription: 'Description',
+        tabsReviews: 'Reviews',
+        reviews: 'reviews',
+        sortRecent: 'Most recent',
+        sortLiked: 'Most liked',
+        sortRating: 'Highest rated',
+        empty: 'Be the first to review this product',
+        loginNotice: 'Please log in to leave a review.',
+        loginLink: 'Log in',
+        purchaseNotice: 'You can only review products you have purchased.',
+        formTitle: 'Write a review',
+        formPlaceholder: 'Share your thoughts about this product...',
+        formSubmit: 'Submit Review',
+    },
+
+    // ==================== Product Detail JS ====================
+    productDetailJs: {
+        stockOut: 'Out of stock',
+        stockLow: 'Only {n} left in stock',
+        stockAvailable: 'In stock · {n} units available',
+        empty: 'No description provided.',
+        favoriteLoginRequired: 'Please log in to favorite',
+        favoriteError: 'Failed to update favorite',
+        cartSoon: 'Cart integration coming soon ({n} units)',
+        chartSoon: 'Live chat coming soon',
+        reviewSuccess: 'Review submitted!',
+        reviewError: 'Failed to submit review',
+        likeLoginRequired: 'Please log in to like reviews'
+
+    },
+
     // ==================== Common ====================
     common: {
+        category: 'Category',
+        home: 'Home',
         save: 'Save',
         cancel: 'Cancel',
         delete: 'Delete',

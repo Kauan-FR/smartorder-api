@@ -121,6 +121,12 @@ public interface OrderService {
     Order update(Long id, Order order);
 
     /**
+     * Returns true if the user has at least one OrderItem referencing the given
+     * product across orders that are not in CANCELLED status.
+     */
+    boolean hasUserPurchasedProduct(String email, Long productId);
+
+    /**
      * Deletes an order by its id.
      *
      * @param id the id of the order to delete

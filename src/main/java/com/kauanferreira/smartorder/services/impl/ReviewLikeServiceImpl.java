@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Implementation of {@link ReviewLikeService}.
  *
@@ -92,6 +94,14 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
     @Transactional(readOnly = true)
     public Integer countLikes(Long reviewId) {
         return reviewLikeRepository.countByReviewId(reviewId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> getLikedReviewIds(String email) {
+        User user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return reviewLikeRepository.findLikedReviewIdsByUserId(user.getId());
     }
 
     /**
