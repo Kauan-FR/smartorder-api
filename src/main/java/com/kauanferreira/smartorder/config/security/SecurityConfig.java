@@ -98,6 +98,7 @@ public class SecurityConfig {
                         // Public - Storefront (anyone can browse products and categories)
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reviews/product/**").permitAll()
 
                         // All other requests require authentication
                         .anyRequest().authenticated()

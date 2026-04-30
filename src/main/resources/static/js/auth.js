@@ -5,7 +5,7 @@
  * @author Kauan Santos Ferreira
  * @since 2026
  */
-const AuthManager = {
+window.AuthManager = {
     TOKEN_KEY: 'smartorder-token',
     USER_KEY: 'smartorder-user',
     EXPIRY_CHECK_INTERVAL: 30000,
