@@ -31,7 +31,7 @@ svg {
 }
 
 a {
-    color: inherit;
+    color: var(--brand-primary);
     text-decoration: none;
 }
 
