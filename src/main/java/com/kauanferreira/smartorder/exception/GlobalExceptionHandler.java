@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,6 +31,7 @@ import java.util.Map;
  *     <li>{@link BusinessRuleException} → 422 (Unprocessable Entity)</li>
  *     <li>{@link DatabaseOperationException} → 500 (Internal Server Error)</li>
  *     <li>{@link MethodArgumentNotValidException} → 400 (Bad Request)</li>
+ *     <li>{@link InsufficientStockException} → 409 (Conflict)</li>
  * </ul>
  *
  * @author Kauan Santos Ferreira
@@ -40,6 +42,7 @@ import java.util.Map;
  * @see DuplicateResourceException
  * @see BusinessRuleException
  * @see DatabaseOperationException
+ * @see InsufficientStockException
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -198,5 +201,22 @@ public class GlobalExceptionHandler {
                 request.getRequestURI()
         );
         return ResponseEntity.status(status).body(error);
+    }
+
+    /**
+     * Handles insufficient stock errors when cart or order operations
+     * exceed the available product stock.
+     *
+     * @param ex the thrown exception
+     * @return HTTP 409 Conflict with the error message
+     */
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<Map<String, Object>> handleInsufficientStock(InsufficientStockException ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.CONFLICT.value());
+        body.put("error", "Insufficient Stock");
+        body.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 }

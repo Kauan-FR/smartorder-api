@@ -1,7 +1,9 @@
 package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.CartItem;
+import com.kauanferreira.smartorder.entity.Product;
 import com.kauanferreira.smartorder.entity.User;
+import com.kauanferreira.smartorder.exception.InsufficientStockException;
 import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.CartItemRepository;
 import com.kauanferreira.smartorder.repository.UserRepository;
@@ -53,20 +55,29 @@ public class CartItemServiceImpl implements CartItemService {
      * <p>If the product is already in the cart, the quantity is added
      * to the existing quantity rather than creating a duplicate entry.</p>
      *
-     * @throws ResourceNotFoundException if the product does not exist
+     * <p>The total requested quantity (existing + new) is validated
+     * against the product's available stock.</p>
+     *
+     * @throws ResourceNotFoundException     if the product does not exist
+     * @throws InsufficientStockException    if the requested quantity exceeds available stock
      */
     @Override
     @Transactional
     public CartItem addToCart(String email, CartItem cartItem) {
         User user = findUserByEmail(email);
-        productService.findById(cartItem.getProduct().getId());
+        Product product = productService.findById(cartItem.getProduct().getId());
 
         Optional<CartItem> existing = cartItemRepository
-                .findByUserIdAndProductId(user.getId(), cartItem.getProduct().getId());
+                .findByUserIdAndProductId(user.getId(), product.getId());
+
+        int currentQuantity = existing.map(CartItem::getQuantity).orElse(0);
+        int totalRequested = currentQuantity + cartItem.getQuantity();
+
+        validateStockAvailability(product, totalRequested);
 
         if (existing.isPresent()) {
             CartItem existingItem = existing.get();
-            existingItem.setQuantity(existingItem.getQuantity() + cartItem.getQuantity());
+            existingItem.setQuantity(totalRequested);
             CartItem saved = cartItemRepository.save(existingItem);
             return cartItemRepository.findByUserIdAndProductId(user.getId(), saved.getProduct().getId())
                     .orElse(saved);
@@ -83,14 +94,21 @@ public class CartItemServiceImpl implements CartItemService {
     /**
      * {@inheritDoc}
      *
-     * @throws ResourceNotFoundException if the cart item is not found
-     *         or does not belong to the authenticated user
+     * <p>Validates that the requested quantity does not exceed
+     * the product's available stock.</p>
+     *
+     * @throws ResourceNotFoundException     if the cart item is not found
+     *                                       or does not belong to the authenticated user
+     * @throws InsufficientStockException    if the requested quantity exceeds available stock
      */
     @Override
     @Transactional
     public CartItem updateQuantity(String email, Long cartItemId, Integer quantity) {
         User user = findUserByEmail(email);
         CartItem cartItem = findCartItemByIdAndUser(cartItemId, user.getId());
+
+        validateStockAvailability(cartItem.getProduct(), quantity);
+
         cartItem.setQuantity(quantity);
         return cartItemRepository.save(cartItem);
     }
@@ -99,7 +117,7 @@ public class CartItemServiceImpl implements CartItemService {
      * {@inheritDoc}
      *
      * @throws ResourceNotFoundException if the cart item is not found
-     *         or does not belong to the authenticated user
+     *                                   or does not belong to the authenticated user
      */
     @Override
     @Transactional
@@ -117,6 +135,28 @@ public class CartItemServiceImpl implements CartItemService {
     public void clearCart(String email) {
         User user = findUserByEmail(email);
         cartItemRepository.deleteByUserId(user.getId());
+    }
+
+    /**
+     * Validates that the requested quantity does not exceed
+     * the product's available stock.
+     *
+     * @param product           the product being added or updated
+     * @param requestedQuantity the total quantity requested
+     * @throws InsufficientStockException if the requested quantity exceeds available stock
+     */
+    private void validateStockAvailability(Product product, int requestedQuantity) {
+        Integer stock = product.getStockQuantity();
+
+        if (stock == null || stock <= 0) {
+            throw new InsufficientStockException(
+                    String.format("Product '%s' is out of stock", product.getName()));
+        }
+
+        if (requestedQuantity > stock) {
+            throw new InsufficientStockException(
+                    String.format("Only %d unit(s) available for '%s'", stock, product.getName()));
+        }
     }
 
     /**
@@ -139,7 +179,7 @@ public class CartItemServiceImpl implements CartItemService {
      * @param userId     the user ID
      * @return the found cart item
      * @throws ResourceNotFoundException if the cart item is not found
-     *         or does not belong to the user
+     *                                   or does not belong to the user
      */
     private CartItem findCartItemByIdAndUser(Long cartItemId, Long userId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
