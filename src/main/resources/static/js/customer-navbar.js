@@ -313,4 +313,8 @@
         div.textContent = text;
         return div.innerHTML;
     }
+
+    // Listen for cart updates from any component (product card, detail page, cart page)
+    // and refresh the badge automatically without page reload
+    window.addEventListener('cart:updated', loadCartBadge);
 })();

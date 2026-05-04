@@ -679,11 +679,11 @@ I18n.register('es', {
     storeCardJs: {
         welcomeDeal: 'Oferta de Bienvenida',
         reviews: 'reseñas',
-        empty: 'No hay productos disponibles todavía',
-        loadError: 'Error al cargar productos',
-        loginRequired: 'Inicie sesión para marcar como favorito',
-        favoriteError: 'Error al actualizar favorito',
-        cartSoon: 'Integración con el carrito próximamente',
+        cartAdded: 'Agregado al carrito',
+        cartLoginRequired: 'Inicie sesión para agregar artículos al carrito',
+        cartOutOfStock: 'Este producto está agotado',
+        cartStockExceeded: 'No hay más unidades disponibles',
+        cartGenericError: 'No se pudo agregar al carrito',
     },
 
     // ==================== Store Footer ====================
