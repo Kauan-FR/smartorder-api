@@ -765,8 +765,13 @@ I18n.register('en', {
         chartSoon: 'Live chat coming soon',
         reviewSuccess: 'Review submitted!',
         reviewError: 'Failed to submit review',
-        likeLoginRequired: 'Please log in to like reviews'
-
+        likeLoginRequired: 'Please log in to like reviews',
+        cartAdded: 'Added to cart',
+        cartAddedPlural: '{n} units added to cart',
+        cartLoginRequired: 'Please log in to add items to your cart',
+        cartOutOfStock: 'This product is out of stock',
+        cartStockExceeded: 'Not enough units in stock',
+        cartGenericError: 'Could not add to cart',
     },
 
     // ==================== Common ====================

@@ -532,12 +532,71 @@
     }
 
     function handleAddToCart() {
+        const token = window.AuthManager && AuthManager.getToken();
+        const cartBtn = document.getElementById('addToCartBtn');
         const qty = Number(document.getElementById('qtyInput')?.value || 1);
-        // Real cart integration in next phase
-        if (window.showToast) {
-            const tpl = I18n.get('productDetailJs.cartSoon') || 'Cart integration coming soon ({n} units)';
-            showToast(tpl.replace('{n}', qty), 'info');
+
+        if (!token) {
+            showToast(I18n.get('productDetailJs.cartLoginRequired'), 'info');
+            setTimeout(() => { window.location.href = '/login'; }, 1200);
+            return;
         }
+
+        if (!qty || qty < 1) return;
+        if (cartBtn && cartBtn.disabled) return;
+        if (cartBtn) cartBtn.disabled = true;
+
+        fetch('/api/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({ productId, quantity: qty }),
+        })
+            .then((res) => res.json().then((body) => ({ status: res.status, body })))
+            .then(({ status, body }) => {
+                if (status === 201) {
+                    const message = qty === 1
+                        ? I18n.get('productDetailJs.cartAdded')
+                        : (I18n.get('productDetailJs.cartAddedPlural') || '{n} units added to cart').replace('{n}', qty);
+                    showToast(message, 'success');
+                    window.dispatchEvent(new CustomEvent('cart:updated'));
+                    return;
+                }
+
+
+                if (status === 409) {
+                    const serverMessage = body && body.message ? body.message : '';
+                    const isOutOfStock = serverMessage.toLowerCase().includes('out of stock');
+                    const finalMsg = isOutOfStock
+                        ? (I18n.get('productDetailJs.cartOutOfStock') || 'This product is out of stock')
+                        : (I18n.get('productDetailJs.cartStockExceeded') || 'Not enough units in stock');
+
+                    console.log('[CART DEBUG] About to show toast:', finalMsg);
+                    console.log('[CART DEBUG] showToast is:', typeof showToast);
+                    console.log('[CART DEBUG] body received:', body);
+
+                    showToast(finalMsg, 'error');
+
+                    console.log('[CART DEBUG] showToast called, returning');
+                    return;
+                }
+
+                if (status === 401) {
+                    showToast(I18n.get('productDetailJs.cartLoginRequired'), 'info');
+                    setTimeout(() => { window.location.href = '/login'; }, 1200);
+                    return;
+                }
+
+                showToast(I18n.get('productDetailJs.cartGenericError'), 'error');
+            })
+            .catch(() => {
+                showToast(I18n.get('productDetailJs.cartGenericError'), 'error');
+            })
+            .finally(() => {
+                if (cartBtn) cartBtn.disabled = false;
+            });
     }
 
     function handleTalkToSeller() {
