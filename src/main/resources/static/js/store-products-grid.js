@@ -226,10 +226,7 @@
         if (cartBtn) {
             cartBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // Hook real ao integrar com CartItem (próxima etapa)
-                if (window.showToast) {
-                    showToast(I18n.get('storeCardJs.cartSoon') || 'Cart integration coming soon', 'info');
-                }
+                addToCart(product, cartBtn);
             });
         }
 
@@ -237,6 +234,60 @@
         if (window.I18n && typeof I18n.apply === 'function') {
             I18n.apply(card);
         }
+    }
+
+    function addToCart(product, button) {
+        const token = window.AuthManager && AuthManager.getToken();
+
+        if (!token) {
+            showToast(I18n.get('storeCardJs.cartLoginRequired'), 'info');
+            setTimeout(() => { window.location.href = '/login'; }, 1500);
+            return;
+        }
+
+        if (button.disabled) return;
+        button.disabled = true;
+
+        fetch('/api/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,
+            },
+            body: JSON.stringify({ productId: product.id, quantity: 1 }),
+        })
+            .then((res) => res.json().then((body) => ({ status: res.status, body })))
+            .then(({ status, body }) => {
+                if (status === 201) {
+                    showToast(I18n.get('storeCardJs.cartAdded'), 'success');
+                    window.dispatchEvent(new CustomEvent('cart:updated'));
+                    return;
+                }
+
+                if (status === 409) {
+                    const message = body && body.message ? body.message : I18n.get('storeCardJs.cartStockExceeded');
+                    const isOutOfStock = message.toLowerCase().includes('out of stock');
+                    showToast(
+                        isOutOfStock ? I18n.get('storeCardJs.cartOutOfStock') : I18n.get('storeCardJs.cartStockExceeded'),
+                        'error'
+                    );
+                    return;
+                }
+
+                if (status === 401) {
+                    showToast(I18n.get('storeCardJs.cartLoginRequired'), 'info');
+                    setTimeout(() => { window.location.href = '/login'; }, 1200);
+                    return;
+                }
+
+                showToast(I18n.get('storeCardJs.cartGenericError'), 'error');
+            })
+            .catch(() => {
+                showToast(I18n.get('storeCardJs.cartGenericError'), 'error');
+            })
+            .finally(() => {
+                button.disabled = false;
+            });
     }
 
     // ===== Favorite toggle =====

@@ -703,11 +703,11 @@ I18n.register('en', {
     storeCardJs: {
         welcomeDeal: 'Welcome Deal',
         reviews: 'reviews',
-        empty: 'No products available yet',
-        loadError: 'Failed to load products',
-        loginRequired: 'Please log in to favorite',
-        favoriteError: 'Failed to update favorite',
-        cartSoon: 'Cart integration coming soon',
+        cartAdded: 'Added to cart',
+        cartLoginRequired: 'Please log in to add items to your cart',
+        cartOutOfStock: 'This product is out of stock',
+        cartStockExceeded: 'No more units available',
+        cartGenericError: 'Could not add to cart',
     },
 
     // ==================== Store Footer ====================
