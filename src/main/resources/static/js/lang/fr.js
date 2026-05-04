@@ -744,6 +744,44 @@ I18n.register('fr', {
         likeLoginRequired: 'Veuillez vous connecter pour aimer les avis'
     },
 
+    // ==================== Cart Page ====================
+    cartPage: {
+        title: 'Panier d\'Achat',
+        itemsLabel: 'articles dans votre panier',
+        loading: 'Chargement de votre panier...',
+        emptyTitle: 'Votre panier est vide',
+        emptyText: 'Il semblerait que vous n\'ayez ainda rien ajouté. Parcourez nos produits et trouvez quelque chose que vous aimez.',
+        emptyCta: 'Continuer les achats',
+        colProduct: 'Produit',
+        colPrice: 'Prix Unitaire',
+        colQty: 'Quantité',
+        colSubtotal: 'Sous-total',
+        colActions: 'Actions',
+        clearCart: 'Vider le panier',
+        clearConfirm: 'Êtes-vous sûr de vouloir supprimer tous os articles de votre panier ?',
+        removeItem: 'Supprimer',
+        summaryTitle: 'Récapitulatif de la Commande',
+        summarySubtotal: 'Sous-total',
+        summaryShipping: 'Livraison',
+        summaryFree: 'Gratuit',
+        summaryTotal: 'Total',
+        checkout: 'Passer la Commande',
+        continueShopping: 'Continuer les achats',
+    },
+
+    // ==================== Cart Page JS ====================
+    cartPageJs: {
+        itemRemoved: 'Article supprimé du panier',
+        cartCleared: 'Panier vidé',
+        quantityUpdated: 'Quantité mise à jour',
+        quantityError: 'Impossible de mettre à jour la quantité',
+        removeError: 'Impossible de supprimer l\'article',
+        clearError: 'Impossible de vider le panier',
+        loginRequired: 'Veuillez vous connecter pour voir votre panier',
+        checkoutSoon: 'Paiement bientôt disponible',
+        stockExceeded: 'Pas assez d\'unités en stock',
+    },
+
     common: {
         category: 'Catégorie',
         home: 'Accueil',

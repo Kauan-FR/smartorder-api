@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="~{fragments/head :: head('Cart')}"></head>
+    <link th:href="@{/css/components/toast.css}" rel="stylesheet">
+    <link th:href="@{/css/layouts/customer-navbar.css}" rel="stylesheet">
+    <link th:href="@{/css/layouts/store-footer.css}" rel="stylesheet">
+    <link th:href="@{/css/pages/cart.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- ========== Customer Navbar ========== -->
+<header th:replace="~{fragments/customer-navbar :: customerNavbar('cart')}"></header>
+
+<!-- ========== Main Content ========== -->
+<main class="cart-page">
+    <div class="cart-container">
+
+        <!-- Page title -->
+        <header class="cart-header">
+            <h1 class="cart-title" data-i18n="cartPage.title">Shopping Cart</h1>
+            <p class="cart-subtitle" id="cartSubtitle">
+                <span data-cart-count="0">0</span>
+                <span data-i18n="cartPage.itemsLabel">items in your cart</span>
+            </p>
+        </header>
+
+        <!-- Loading state -->
+        <div class="cart-loading" id="cartLoading">
+            <div class="cart-spinner"></div>
+            <p data-i18n="cartPage.loading">Loading your cart...</p>
+        </div>
+
+        <!-- Empty state -->
+        <div class="cart-empty" id="cartEmpty" hidden>
+            <svg class="cart-empty__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
+                <circle cx="9" cy="20" r="1.5"/>
+                <circle cx="18" cy="20" r="1.5"/>
+            </svg>
+            <h2 class="cart-empty__title" data-i18n="cartPage.emptyTitle">Your cart is empty</h2>
+            <p class="cart-empty__text" data-i18n="cartPage.emptyText">
+                Looks like you haven't added anything yet. Browse our products and find something you love.
+            </p>
+            <a href="/store" class="cart-empty__cta" data-i18n="cartPage.emptyCta">Continue shopping</a>
+        </div>
+
+        <!-- Cart with items -->
+        <div class="cart-content" id="cartContent" hidden>
+
+            <!-- Items table (left column) -->
+            <section class="cart-items">
+
+                <!-- Column headers (Shopee-style) -->
+                <header class="cart-items__head">
+                    <span class="cart-items__col cart-items__col--product" data-i18n="cartPage.colProduct">Product</span>
+                    <span class="cart-items__col cart-items__col--price" data-i18n="cartPage.colPrice">Unit Price</span>
+                    <span class="cart-items__col cart-items__col--qty" data-i18n="cartPage.colQty">Quantity</span>
+                    <span class="cart-items__col cart-items__col--subtotal" data-i18n="cartPage.colSubtotal">Subtotal</span>
+                    <span class="cart-items__col cart-items__col--actions" data-i18n="cartPage.colActions">Actions</span>
+                </header>
+
+                <!-- Items list (populated by JS) -->
+                <ul class="cart-items__list" id="cartItemsList"></ul>
+
+                <!-- Bottom actions -->
+                <footer class="cart-items__footer">
+                    <button type="button" class="cart-clear-btn" id="cartClearBtn">
+                        <span data-i18n="cartPage.clearCart">Clear cart</span>
+                    </button>
+                </footer>
+
+            </section>
+
+            <!-- Summary sidebar (right column, sticky — Amazon-style) -->
+            <aside class="cart-summary">
+                <h2 class="cart-summary__title" data-i18n="cartPage.summaryTitle">Order Summary</h2>
+
+                <div class="cart-summary__row">
+                    <span data-i18n="cartPage.summarySubtotal">Subtotal</span>
+                    <span id="summarySubtotal">$0.00</span>
+                </div>
+
+                <div class="cart-summary__row">
+                    <span data-i18n="cartPage.summaryShipping">Shipping</span>
+                    <span class="cart-summary__free" data-i18n="cartPage.summaryFree">Free</span>
+                </div>
+
+                <div class="cart-summary__divider"></div>
+
+                <div class="cart-summary__row cart-summary__row--total">
+                    <span data-i18n="cartPage.summaryTotal">Total</span>
+                    <span id="summaryTotal">$0.00</span>
+                </div>
+
+                <button type="button" class="cart-summary__checkout" id="cartCheckoutBtn">
+                    <span data-i18n="cartPage.checkout">Proceed to Checkout</span>
+                </button>
+
+                <a href="/store" class="cart-summary__continue" data-i18n="cartPage.continueShopping">
+                    Continue shopping
+                </a>
+            </aside>
+
+        </div>
+
+    </div>
+</main>
+
+<!-- ========== Footer ========== -->
+<footer th:replace="~{fragments/store-footer :: storeFooter}"></footer>
+
+<!-- ========== Scripts ========== -->
+<script th:src="@{/js/i18n.js}"></script>
+<script th:src="@{/js/lang/en.js}"></script>
+<script th:src="@{/js/lang/pt.js}"></script>
+<script th:src="@{/js/lang/es.js}"></script>
+<script th:src="@{/js/lang/fr.js}"></script>
+<script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/utils/toast.js}"></script>
+<script th:src="@{/js/customer-navbar.js}"></script>
+<script th:src="@{/js/store-footer.js}"></script>
+<script th:src="@{/js/cart.js}"></script>
+
+</body>
+</html>

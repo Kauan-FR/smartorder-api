@@ -774,6 +774,44 @@ I18n.register('en', {
         cartGenericError: 'Could not add to cart',
     },
 
+    // ==================== Cart Page ====================
+    cartPage: {
+        title: 'Shopping Cart',
+        itemsLabel: 'items in your cart',
+        loading: 'Loading your cart...',
+        emptyTitle: 'Your cart is empty',
+        emptyText: "Looks like you haven't added anything yet. Browse our products and find something you love.",
+        emptyCta: 'Continue shopping',
+        colProduct: 'Product',
+        colPrice: 'Unit Price',
+        colQty: 'Quantity',
+        colSubtotal: 'Subtotal',
+        colActions: 'Actions',
+        clearCart: 'Clear cart',
+        clearConfirm: 'Are you sure you want to remove all items from your cart?',
+        removeItem: 'Remove',
+        summaryTitle: 'Order Summary',
+        summarySubtotal: 'Subtotal',
+        summaryShipping: 'Shipping',
+        summaryFree: 'Free',
+        summaryTotal: 'Total',
+        checkout: 'Proceed to Checkout',
+        continueShopping: 'Continue shopping',
+    },
+
+    // ==================== Cart Page JS ====================
+    cartPageJs: {
+        itemRemoved: 'Item removed from cart',
+        cartCleared: 'Cart cleared',
+        quantityUpdated: 'Quantity updated',
+        quantityError: 'Could not update quantity',
+        removeError: 'Could not remove item',
+        clearError: 'Could not clear cart',
+        loginRequired: 'Please log in to view your cart',
+        checkoutSoon: 'Checkout coming soon',
+        stockExceeded: 'Not enough units in stock',
+    },
+
     // ==================== Common ====================
     common: {
         category: 'Category',

@@ -744,6 +744,44 @@ I18n.register('es', {
         likeLoginRequired: 'Por favor, inicie sesión para dar me gusta a las reseñas'
     },
 
+    // ==================== Cart Page ====================
+    cartPage: {
+        title: 'Carrito de Compras',
+        itemsLabel: 'artículos en tu carrito',
+        loading: 'Cargando tu carrito...',
+        emptyTitle: 'Tu carrito está vacío',
+        emptyText: 'Parece que aún no has añadido nada. Explora nuestros productos y encuentra algo que te encante.',
+        emptyCta: 'Continuar comprando',
+        colProduct: 'Producto',
+        colPrice: 'Precio Unitario',
+        colQty: 'Cantidad',
+        colSubtotal: 'Subtotal',
+        colActions: 'Acciones',
+        clearCart: 'Limpiar carrito',
+        clearConfirm: '¿Estás seguro de que deseas eliminar todos los artículos de tu carrito?',
+        removeItem: 'Eliminar',
+        summaryTitle: 'Resumen del Pedido',
+        summarySubtotal: 'Subtotal',
+        summaryShipping: 'Envío',
+        summaryFree: 'Gratis',
+        summaryTotal: 'Total',
+        checkout: 'Finalizar Compra',
+        continueShopping: 'Continuar comprando',
+    },
+
+    // ==================== Cart Page JS ====================
+    cartPageJs: {
+        itemRemoved: 'Artículo eliminado del carrito',
+        cartCleared: 'Carrito vaciado',
+        quantityUpdated: 'Cantidad actualizada',
+        quantityError: 'No se pudo actualizar la cantidad',
+        removeError: 'No se pudo eliminar el artículo',
+        clearError: 'No se pudo vaciar el carrito',
+        loginRequired: 'Por favor, inicia sesión para ver tu carrito',
+        checkoutSoon: 'Finalización de compra próximamente',
+        stockExceeded: 'No hay suficientes unidades en stock',
+    },
+
     common: {
         category: 'Categoría',
         home: 'Inicio',
