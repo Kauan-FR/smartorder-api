@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="~{fragments/head :: head('My Account')}"></head>
+    <link th:href="@{/css/layouts/customer-navbar.css}" rel="stylesheet">
+    <link th:href="@{/css/layouts/store-footer.css}" rel="stylesheet">
+    <link th:href="@{/css/components/toast.css}" rel="stylesheet">
+    <link th:href="@{/css/pages/profile.css}" rel="stylesheet">
+    <link th:href="@{/css/components/forms.css}" rel="stylesheet">
+    <link th:href="@{/css/components/buttons.css}" rel="stylesheet">
+    <link th:href="@{/css/components/cards.css}" rel="stylesheet">
+    <link th:href="@{/css/components/badges.css}" rel="stylesheet">
+    <link th:href="@{/css/components/avatar.css}" rel="stylesheet">
+    <link th:href="@{/css/components/forms.css}" rel="stylesheet">
+    <link th:href="@{/css/components/modal.css}" rel="stylesheet">
+<body>
+
+<nav th:replace="~{fragments/customer-navbar :: customerNavbar('profile')}"></nav>
+
+<main class="store-main">
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-header__avatar-section">
+            <div class="profile-header__avatar" id="profileAvatarContainer">
+                <div class="avatar avatar-xxl avatar-initials" id="profileAvatarInitials">U</div>
+                <img class="avatar avatar-xxl" id="profileAvatarImg" src="" alt="Profile photo" style="display:none;">
+            </div>
+            <div class="profile-header__info">
+                <h1 class="profile-header__name" id="profileHeaderName">User</h1>
+                <p class="profile-header__email" id="profileHeaderEmail">email@example.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="settings-tabs">
+        <button class="settings-tab settings-tab--active" data-tab="account" onclick="switchTab('account', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span data-i18n="profile.tabAccount">Account</span>
+        </button>
+        <button class="settings-tab" data-tab="security" onclick="switchTab('security', this)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <span data-i18n="profile.tabSecurity">Security</span>
+        </button>
+    </div>
+
+    <!-- ==================== Tab: Account ==================== -->
+    <div class="settings-panel settings-panel--active" id="tab-account">
+        <div class="settings-card">
+            <div class="settings-card__header">
+                <h2 class="settings-card__title" data-i18n="profile.accountTitle">Account information</h2>
+                <p class="settings-card__desc" data-i18n="profile.accountDesc">Update your personal information and profile photo.</p>
+            </div>
+            <div class="settings-card__body">
+
+                <!-- Profile photo -->
+                <div class="settings-photo-section">
+                    <div class="settings-photo-preview">
+                        <div class="avatar avatar-xl avatar-initials" id="formAvatarInitials">U</div>
+                        <img class="avatar avatar-xl" id="formAvatarImg" src="" alt="Profile photo" style="display:none;">
+                    </div>
+                    <div class="settings-photo-info">
+                        <p class="settings-photo-label" data-i18n="profile.profilePhoto">Profile photo</p>
+                        <p class="settings-photo-desc" data-i18n="profile.profilePhotoDesc">Add a URL to display your profile image.</p>
+                        <input class="input" type="text" id="accountImageUrl" maxlength="500" placeholder="https://example.com/photo.jpg" oninput="previewAccountPhoto()">
+                    </div>
+                </div>
+
+                <div class="settings-divider"></div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="accountName" data-i18n="profile.accountName">Full name</label>
+                    <input class="input" type="text" id="accountName" maxlength="100" placeholder="Your full name">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="accountEmail" data-i18n="profile.accountEmail">Email</label>
+                    <input class="input" type="email" id="accountEmail" maxlength="150" placeholder="you@example.com">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="accountPhone" data-i18n="profile.accountPhone">Phone</label>
+                    <input class="input" type="text" id="accountPhone" maxlength="20" placeholder="(00) 00000-0000">
+                </div>
+
+            </div>
+            <div class="settings-card__footer">
+                <button class="btn btn-primary" onclick="saveAccountInfo()" data-i18n="common.saveChanges">Save changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Tab: Security ==================== -->
+    <div class="settings-panel" id="tab-security">
+        <div class="settings-card">
+            <div class="settings-card__header">
+                <h2 class="settings-card__title" data-i18n="profile.securityTitle">Change password</h2>
+                <p class="settings-card__desc" data-i18n="profile.securityDesc">Update your password. Use at least 8 characters with a mix of letters and numbers.</p>
+            </div>
+            <div class="settings-card__body">
+                <div class="modal__error" id="passwordError"></div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="currentPassword" data-i18n="profile.currentPassword">Current password</label>
+                    <input class="input" type="password" id="currentPassword" placeholder="••••••••">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="newPassword" data-i18n="profile.newPassword">New password</label>
+                    <input class="input" type="password" id="newPassword" data-i18n-placeholder="profile.least" placeholder="At least 8 characters">
+                </div>
+
+                <div class="modal__form-group">
+                    <label class="label" for="confirmPassword" data-i18n="profile.confirmPassword">Confirm new password</label>
+                    <input class="input" type="password" id="confirmPassword" data-i18n-placeholder="profile.repeat" placeholder="Repeat new password">
+                </div>
+            </div>
+            <div class="settings-card__footer">
+                <button class="btn btn-primary" onclick="updatePassword()" data-i18n="profile.updatePassword">Update password</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="~{fragments/store-footer :: storeFooter}"></footer>
+
+<!-- Scripts -->
+<script th:src="@{/js/i18n.js}"></script>
+<script th:src="@{/js/lang/en.js}"></script>
+<script th:src="@{/js/lang/pt.js}"></script>
+<script th:src="@{/js/lang/es.js}"></script>
+<script th:src="@{/js/lang/fr.js}"></script>
+<script th:src="@{/js/auth.js}"></script>
+<script th:src="@{/js/utils/toast.js}"></script>
+<script th:src="@{/js/customer-navbar.js}"></script>
+<script th:src="@{/js/store-footer.js}"></script>
+<script th:src="@{/js/store-profile.js}"></script>
+</body>
+</html>

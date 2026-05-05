@@ -149,6 +149,16 @@ public class PageController {
         return "store/product-detail";
     }
 
+    /**
+     * Serves the customer profile page (account information and password management).
+     *
+     * @return the store profile template path
+     */
+    @GetMapping("/store/profile")
+    public String storeProfile() {
+        return "store/profile";
+    }
+
     // ==================== Profile & Settings ====================
 
     /**
