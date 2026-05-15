@@ -1,6 +1,7 @@
 package com.kauanferreira.smartorder.services.impl;
 
 import com.kauanferreira.smartorder.entity.Address;
+import com.kauanferreira.smartorder.entity.User;
 import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.AddressRepository;
 import com.kauanferreira.smartorder.services.interfaces.AddressService;
@@ -114,6 +115,23 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.countByUserId(userId);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Address> findByAuthenticatedUser(String email) {
+        User user = userService.findByEmail(email);
+        return addressRepository.findByUserId(user.getId());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Transactional
+    public Address createForAuthenticatedUser(String email, Address address) {
+        User user = userService.findByEmail(email);
+        address.setUser(user);
+        return addressRepository.save(address);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -135,6 +153,22 @@ public class AddressServiceImpl implements AddressService {
         existing.setZipCode(address.getZipCode());
         existing.setCountry(address.getCountry());
         return addressRepository.save(existing);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Transactional
+    public void deleteForAuthenticatedUser(String email, Long addressId) {
+        User user = userService.findByEmail(email);
+        Address address = findById(addressId);
+
+        if (!address.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException(
+                    String.format("Address with id %d not found", addressId)
+            );
+        }
+
+        addressRepository.delete(address);
     }
 
     /**

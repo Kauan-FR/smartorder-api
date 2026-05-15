@@ -97,6 +97,40 @@ public interface AddressService {
     Address update(Long id, Address address);
 
     /**
+     * Retrieves all addresses belonging to the user identified by the given email.
+     *
+     * @param email the authenticated user's email (from JWT)
+     * @return the list of addresses owned by the user
+     */
+    List<Address> findByAuthenticatedUser(String email);
+
+    /**
+     * Creates a new address for the user identified by the given email.
+     *
+     * <p>User identity is resolved from the authenticated email (JWT). The userId
+     * is never accepted from the client to prevent privilege escalation.</p>
+     *
+     * @param email   the authenticated user's email (from JWT)
+     * @param address the address entity to persist (without user association)
+     * @return the persisted address with its generated id and user attached
+     */
+    Address createForAuthenticatedUser(String email, Address address);
+
+    /**
+     * Deletes an address belonging to the user identified by the given email.
+     *
+     * <p>Validates ownership before deletion — if the address exists but belongs
+     * to another user, the operation is rejected as not found (to avoid leaking
+     * the existence of resources).</p>
+     *
+     * @param email     the authenticated user's email (from JWT)
+     * @param addressId the id of the address to delete
+     * @throws ResourceNotFoundException if the address does not exist OR does not
+     *                                    belong to the authenticated user
+     */
+    void deleteForAuthenticatedUser(String email, Long addressId);
+
+    /**
      * Deletes an address by its id.
      *
      * @param id the id of the address to delete

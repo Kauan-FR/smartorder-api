@@ -1,6 +1,7 @@
 package com.kauanferreira.smartorder.controller;
 
 import com.kauanferreira.smartorder.dto.mapper.AddressMapper;
+import com.kauanferreira.smartorder.dto.request.AddressCustomerRequest;
 import com.kauanferreira.smartorder.dto.request.AddressRequest;
 import com.kauanferreira.smartorder.dto.response.AddressResponse;
 import com.kauanferreira.smartorder.entity.Address;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -62,6 +64,42 @@ public class AddressController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(response);
+    }
+
+    /**
+     * Creates a new address for the authenticated user.
+     *
+     * <p>User identity is extracted from the JWT token. The request body must not
+     * include a userId field — only the address fields themselves.</p>
+     *
+     * @param authentication the authentication object provided by Spring Security
+     * @param request        the address payload
+     * @return HTTP 201 with the created address and a Location header
+     */
+    @Operation(
+            summary = "Create address for the authenticated user",
+            description = "Creates a new address linked to the currently authenticated user. " +
+                    "User identity is extracted from the JWT token."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Address created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Authentication required")
+    })
+    @PostMapping("/my")
+    public ResponseEntity<AddressResponse> createForAuthenticatedUser(Authentication authentication,
+                                                                      @Valid @RequestBody AddressCustomerRequest request) {
+        Address entity = AddressMapper.toEntity(request);
+        Address created = addressService.createForAuthenticatedUser(authentication.getName(), entity);
+        AddressResponse response = AddressMapper.toResponse(created);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .replacePath("/api/addresses/{id}")
                 .buildAndExpand(created.getId())
                 .toUri();
 
@@ -198,6 +236,34 @@ public class AddressController {
     }
 
     /**
+     * Retrieves all addresses belonging to the authenticated user.
+     *
+     * <p>User identity is extracted from the JWT token. Used by customer-facing
+     * flows where the user should never need to (or be allowed to) pass their
+     * own userId in the request.</p>
+     *
+     * @param authentication the authentication object provided by Spring Security
+     * @return HTTP 200 with the list of addresses owned by the authenticated user
+     */
+    @Operation(
+            summary = "Find addresses of the authenticated user",
+            description = "Retrieves all addresses belonging to the currently authenticated user. " +
+                    "User identity is extracted from the JWT token."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Addresses retrieved successfully"),
+            @ApiResponse(responseCode = "401", description = "Authentication required")
+    })
+    @GetMapping("/my")
+    public ResponseEntity<List<AddressResponse>> findMyAddresses(Authentication authentication) {
+        List<AddressResponse> responses = addressService.findByAuthenticatedUser(authentication.getName())
+                .stream()
+                .map(AddressMapper::toResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
+    }
+
+    /**
      * Updates an existing address.
      *
      * @param id      the id of the address to update
@@ -216,6 +282,35 @@ public class AddressController {
         Address entity = AddressMapper.toEntity(request);
         Address updated = addressService.update(id, entity);
         return ResponseEntity.ok().body(AddressMapper.toResponse(updated));
+    }
+
+    /**
+     * Deletes an address belonging to the authenticated user.
+     *
+     * <p>User identity is extracted from the JWT token. Validates that the address
+     * being deleted is actually owned by the authenticated user — attempting to
+     * delete another user's address returns 404, not 403, to prevent disclosure
+     * of resource existence.</p>
+     *
+     * @param authentication the authentication object provided by Spring Security
+     * @param id             the address id to delete
+     * @return HTTP 204 with no content
+     */
+    @Operation(
+            summary = "Delete an address of the authenticated user",
+            description = "Deletes an address owned by the currently authenticated user. " +
+                    "Returns 404 if the address does not exist or belongs to another user."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Address deleted successfully"),
+            @ApiResponse(responseCode = "401", description = "Authentication required"),
+            @ApiResponse(responseCode = "404", description = "Address not found or not owned by user")
+    })
+    @DeleteMapping("/my/{id}")
+    public ResponseEntity<Void> deleteForAuthenticatedUser(Authentication authentication,
+                                                           @PathVariable Long id) {
+        addressService.deleteForAuthenticatedUser(authentication.getName(), id);
+        return ResponseEntity.noContent().build();
     }
 
     /**

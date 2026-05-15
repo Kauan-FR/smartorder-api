@@ -1,5 +1,6 @@
 package com.kauanferreira.smartorder.dto.mapper;
 
+import com.kauanferreira.smartorder.dto.request.AddressCustomerRequest;
 import com.kauanferreira.smartorder.dto.request.AddressRequest;
 import com.kauanferreira.smartorder.dto.response.AddressResponse;
 import com.kauanferreira.smartorder.entity.Address;
@@ -47,6 +48,28 @@ public final class AddressMapper {
         address.setUser(user);
 
         return  address;
+    }
+
+    /**
+     * Converts an {@link AddressCustomerRequest} to an {@link Address} entity.
+     *
+     * <p>Unlike {@link #toEntity(AddressRequest)}, this method does not populate
+     * the user reference. The service layer must set the authenticated user
+     * before persisting.</p>
+     *
+     * @param request the customer-facing request DTO
+     * @return a new Address entity without user association
+     */
+    public static Address toEntity(AddressCustomerRequest request) {
+        Address address = new Address();
+        address.setStreet(request.street());
+        address.setNumber(request.number());
+        address.setComplement(request.complement());
+        address.setCity(request.city());
+        address.setState(request.state());
+        address.setZipCode(request.zipCode());
+        address.setCountry(request.country());
+        return address;
     }
 
     /**
