@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +90,20 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     boolean existsByUserIdAndProductIdAndStatusNot(@Param("userId") Long userId,
                                                    @Param("productId") Long productId,
                                                    @Param("status") OrderStatus status);
+
+    /**
+     * Finds all orders with the given status whose order date is older than
+     * the provided cutoff timestamp.
+     *
+     * <p>Used by the demo scheduler to advance orders that have been "stuck"
+     * in a transitional status for longer than the configured tick interval.</p>
+     *
+     * @param status the status to filter by (typically PENDING or CONFIRMED)
+     * @param cutoff the threshold timestamp — only orders placed before this
+     *               instant are returned
+     * @return list of orders eligible to be advanced to the next status
+     */
+    List<Order> findByStatusAndOrderDateBefore(OrderStatus status, LocalDateTime cutoff);
 
     /**
      * Counts how many orders a user has placed.
