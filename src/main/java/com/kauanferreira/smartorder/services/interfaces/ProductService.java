@@ -262,6 +262,31 @@ public interface ProductService {
     List<ProductResponse> findAllWithRating();
 
     /**
+     * Decreases the stock quantity of a product by the given amount.
+     *
+     * <p>Validates that the current stock is sufficient before applying the
+     * decrement. This operation is intended to be called inside a transactional
+     * context (typically during order checkout).</p>
+     *
+     * @param productId the id of the product whose stock will be decremented
+     * @param quantity  the amount to subtract from the current stock (must be positive)
+     * @return the updated product with the new stock quantity
+     */
+    Product decreaseStock(Long productId, Integer quantity);
+
+    /**
+     * Increases the stock quantity of a product by the given amount.
+     *
+     * <p>Used to return stock when an order is cancelled. This operation is
+     * intended to be called inside a transactional context.</p>
+     *
+     * @param productId the id of the product whose stock will be incremented
+     * @param quantity  the amount to add to the current stock (must be positive)
+     * @return the updated product with the new stock quantity
+     */
+    Product increaseStock(Long productId, Integer quantity);
+
+    /**
      * Returns a product by ID enriched with its aggregated rating data.
      *
      * @param id the product ID

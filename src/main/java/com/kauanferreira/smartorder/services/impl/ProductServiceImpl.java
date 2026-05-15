@@ -5,6 +5,7 @@ import com.kauanferreira.smartorder.dto.projection.RatingProjection;
 import com.kauanferreira.smartorder.dto.response.ProductResponse;
 import com.kauanferreira.smartorder.entity.Product;
 import com.kauanferreira.smartorder.exception.DuplicateResourceException;
+import com.kauanferreira.smartorder.exception.InsufficientStockException;
 import com.kauanferreira.smartorder.exception.ResourceNotFoundException;
 import com.kauanferreira.smartorder.repository.ProductRepository;
 import com.kauanferreira.smartorder.repository.ReviewRepository;
@@ -277,6 +278,42 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toMap(RatingProjection::productId, Function.identity()));
 
         return page.map(p -> ProductMapper.toResponseWithRating(p, ratingsMap.get(p.getId())));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws ResourceNotFoundException    if the product does not exist
+     * @throws InsufficientStockException   if the requested quantity exceeds the current stock
+     */
+    @Override
+    @Transactional
+    public Product decreaseStock(Long productId, Integer quantity) {
+        Product product = findById(productId);
+        int currentStock = product.getStockQuantity();
+
+        if (currentStock < quantity) {
+            throw new InsufficientStockException(
+                    String.format("Insufficient stock for product '%s'. Available: %d, requested: %d",
+                            product.getName(), currentStock, quantity)
+            );
+        }
+
+        product.setStockQuantity(currentStock - quantity);
+        return productRepository.save(product);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws ResourceNotFoundException if the product does not exist
+     */
+    @Override
+    @Transactional
+    public Product increaseStock(Long productId, Integer quantity) {
+        Product product = findById(productId);
+        product.setStockQuantity(product.getStockQuantity() + quantity);
+        return productRepository.save(product);
     }
 
     private List<ProductResponse> enrichWithRating(List<Product> products) {

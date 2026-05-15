@@ -1,5 +1,6 @@
 package com.kauanferreira.smartorder.services.interfaces;
 
+import com.kauanferreira.smartorder.dto.request.CheckoutRequest;
 import com.kauanferreira.smartorder.entity.Order;
 import com.kauanferreira.smartorder.enums.OrderStatus;
 import org.aspectj.weaver.ast.Or;
@@ -85,6 +86,32 @@ public interface OrderService {
      * @return list of matching orders, or empty list if none match
      */
     List<Order> findByAddressId(Long addressId);
+
+    /**
+     * Retrieves all orders belonging to the user identified by the given email.
+     *
+     * @param email the authenticated user's email (from JWT)
+     * @return the list of orders sorted by date descending
+     */
+    List<Order> findByAuthenticatedUser(String email);
+
+    /**
+     * Processes a customer checkout for a single product ("Buy now" flow).
+     *
+     * <p>User identity is resolved from the authenticated email (JWT). The first
+     * address registered by the user is used as the delivery address. Stock is
+     * validated and decremented atomically; if any validation fails, the
+     * transaction is rolled back and no changes are persisted.</p>
+     *
+     * <p>The created order starts with status {@link OrderStatus#PENDING} and
+     * will be advanced automatically by the scheduled demo job.</p>
+     *
+     * @param email   the authenticated user's email (from JWT)
+     * @param request the checkout payload containing productId and quantity
+     * @return the persisted order with its single item attached
+     */
+    Order checkout(String email, CheckoutRequest request);
+
 
     /**
      * Counts the total number of orders for a specific user.

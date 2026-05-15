@@ -1,6 +1,7 @@
 package com.kauanferreira.smartorder.controller;
 
 import com.kauanferreira.smartorder.dto.mapper.OrderMapper;
+import com.kauanferreira.smartorder.dto.request.CheckoutRequest;
 import com.kauanferreira.smartorder.dto.request.OrderRequest;
 import com.kauanferreira.smartorder.dto.response.OrderResponse;
 import com.kauanferreira.smartorder.entity.Order;
@@ -61,6 +62,46 @@ public class OrderController {
     public ResponseEntity<OrderResponse> create(@Valid @RequestBody OrderRequest request) {
         Order entity = OrderMapper.toEntity(request);
         Order created = orderService.create(entity);
+        Order fullOrder = orderService.findById(created.getId());
+        OrderResponse response = OrderMapper.toResponser(fullOrder);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(created.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(response);
+    }
+
+    /**
+     * Processes a customer checkout for a single product ("Buy now" flow).
+     *
+     * <p>The authenticated user is resolved from the JWT token. The user's first
+     * registered address is used as the delivery address. Stock is validated and
+     * decremented atomically.</p>
+     *
+     * @param authentication the authentication object provided by Spring Security
+     * @param request        the checkout payload (productId and quantity)
+     * @return HTTP 201 with the created order
+     */
+    @Operation(
+            summary = "Checkout a single product",
+            description = "Creates a new order for the authenticated user with a single product item. " +
+                    "User identity is extracted from the JWT token. Uses the user's first registered " +
+                    "address as the delivery address. Validates and decrements product stock atomically."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Order created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data or user has no address registered"),
+            @ApiResponse(responseCode = "401", description = "Authentication required"),
+            @ApiResponse(responseCode = "404", description = "User or product not found"),
+            @ApiResponse(responseCode = "409", description = "Insufficient stock")
+    })
+    @PostMapping("/checkout")
+    public ResponseEntity<OrderResponse> checkout(Authentication authentication,
+                                                  @Valid @RequestBody CheckoutRequest request) {
+        Order created = orderService.checkout(authentication.getName(), request);
         Order fullOrder = orderService.findById(created.getId());
         OrderResponse response = OrderMapper.toResponser(fullOrder);
 
@@ -244,6 +285,31 @@ public class OrderController {
         return ResponseEntity.ok(
                 orderService.hasUserPurchasedProduct(authentication.getName(), productId)
         );
+    }
+
+    /**
+     * Retrieves all orders belonging to the authenticated user.
+     * User identity is extracted from the JWT token, not from request parameters.
+     *
+     * @param authentication the authentication object provided by Spring Security
+     * @return HTTP 200 with the list of orders sorted by date descending
+     */
+    @Operation(
+            summary = "Find orders of the authenticated user",
+            description = "Retrieves all orders placed by the currently authenticated user, sorted by date descending. " +
+                    "User identity is extracted from the JWT token."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Orders retrieved successfully"),
+            @ApiResponse(responseCode = "401", description = "Authentication required")
+    })
+    @GetMapping("/my")
+    public ResponseEntity<List<OrderResponse>> findMyOrders(Authentication authentication) {
+        List<OrderResponse> responses = orderService.findByAuthenticatedUser(authentication.getName())
+                .stream()
+                .map(OrderMapper::toResponser)
+                .toList();
+        return ResponseEntity.ok(responses);
     }
 
     /**
